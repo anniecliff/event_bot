@@ -780,8 +780,8 @@ function getBookingDetails()
 				     {
 						$query2 = "SELECT facilities_type FROM facilities_type WHERE id='$id'";
 						$res    = getData($query2);
-						while($r = mysqli_fetch_array($res) {	
-							$type_name = $r['facilities_type']
+						while($r = mysqli_fetch_array($res)) {	
+							$type_name = $r['facilities_type'];
 						}			     	
 				     	
 //						$type_name = $bookingfunc->get_facility_name($data["facilities_type"]);
@@ -801,7 +801,7 @@ function getBookingDetails()
 						}
 			
 						$f_time = $starth ."-".$end_time;
-						$query3 = "SELECT location_id FROM facilities_booking WHERE $starth = $data['book_id'] AND facilities_type='$data['facilities_type']' AND book_date='$data['book_date']'";
+						$query3 = "SELECT location_id FROM facilities_booking WHERE".$starth." = ".$data['book_id']." AND facilities_type='".$data['facilities_type']."' AND book_date='".$data['book_date']."'";
 						$res3  = getData($query3);
 						while($r1 = mysqli_fetch_array($res3))
 						{
