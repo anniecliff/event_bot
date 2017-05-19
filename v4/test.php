@@ -17,10 +17,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 } 
 echo "Connected successfully";
-    mysql_select_db($database);
+    mysqli_select_db($database);
 
 $sql = "SELECT * FROM location_info JOIN location_facilities";
-$data = getData($sql);
+$data = mysqli_query($conn,$sql);
 $output = "hello ";
 ob_end_clean();
 echo json_encode($data);
