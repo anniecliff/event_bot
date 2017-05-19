@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 echo "Connected successfully";
     mysqli_select_db($database);
 
-$sql = "SELECT * FROM location_info JOIN location_facilities";
+$sql = "SELECT * FROM location_info";
 $data = mysqli_query($conn,$sql);
 $output = "hello ";
 ob_end_clean();
