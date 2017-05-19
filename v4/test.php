@@ -7,6 +7,7 @@ $data = getData($sql);
 echo json_encode($data);*/
 header('Content-Type: application/json');
 ob_start();
-echo "hello";
+$output = "hello ";
 ob_end_clean();
+echo json_encode($output);
 ?>
