@@ -20,9 +20,12 @@ $sql = "SELECT * FROM location_info";
 $data = mysqli_query($conn,$sql);*/
 $mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
 $result = $mysqli->query("SELECT * FROM location_info");
-$row = $result->mysqli_fetch_all();
+//$row = $result->fetch_array();
+ while($row = $result->fetch_array()){
+             $rows[] = $row;
+    }
 //echo htmlentities($row['_message']);
 $output = "hello ";
 ob_end_clean();
-echo json_encode($row);
+echo json_encode($rows);
 ?>
