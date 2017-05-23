@@ -20,7 +20,7 @@ $sql = "SELECT * FROM location_info";
 $data = mysqli_query($conn,$sql);*/
 $mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
 $result = $mysqli->query("SELECT * FROM location_info");
-$row = $result->fetch_assoc();
+$row = $result->fetch_array();
 //echo htmlentities($row['_message']);
 $output = "hello ";
 ob_end_clean();
