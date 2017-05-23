@@ -23,5 +23,5 @@ $sql = "SELECT * FROM location_info";
 $data = mysqli_query($conn,$sql);
 $output = "hello ";
 ob_end_clean();
-echo json_encode($data);
+echo json_encode($output);
 ?>
