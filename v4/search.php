@@ -3,7 +3,7 @@
 header('Content-Type: application/json');
 ob_start();
 $i=0;
-$search =$_GET['search'];	
+$search =$_POST['search'];	
 $mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
 $result = $mysqli->query("SELECT * FROM location_info WHERE location_desc like '%".$search."%'")
 while($row = $result->fetch_array()){
