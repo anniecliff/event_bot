@@ -19,7 +19,7 @@ echo "Connected successfully";
 $sql = "SELECT * FROM location_info";
 $data = mysqli_query($conn,$sql);*/
 $mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
-$result = $mysqli->query("SELECT * FROM location_info");
+$result = $mysqli->query("SELECT L.*,F.* FROM location_facilities_v2 AS F JOIN location_info as L  ON L.id = F.vo_id WHERE  F.facility_type = 1");
 //$row = $result->fetch_array();
  while($row = $result->fetch_array()){
              $rows[] = $row;
