@@ -35,5 +35,5 @@ while($row = $result->fetch_array()){
 //	echo json_encode($data);
 	return $data;*/
 ob_end_clean();
-echo json_encode($search);
+echo json_encode($data);
 ?>
