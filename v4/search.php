@@ -1,6 +1,6 @@
 <?php
 echo "<pre>";
-print_r($_POST);
+print_r($_GET);
 header('Content-Type: application/json');
 ob_start();
 $i=0;
