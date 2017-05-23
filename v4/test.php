@@ -5,7 +5,7 @@
 //echo json_encode($data);
 header('Content-Type: application/json');
 ob_start();
-$servername = "myvoffice.me";
+/*$servername = "myvoffice.me";
 $username = "myvoff_entrp";
 $password = "V2PM@.@tGr!Z";
 $database = "myvoff_vos";
@@ -20,7 +20,7 @@ echo "Connected successfully";
     mysqli_select_db($database);
 
 $sql = "SELECT * FROM location_info";
-$data = mysqli_query($conn,$sql);
+$data = mysqli_query($conn,$sql);*/
 $output = "hello ";
 ob_end_clean();
 echo json_encode($output);
