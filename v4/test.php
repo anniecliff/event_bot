@@ -18,6 +18,8 @@ echo "Connected successfully";
 
 $sql = "SELECT * FROM location_info";
 $data = mysqli_query($conn,$sql);*/
+$mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
+
 $output = "hello ";
 ob_end_clean();
 echo json_encode($output);
