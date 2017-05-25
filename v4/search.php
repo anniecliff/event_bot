@@ -41,5 +41,5 @@ while($row = $result->fetch_array()){
 */
 
 ob_end_clean();
-echo json_encode($output);
+echo json_encode($parameter);
 ?>
