@@ -8,6 +8,10 @@ $request = json_decode($json, true);
 $action = $request["result"]["action"];
 $parameters = $request["result"]["parameters"];
 
+echo $parameters;
+
+
+
 //[Code to set $outputtext, $nextcontext, $param1, $param2 values]
 
 $output["contextOut"] = array(array("name" => "$next-context", "parameters" =>
