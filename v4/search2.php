@@ -2,7 +2,7 @@
 
 header('Content-Type: application/json');
 ob_start();
-
+/*
 $json = file_get_contents('php://input');
 $request = json_decode($json, true);
 $action = $request["result"]["action"];
@@ -19,12 +19,12 @@ $output["source"] = "whatever.php";
 
 
 
+*/
 
 
 
 
 
-/*
 $i=0;
 $search =$_GET['search'];	
 //echo $search;
@@ -34,7 +34,7 @@ while($row = $result->fetch_array()){
 			$data['location_name'][$i] = $row['location_desc'];
 			$i++;
 }
-*/
+
 
 ob_end_clean();
 echo json_encode($output);
