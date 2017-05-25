@@ -4,6 +4,7 @@ header('Content-Type: application/json');
 ob_start();
 
 $json = file_get_contents('php://input');
+//$input = json_decode(file_get_contents('php://input'), true);
 $request = json_decode($json, true);
 $action = $request["result"]["action"];
 $parameters = $request["result"]["parameters"];
@@ -19,7 +20,7 @@ while($row = $result->fetch_array()){
 
 //[Code to set $outputtext, $nextcontext, $param1, $param2 values]
 
-$next = "sendmessage-followup";
+$next = "sendmessage-location-followup";
 $param1value = "1";
 $param2value = "true";
 $outputtext  = "Yes available";
