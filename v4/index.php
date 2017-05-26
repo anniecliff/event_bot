@@ -322,7 +322,8 @@ function searchCenter()
 	
 	$array['speech'] = $speech;
 	$array['displayText'] = $speech;
-	$array['source'] = "api-bot";
+	$array['data']['contextOut'] =""; 
+	$array['source'] = "v4";
 	
 
 	/*$array  =  (
