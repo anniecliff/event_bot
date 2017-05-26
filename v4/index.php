@@ -323,13 +323,18 @@ function searchCenter()
 		$speech = "Yes Center available " + $r['location_name'];
 	
 	}
+	
+	$array['speech'] = $speech;
+	$array['displayText'] = $speech;
+	$array['source'] = "api-bot";
+	
 
-	$array  =  (
+	/*$array  =  (
         "speech" => $speech,
         "displayText" => $speech,
        
         "source" =>"api-bot"
-    );
+    );*/
     print("Response:");
     print($speech);
 	echo json_encode($array);
