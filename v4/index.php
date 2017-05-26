@@ -310,6 +310,7 @@ function searchCenter()
 			$res_loc = $row['location_desc'];
 			$data['timezone'][$i]      = $row['time_zone'];
 			$i++;
+			print_r($row);
 		}	
 	
 	}
