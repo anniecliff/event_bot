@@ -299,7 +299,7 @@ function getStaffName($staffid)
 function searchCenter()
 {
 	$i=0;
-	$search = validate_input($_POST['search']);	
+	$search = $_GET['search'];	
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
 	$res    = getData($query);
 	$count_res = mysqli_num_rows($res);
