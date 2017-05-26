@@ -332,8 +332,8 @@ function searchCenter()
         "source" =>"api-bot"
     );*/
    
-	echo json_encode($array);
-	//return $array;
+	//echo json_encode($array);
+	return $array;
 	
 }
 
