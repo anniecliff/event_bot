@@ -322,7 +322,7 @@ function searchCenter()
 	
 	$array['speech'] = $speech;
 	$array['displayText'] = $speech;
-	$array['data']['contextOut'] =""; 
+	$array['data']['contextOut'] =[]; 
 	$array['source'] = "v4";
 	
 
