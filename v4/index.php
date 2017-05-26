@@ -325,10 +325,10 @@ function searchCenter()
 	}
 
 	$array  =  (
-        "speech": $speech,
-        "displayText": $speech,
+        "speech" => $speech,
+        "displayText" => $speech,
        
-        "source": "api-bot"
+        "source" =>"api-bot"
     );
     print("Response:");
     print($speech);
