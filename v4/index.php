@@ -324,16 +324,16 @@ function searchCenter()
 	
 	}
 
-
-    print("Response:");
-    print($speech);
-//	echo json_encode($data);
-	return  {
+	$array  =  {
         "speech": $speech,
         "displayText": $speech,
        
         "source": "api-bot"
     };
+    print("Response:");
+    print($speech);
+//	echo json_encode($data);
+	return $array;
 	
 }
 
