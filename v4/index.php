@@ -1,6 +1,6 @@
 <?php
 require_once ('Query.php'); 
-require 'flight/Flight.php';
+require '../flight/Flight.php';
 //echo "hiiii";
 /* *************************Routes starts here*******************************/
 /*** created by : Annie      ***/
