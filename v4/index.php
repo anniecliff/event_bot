@@ -310,7 +310,7 @@ function searchCenter()
 			$res_loc = $row['location_desc'];
 			$data['timezone'][$i]      = $row['time_zone'];
 			$i++;
-			print_r($res_loc);
+			//print_r($res_loc);
 		}	
 	
 	}
@@ -318,12 +318,9 @@ function searchCenter()
 	{
 		$data = "No locations found";
 	}
-	foreach($data as $r)
-	{
 	
 		$speech = "Yes Center available " + $res_loc;
 	
-	}
 	
 	$array['speech'] = $speech;
 	$array['displayText'] = $speech;
