@@ -307,7 +307,7 @@ function searchCenter()
 	{
 		while($row = mysqli_fetch_array($res))
 		{
-			$data['location_name'][$i] = $row['location_desc'];
+			$res_loc = $row['location_desc'];
 			$data['timezone'][$i]      = $row['time_zone'];
 			$i++;
 		}	
@@ -320,7 +320,7 @@ function searchCenter()
 	foreach($data as $r)
 	{
 	
-		$speech = "Yes Center available " + $r['location_name'];
+		$speech = "Yes Center available " + $res_loc;
 	
 	}
 	
