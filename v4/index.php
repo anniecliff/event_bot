@@ -329,8 +329,8 @@ function searchCenter()
     print($speech);
 //	echo json_encode($data);
 	return  {
-        "speech": speech,
-        "displayText": speech,
+        "speech": $speech,
+        "displayText": $speech,
        
         "source": "api-bot"
     };
