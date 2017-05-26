@@ -317,8 +317,8 @@ function searchCenter()
 		$data = "No locations found";
 	}
 	
-		$speech = "Yes Center available " + $res_loc;
-	echo $res_loc;
+		$speech = "Yes Center available ".$res_loc;
+	//echo $res_loc;
 	
 	$array['speech'] = $speech;
 	$array['displayText'] = $speech;
