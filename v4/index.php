@@ -317,8 +317,23 @@ function searchCenter()
 	{
 		$data = "No locations found";
 	}
+	foreach($data as $r)
+	{
+	
+		$speech = "Yes Center available " + $r['location_name'];
+	
+	}
+
+
+    print("Response:");
+    print($speech);
 //	echo json_encode($data);
-	return $data;
+	return  {
+        "speech": speech,
+        "displayText": speech,
+       
+        "source": "api-bot"
+    };
 	
 }
 
