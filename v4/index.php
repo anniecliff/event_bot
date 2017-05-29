@@ -50,7 +50,7 @@ Flight::route('/searchCenter', function()
 {
 	enable_cors();
 	$returnarray=searchCenter();
-//	header('Content-type:application/json;charset=utf-8');
+	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
 
 });
