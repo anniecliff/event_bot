@@ -320,6 +320,7 @@ ob_start();
 //	print_r($obj);
 	//$search =$_GET['search'];
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
+	echo $query;
 	$res    = getData($query);
 	$count_res = mysqli_num_rows($res);
 	if($count_res > 0)
