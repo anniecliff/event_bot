@@ -317,7 +317,7 @@ ob_start();
 //	$search  = $d['city']; 
 	
 //	$obj = json_decode($json);
-//	print_r($obj);
+	print_r($obj);
 	//$search =$_GET['search'];
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
 //	echo $query;
