@@ -299,7 +299,7 @@ function getStaffName($staffid)
 function searchCenter()
 {
 	$i=0;
-	$dummy = json_decode($_POST['search']);	
+	$dummy = json_decode($_GET['search']);	
 	foreach($dummy->city[0] as $key=>$value)
 	{
 		$search = $value;
