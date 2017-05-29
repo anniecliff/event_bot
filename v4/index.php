@@ -49,7 +49,8 @@ Flight::route('/getCallDetails', function()
 Flight::route('/searchCenter', function()
 {
 	header('Content-type:application/json;charset=utf-8');
-	$opts = array(
+	header('Authorization: Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
+	/*$opts = array(
   'http'=>array(
     'method'=>"GET",
     'header'=>"Content-type:application/json;charset=utf-8" .
@@ -57,12 +58,12 @@ Flight::route('/searchCenter', function()
 
   )
 );
-
-$context1 = stream_context_create($opts);
+*/
+//$context1 = stream_context_create($opts);
 
 	ob_start();
 	
-	$obj = json_decode(file_get_contents('php://input'), false,$context1);
+	$obj = json_decode(file_get_contents('php://input'),true);
 
 	$parameters = $obj['parameters'];
 	$search = $parameters['search'];
