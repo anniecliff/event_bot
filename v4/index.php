@@ -48,10 +48,56 @@ Flight::route('/getCallDetails', function()
 //Annie, May 15, 2017
 Flight::route('/searchCenter', function()
 {
-	//enable_cors()();
-	$returnarray=searchCenter();
 	header('Content-type:application/json;charset=utf-8');
-	echo json_encode($returnarray);
+
+	ob_start();
+	
+	$obj = json_decode(file_get_contents('php://input'), true);
+
+	$parameters = $obj['parameters'];
+	$search = $parameters['search'];
+
+	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
+
+	$res    = getData($query);
+	$count_res = mysqli_num_rows($res);
+	if($count_res > 0)
+	{
+		while($row = mysqli_fetch_array($res))
+		{
+			$res_loc = $row['location_desc'];
+
+		}	
+	
+	}
+	else 
+	{
+		$data = "No locations found";
+	}
+	
+		$speech = "Yes Center available ".$res_loc;
+	//echo $res_loc;
+	$source  = "v4";
+	$next_context = "location";
+	$param1value = $res_loc;
+	$param2value = 0;
+	$context = array(array("name" => $next_context, "parameters" => array("param1" => $param1value, "param2" => $param2value)));
+	//$context = "";
+	$json = json_encode([
+                'speech'   => $speech,
+                'displayText' => $speech,
+                'data' => [],
+                'contextOut' => [$context],
+                'source' => $source
+        ]);
+
+
+
+   
+	ob_end_clean();
+//	$returnarray=searchCenter();
+
+	echo json_encode($json);
 
 });
 
