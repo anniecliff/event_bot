@@ -17,8 +17,8 @@ Flight::route('/getRoom', function()
 {
 	//enable_cors()();
 	$returnarray=getRoom();
-	header('Content-type:application/json;charset=utf-8');
-		
+//	header('Content-type:application/json; charset=utf-8');
+	header("Content-Type: application/json; charset=utf-8");	
 	//$context = "";
 	$json = json_encode([
                 'speech'   => "text",
