@@ -15,7 +15,7 @@ Flight::route('/', function()
 //Annie, May 15, 2017
 Flight::route('/getRoom', function()
 {
-	enable_cors();
+	//enable_cors()();
 	$returnarray=getRoom();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
@@ -26,7 +26,7 @@ Flight::route('/getRoom', function()
 //Annie, May 15, 2017
 Flight::route('/getFacilitiesType', function()
 {
-	enable_cors();
+	//enable_cors()();
 	$returnarray=getFacilitiesType();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
@@ -37,7 +37,7 @@ Flight::route('/getFacilitiesType', function()
 //Annie, May 15, 2017
 Flight::route('/getCallDetails', function()
 {
-	enable_cors();
+	//enable_cors()();
 	$returnarray=getCallDetails();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
@@ -48,7 +48,7 @@ Flight::route('/getCallDetails', function()
 //Annie, May 15, 2017
 Flight::route('/searchCenter', function()
 {
-	enable_cors();
+	//enable_cors()();
 	$returnarray=searchCenter();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
@@ -59,7 +59,7 @@ Flight::route('/searchCenter', function()
 //Annie, May 15, 2017
 Flight::route('/getClientInfo', function()
 {
-	enable_cors();
+	//enable_cors()();
 	$returnarray=getClientInfo();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
@@ -72,7 +72,7 @@ Flight::route('/getClientInfo', function()
 //Annie, May 16, 2017
 Flight::route('/getClientFacilitiesHoursLeft', function()
 {
-	enable_cors();
+	//enable_cors()();
 	$returnarray=getClientFacilitiesHoursLeft();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
@@ -83,7 +83,7 @@ Flight::route('/getClientFacilitiesHoursLeft', function()
 //Annie, May 16, 2017
 Flight::route('/getVOFacilities', function()
 {
-	enable_cors();
+	//enable_cors()();
 	$returnarray=getVOFacilities();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
@@ -94,7 +94,7 @@ Flight::route('/getVOFacilities', function()
 //Annie, May 16, 2017
 Flight::route('/getAvailableTimeSlot', function()
 {
-	enable_cors();
+	//enable_cors()();
 	$returnarray=getAvailableTimeSlot();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
@@ -106,7 +106,7 @@ Flight::route('/getAvailableTimeSlot', function()
 //Annie, May 16, 2017
 Flight::route('/getBookingList', function()
 {
-	enable_cors();
+	//enable_cors()();
 	$returnarray=getBookingList();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
@@ -118,7 +118,7 @@ Flight::route('/getBookingList', function()
 //Annie, May 16, 2017
 Flight::route('/getBookingDetails', function()
 {
-	enable_cors();
+	//enable_cors()();
 	$returnarray=getBookingDetails();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
@@ -298,7 +298,7 @@ function getStaffName($staffid)
 // function to return all location that matches search string
 function searchCenter()
 {
-	header('Content-Type: application/json');
+	//sheader('Content-Type: application/json');
 ob_start();
 	$i=0;
 	/*$dummy = json_decode($_GET['search']);	
@@ -922,14 +922,14 @@ function getVOName($void)
 		return $fdata[0];
 }
 
-function enable_cors() 
+/*function //enable_cors()() 
 {
 	header('Access-Control-Allow-Origin: *');
 	header('Access-Control-Allow-Methods: GET, POST');
 	header("Access-Control-Allow-Headers: X-Requested-With");	
 	date_default_timezone_set('asia/singapore');
 	//date_default_timezone_set('UTC');
-}
+}*/
 function validate_input($input) 
 {	
   $input = trim($input);
