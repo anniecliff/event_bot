@@ -313,14 +313,14 @@ ob_start();
 	$obj = json_decode(file_get_contents('php://input'), true);
 	//echo $obj;
 	$parameters = $obj['parameters'];
-	$d = $parameters['search'];
-	$search  = $d['city']; 
+	$search = $parameters['search'];
+//	$search  = $d['city']; 
 	
 //	$obj = json_decode($json);
 //	print_r($obj);
 	//$search =$_GET['search'];
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
-	echo $query;
+//	echo $query;
 	$res    = getData($query);
 	$count_res = mysqli_num_rows($res);
 	if($count_res > 0)
@@ -355,7 +355,7 @@ ob_start();
    
 ob_end_clean();
 //	echo json_encode($array);
-//	return $array;
+	return $array;
 	
 }
 
