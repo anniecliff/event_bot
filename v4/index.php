@@ -32,7 +32,7 @@ Flight::route('/getRoom', function()
 	
 	
 	
-	echo json_encode($json);
+	echo $json;
 
 });
 
