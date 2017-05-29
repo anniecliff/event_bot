@@ -317,7 +317,7 @@ ob_start();
 //	$search  = $d['city']; 
 	
 //	$obj = json_decode($json);
-	print_r($obj);
+	//print_r($obj);
 	//$search =$_GET['search'];
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
 //	echo $query;
@@ -339,12 +339,25 @@ ob_start();
 	
 		$speech = "Yes Center available ".$res_loc;
 	//echo $res_loc;
-	
+	$source  = "v4";
+	$context = "";
+	$json = json_encode([
+                'speech'   => $speech,
+                'displayText' => $speech,
+                'data' => [],
+                'contextOut' => [$context],
+                'source' => $source
+        ]);
+
+
+
+
+/*	
 	$array['speech'] = $speech;
 	$array['displayText'] = $speech;
 	$array['data']['contextOut'] =[]; 
 	$array['source'] = "v4";
-	
+	*/
 
 	/*$array  =  (
         "speech" => $speech,
@@ -353,7 +366,7 @@ ob_start();
         "source" =>"api-bot"
     );*/
    
-ob_end_clean();
+	ob_end_clean();
 //	echo json_encode($array);
 	return $array;
 	
