@@ -299,7 +299,14 @@ function getStaffName($staffid)
 function searchCenter()
 {
 	$i=0;
-	$search = $_GET['search'];	
+	$dummy = json_decode($_POST['search']);	
+	foreach($dummy->city[0] as $key=>$value)
+	{
+		$search = $value;
+	
+	
+	}
+	
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
 	$res    = getData($query);
 	$count_res = mysqli_num_rows($res);
