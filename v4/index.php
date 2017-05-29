@@ -300,7 +300,7 @@ function searchCenter()
 {
 	$i=0;
 	$dummy = json_decode($_GET['search']);	
-	foreach($dummy->city[0] as $key=>$value)
+	foreach($dummy->city as $key=>$value)
 	{
 		$search = $value;
 	
