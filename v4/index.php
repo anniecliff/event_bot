@@ -310,7 +310,8 @@ function searchCenter()
 	*/
 	$obj = json_decode(file_get_contents('php://input'), true);
 	$parameters = $data->parameters;
-	$search  = $data->search; 
+	$d = $parameters->search;
+	$search  = $d->city; 
 	
 //	$obj = json_decode($json);
 //	print_r($obj);
