@@ -298,6 +298,8 @@ function getStaffName($staffid)
 // function to return all location that matches search string
 function searchCenter()
 {
+	header('Content-Type: application/json');
+ob_start();
 	$i=0;
 	/*$dummy = json_decode($_GET['search']);	
 	echo $dummy;
@@ -349,8 +351,9 @@ function searchCenter()
         "source" =>"api-bot"
     );*/
    
-	//echo json_encode($array);
-	return $array;
+ob_end_clean();
+	echo json_encode($array);
+//	return $array;
 	
 }
 
