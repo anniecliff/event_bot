@@ -18,6 +18,20 @@ Flight::route('/getRoom', function()
 	//enable_cors()();
 	$returnarray=getRoom();
 	header('Content-type:application/json;charset=utf-8');
+		
+	//$context = "";
+	$json = json_encode([
+                'speech'   => "text",
+                'displayText' => "text",
+                'data' => [],
+                'contextOut' => [$returnarray],
+                'source' => "v4"
+        ],JSON_UNESCAPED_SLASHES);
+
+
+	
+	
+	
 	echo json_encode($returnarray);
 
 });
