@@ -314,7 +314,8 @@ ob_start();
 	$parameters = $data['parameters'];
 	$d = $parameters['search'];
 	$search  = $d['city']; 
-	
+	echo $search;
+	echo $d;
 //	$obj = json_decode($json);
 //	print_r($obj);
 	//$search =$_GET['search'];
