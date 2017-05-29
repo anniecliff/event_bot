@@ -311,6 +311,7 @@ ob_start();
 	}
 	*/
 	$obj = json_decode(file_get_contents('php://input'), true);
+	echo $obj;
 	$parameters = $obj['parameters'];
 	$d = $parameters['search'];
 	$search  = $d['city']; 
@@ -319,7 +320,7 @@ ob_start();
 //	$obj = json_decode($json);
 //	print_r($obj);
 	//$search =$_GET['search'];
-	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
+/*	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
 	$res    = getData($query);
 	$count_res = mysqli_num_rows($res);
 	if($count_res > 0)
@@ -342,7 +343,7 @@ ob_start();
 	$array['speech'] = $speech;
 	$array['displayText'] = $speech;
 	$array['data']['contextOut'] =[]; 
-	$array['source'] = "v4";
+	$array['source'] = "v4";*/
 	
 
 	/*$array  =  (
