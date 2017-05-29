@@ -355,7 +355,7 @@ ob_start();
    
 ob_end_clean();
 //	echo json_encode($array);
-	return $array;
+//	return $array;
 	
 }
 
