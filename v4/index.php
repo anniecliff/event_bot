@@ -311,7 +311,7 @@ ob_start();
 	}
 	*/
 	$obj = json_decode(file_get_contents('php://input'), true);
-	$parameters = $data['parameters'];
+	$parameters = $obj['parameters'];
 	$d = $parameters['search'];
 	$search  = $d['city']; 
 	echo $search;
