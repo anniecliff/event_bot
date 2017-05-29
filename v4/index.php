@@ -340,7 +340,12 @@ ob_start();
 		$speech = "Yes Center available ".$res_loc;
 	//echo $res_loc;
 	$source  = "v4";
-	$context = "";
+	$next_context = "location";
+	$param1value = $res_loc;
+	$param2value = 0;
+	$context = array(array("name" => "$next_context", "parameters" =>
+array("param1" => $param1value, "param2" => $param2value)));
+	//$context = "";
 	$json = json_encode([
                 'speech'   => $speech,
                 'displayText' => $speech,
