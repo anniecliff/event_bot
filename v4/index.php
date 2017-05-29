@@ -308,7 +308,13 @@ function searchCenter()
 	
 	}
 	*/
-	$search =$_GET['search'];
+	$obj = json_decode(file_get_contents('php://input'), true);
+	$parameters = $data->parameters;
+	$search  = $data->search; 
+	
+//	$obj = json_decode($json);
+//	print_r($obj);
+	//$search =$_GET['search'];
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
 	$res    = getData($query);
 	$count_res = mysqli_num_rows($res);
