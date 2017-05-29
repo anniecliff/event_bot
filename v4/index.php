@@ -343,7 +343,7 @@ ob_start();
 	$next_context = "location";
 	$param1value = $res_loc;
 	$param2value = 0;
-	$context = array(array("name" => "$next_context", "parameters" =>
+	$context = array(array("name" => $next_context, "parameters" =>
 array("param1" => $param1value, "param2" => $param2value)));
 	//$context = "";
 	$json = json_encode([
@@ -373,7 +373,7 @@ array("param1" => $param1value, "param2" => $param2value)));
    
 	ob_end_clean();
 //	echo json_encode($array);
-	return $array;
+	return $json;
 	
 }
 
