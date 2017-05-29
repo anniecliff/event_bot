@@ -300,13 +300,14 @@ function searchCenter()
 {
 	$i=0;
 	$dummy = json_decode($_GET['search']);	
-	foreach($dummy->city as $key=>$value)
+	echo $dummy;
+	/*foreach($dummy->city as $key=>$value)
 	{
 		$search = $value;
 	
 	
 	}
-	
+	*/
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
 	$res    = getData($query);
 	$count_res = mysqli_num_rows($res);
