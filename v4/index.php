@@ -307,7 +307,7 @@ function searchCenter()
 	
 	
 	}
-	*/*/
+	*/
 	$search =$_GET['search'];
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
 	$res    = getData($query);
