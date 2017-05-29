@@ -49,7 +49,7 @@ Flight::route('/getCallDetails', function()
 Flight::route('/searchCenter', function()
 {
 	header('Content-type:application/json;charset=utf-8');
-	header('Authorization: Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
+	header('Authorization: Bearer {0ccb5842a2b04d0b9fdf23cddd01209d}');
 	/*$opts = array(
   'http'=>array(
     'method'=>"GET",
