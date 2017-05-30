@@ -49,6 +49,15 @@ Flight::route('POST /', function()
 	}
 	else 
 	{
+		$context = array("name" => "search");
+	
+	$json = json_encode([
+	                'speech'   => "Hello World",
+	                'displayText' => "Hello World",
+	                'data' => [],
+	                'contextOut' => [$context],
+	                'source' => "v4",
+	  		 ]);
 		
 	}	  
 	
