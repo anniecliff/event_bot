@@ -77,7 +77,7 @@ Flight::route('/searchCenter', function()
 
 	ob_start();
 	
-	$obj = json_decode(file_get_contents('https://api.api.ai/api'),true);
+	$obj = json_decode(file_get_contents('php://input'),true);
 
 	$parameters = $obj['parameters'];
 	$search = $parameters['search'];
