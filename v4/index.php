@@ -114,7 +114,7 @@ Flight::route('POST /searchCenter', function()
                 'data' => [],
                 'contextOut' => [$context],
                 'source' => $source
-        ],JSON_UNESCAPED_SLASHES);
+        ]);
 
 
 
