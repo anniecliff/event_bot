@@ -73,9 +73,9 @@ Flight::route('POST /searchCenter', function()
 
 //[Code to set $outputtext, $nextcontext, $param1, $param2 values]
 
-$output["contextOut"] = array(array("name" => "location", "parameters" =>
-array("param1" => "location", "param2" => "search")));
+$output["contextOut"] = array();
 $output["speech"] = "hi am  a bot";
+$output["data"] = array();
 $output["displayText"] = "hi am a bot";
 $output["source"] = "/v4/";
 ob_end_clean();
