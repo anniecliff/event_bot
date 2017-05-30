@@ -79,7 +79,7 @@ Flight::route('POST /searchCenter', function()
 	
 	$obj = json_decode(file_get_contents('php://input'),true);
 
-	$parameters = $obj['parameters'];
+	/*$parameters = $obj['parameters'];
 	$search = $parameters['search'];
 
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
@@ -114,9 +114,15 @@ Flight::route('POST /searchCenter', function()
                 'data' => [],
                 'contextOut' => [$context],
                 'source' => $source
+        ],JSON_UNESCAPED_SLASHES);*/
+	$context = array(array("name" => "location", "parameters" => array("param1" => 0, "param2" => 1)));
+		$json = json_encode([
+                'speech'   => "Hi",
+                'displayText' => "We are working on this",
+                'data' => [],
+                'contextOut' => [$context],
+                'source' => "v4"
         ],JSON_UNESCAPED_SLASHES);
-
-
 
    
 	ob_end_clean();
