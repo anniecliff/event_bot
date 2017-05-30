@@ -32,7 +32,7 @@ Flight::route('POST /', function()
 	
 		$res_loc = searchCenter($search);
 		$speech = "Yes Center available ".$res_loc;
-		$source  = "/v4/";
+		$source  = "v4";
 		/*$next_context = "location";
 		$param1value = $res_loc;
 		$param2value = 0;*/
@@ -40,7 +40,7 @@ Flight::route('POST /', function()
 
 		$json = json_encode([
 	                'speech'   => $speech,
-	                'displayText' => "Hold On",
+	                'displayText' => $speech,
 	                'data' => [],
 	                'contextOut' => [$context],
 	                'source' => $source
@@ -298,7 +298,7 @@ Flight::route('/getBookingDetails', function()
 	echo json_encode($returnarray);
 
 });
-/* ************************* Routes end here **************************** 
+/* ************************* Routes end here **************************** */
 
 Flight::start();
 
