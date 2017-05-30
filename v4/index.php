@@ -64,32 +64,6 @@ Flight::route('POST /searchCenter', function()
 {
    header('Content-type:application/json;charset=utf-8');
 	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
-	
-	ob_start();
-	$json = file_get_contents('php://input'); 
-	$request = json_decode($json, true);
-	$action = $request["result"]["action"];
-	$parameters = $request["result"]["parameters"];
-
-//[Code to set $outputtext, $nextcontext, $param1, $param2 values]
-
-$output["contextOut"] = array();
-$output["speech"] = "hi am  a bot";
-$output["data"] = array();
-$output["displayText"] = "hi am a bot";
-$output["source"] = "/v4/";
-ob_end_clean();
-echo json_encode($output);	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/*$opts = array(
   'http'=>array(
     'method'=>"GET",
@@ -101,11 +75,11 @@ echo json_encode($output);
 */
 //$context1 = stream_context_create($opts);
 
-/*	ob_start();
+	ob_start();
 	
 	$obj = json_decode(file_get_contents('php://input'),true);
 
-	/*$parameters = $obj['parameters'];
+	$parameters = $obj['parameters'];
 	$search = $parameters['search'];
 
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
@@ -140,21 +114,15 @@ echo json_encode($output);
                 'data' => [],
                 'contextOut' => [$context],
                 'source' => $source
-        ],JSON_UNESCAPED_SLASHES);*/
-	/*$context = array(array("name" => "location", "parameters" => array("param1" => 0, "param2" => 1)));
-		$json = json_encode([
-                'speech'   => "Hi",
-                'displayText' => "We are working on this",
-                'data' => [],
-                'contextOut' => [$context],
-                'source' => "v4"
-        ]);
+        ],JSON_UNESCAPED_SLASHES);
+
+
 
    
 	ob_end_clean();
 //	$returnarray=searchCenter();
 
-	echo $json;*/
+	echo $json;
 });
 Flight::route('/searchCenter1', function()
 {
