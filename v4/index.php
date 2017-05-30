@@ -18,31 +18,40 @@ Flight::route('POST /', function()
 	//echo "hello world";
 	header('Content-type:application/json;charset=utf-8');
 	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
-	/*$opts = array(
-  'http'=>array(
-    'method'=>"GET",
-    'header'=>"Content-type:application/json;charset=utf-8" .
-              "Authorization: Bearer {984e6416dfea4be0b79816938f1253ec}\r\n"
-
-  )
-);
-*/
-//$context1 = stream_context_create($opts);
-
+	
 	ob_start();
 	
-	$json = file_get_contents('php://input'); 
-$request = json_decode($json, true);
-$action = $request["result"]["action"];
-$parameters = $request["result"]["parameters"];
-if($action == "searchCenter")
-{
+	$json_obj = file_get_contents('php://input'); 
+	$request = json_decode($json_obj, true);
+	$action = $request["result"]["action"];
+	$parameters = $request["result"]["parameters"];
+	$search = $parameters["search"];
+	if($action == "searchCenter")
+	{
+	
+		$array = searchCenter($search);
+		$speech = "Yes Center available ".$res_loc;
+		$source  = "v4";
+		$next_context = "location";
+		$param1value = $res_loc;
+		$param2value = 0;
+		$context = array(array("name" => $next_context, "parameters" => array("param1" => $param1value, "param2" => $param2value)));
 
-	searchCenter();
-
-}
-
-
+		$json = json_encode([
+	                'speech'   => $speech,
+	                'displayText' => $speech,
+	                'data' => [],
+	                'contextOut' => [$context],
+	                'source' => $source
+	        ]);
+	
+	}
+	else 
+	{
+		$json = "";
+	}	   
+	ob_end_clean();
+	echo $json;
 
 	
 
@@ -467,31 +476,14 @@ function getStaffName($staffid)
 }
 
 // function to return all location that matches search string
-function searchCenter()
+function searchCenter($search)
 {
 	//sheader('Content-Type: application/json');
-ob_start();
+	ob_start();
 	$i=0;
-	/*$dummy = json_decode($_GET['search']);	
-	echo $dummy;
-	/*foreach($dummy->city as $key=>$value)
-	{
-		$search = $value;
 	
-	
-	}
-	*/
-	$obj = json_decode(file_get_contents('php://input'), true);
-	//echo $obj;
-	$parameters = $obj['parameters'];
-	$search = $parameters['search'];
-//	$search  = $d['city']; 
-	
-//	$obj = json_decode($json);
-	//print_r($obj);
-	//$search =$_GET['search'];
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
-//	echo $query;
+
 	$res    = getData($query);
 	$count_res = mysqli_num_rows($res);
 	if($count_res > 0)
@@ -499,7 +491,7 @@ ob_start();
 		while($row = mysqli_fetch_array($res))
 		{
 			$res_loc = $row['location_desc'];
-					//print_r($res_loc);
+
 		}	
 	
 	}
@@ -507,44 +499,10 @@ ob_start();
 	{
 		$data = "No locations found";
 	}
-	
-		$speech = "Yes Center available ".$res_loc;
-	//echo $res_loc;
-	$source  = "v4";
-	$next_context = "location";
-	$param1value = $res_loc;
-	$param2value = 0;
-	$context = array(array("name" => $next_context, "parameters" =>
-array("param1" => $param1value, "param2" => $param2value)));
-	//$context = "";
-	$json = json_encode([
-                'speech'   => $speech,
-                'displayText' => $speech,
-                'data' => [],
-                'contextOut' => [$context],
-                'source' => $source
-        ]);
 
-
-
-
-/*	
-	$array['speech'] = $speech;
-	$array['displayText'] = $speech;
-	$array['data']['contextOut'] =[]; 
-	$array['source'] = "v4";
-	*/
-
-	/*$array  =  (
-        "speech" => $speech,
-        "displayText" => $speech,
-       
-        "source" =>"api-bot"
-    );*/
-   
 	ob_end_clean();
 //	echo json_encode($array);
-	echo $json;
+	return  $res_loc;
 	
 }
 
