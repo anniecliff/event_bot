@@ -31,7 +31,7 @@ Flight::route('POST /', function()
 	{
 	
 		$res_loc = searchCenter($search);
-		$speech = "Yes Center available ".$res_loc;
+		$speech = $res_loc;
 		$source  = "v4";
 		/*$next_context = "location";
 		$param1value = $res_loc;
@@ -51,13 +51,13 @@ Flight::route('POST /', function()
 	{
 		$context = array("name" => "search");
 	
-	$json = json_encode([
-	                'speech'   => "Hello World",
-	                'displayText' => "Hello World",
-	                'data' => [],
-	                'contextOut' => [$context],
-	                'source' => "v4",
-	  		 ]);
+		$json = json_encode([
+		                'speech'   => "Hello World",
+		                'displayText' => "Hello World",
+		                'data' => [],
+		                'contextOut' => [$context],
+		                'source' => "v4",
+		  		 ]);
 		
 	}	  
 	
@@ -492,7 +492,7 @@ function searchCenter($search)
 	{
 		while($row = mysqli_fetch_array($res))
 		{
-			$res_loc = $row['location_desc'];
+			$res_loc = "Yes Center available. ".$row['location_desc'];
 
 		}	
 	
