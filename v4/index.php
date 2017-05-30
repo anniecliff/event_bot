@@ -122,7 +122,7 @@ Flight::route('/searchCenter', function()
 	ob_end_clean();
 //	$returnarray=searchCenter();
 
-	echo json_encode($json);
+	echo $json;
 
 });
 
