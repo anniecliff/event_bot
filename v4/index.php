@@ -19,9 +19,9 @@ Flight::route('POST /', function()
 	header('Content-type:application/json;charset=utf-8');
 	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
 	
-	ob_start();
+	//ob_start();
 	
-	$data = Flight::request()->data;
+	$data = Flight::request();
 	//$json_obj = file_get_contents('php://input'); 
 	$request = json_decode($data, true);
 	$action = $request["result"]["action"];
@@ -51,7 +51,7 @@ Flight::route('POST /', function()
 	{
 		
 	}	   
-	ob_end_clean();
+	//ob_end_clean();
 	echo $json;
 
 	
