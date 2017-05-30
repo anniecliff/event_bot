@@ -5,10 +5,46 @@ require '../flight/Flight.php';
 /* *************************Routes starts here*******************************/
 /*** created by : Annie      ***/
 /*** Created at : May 15, 2017***/
-Flight::route('/', function()
+
+
+
+
+
+
+
+Flight::route('POST /', function()
 {
 
-	echo "hello world";
+	//echo "hello world";
+	header('Content-type:application/json;charset=utf-8');
+	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
+	/*$opts = array(
+  'http'=>array(
+    'method'=>"GET",
+    'header'=>"Content-type:application/json;charset=utf-8" .
+              "Authorization: Bearer {984e6416dfea4be0b79816938f1253ec}\r\n"
+
+  )
+);
+*/
+//$context1 = stream_context_create($opts);
+
+	ob_start();
+	
+	$json = file_get_contents('php://input'); 
+$request = json_decode($json, true);
+$action = $request["result"]["action"];
+$parameters = $request["result"]["parameters"];
+if($action == "searchCenter")
+{
+
+	searchCenter();
+
+}
+
+
+
+	
 
 });
 //Route to get Locations with room facility
@@ -508,7 +544,7 @@ array("param1" => $param1value, "param2" => $param2value)));
    
 	ob_end_clean();
 //	echo json_encode($array);
-	return $json;
+	echo $json;
 	
 }
 
