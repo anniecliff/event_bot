@@ -60,7 +60,70 @@ Flight::route('/getCallDetails', function()
 
 //Route to search location
 //Annie, May 15, 2017
-Flight::route('/searchCenter', function()
+Flight::route('POST /searchCenter', function()
+header('Content-type:application/json;charset=utf-8');
+	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
+	/*$opts = array(
+  'http'=>array(
+    'method'=>"GET",
+    'header'=>"Content-type:application/json;charset=utf-8" .
+              "Authorization: Bearer {984e6416dfea4be0b79816938f1253ec}\r\n"
+
+  )
+);
+*/
+//$context1 = stream_context_create($opts);
+
+	ob_start();
+	
+	$obj = json_decode(file_get_contents('php://input'),true);
+
+	$parameters = $obj['parameters'];
+	$search = $parameters['search'];
+
+	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
+
+	$res    = getData($query);
+	$count_res = mysqli_num_rows($res);
+	if($count_res > 0)
+	{
+		while($row = mysqli_fetch_array($res))
+		{
+			$res_loc = $row['location_desc'];
+
+		}	
+	
+	}
+	else 
+	{
+		$data = "No locations found";
+	}
+	
+		$speech = "Yes Center available ".$res_loc;
+	//echo $res_loc;
+	$source  = "v4";
+	$next_context = "location";
+	$param1value = $res_loc;
+	$param2value = 0;
+	$context = array(array("name" => $next_context, "parameters" => array("param1" => $param1value, "param2" => $param2value)));
+	//$context = "";
+	$json = json_encode([
+                'speech'   => $speech,
+                'displayText' => $speech,
+                'data' => [],
+                'contextOut' => [$context],
+                'source' => $source
+        ],JSON_UNESCAPED_SLASHES);
+
+
+
+   
+	ob_end_clean();
+//	$returnarray=searchCenter();
+
+	echo $json;
+});
+Flight::route('/searchCenter1', function()
 {
 	header('Content-type:application/json;charset=utf-8');
 	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
