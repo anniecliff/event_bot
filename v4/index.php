@@ -105,7 +105,7 @@ Flight::route('/getCallDetails', function()
 
 //Route to search location
 //Annie, May 15, 2017
-Flight::route('POST /searchCenter', function()
+Flight::route('POST /searchCenter2', function()
 {
    header('Content-type:application/json;charset=utf-8');
 	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
