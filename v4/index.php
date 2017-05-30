@@ -19,11 +19,11 @@ Flight::route('POST /', function()
 	header('Content-type:application/json;charset=utf-8');
 	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
 	
-	//ob_start();
+	ob_start();
 	
-	$data = Flight::request();
-	//$json_obj = file_get_contents('php://input'); 
-	$request = json_decode($data, true);
+	//$data = Flight::request()->data;
+/*	$json_obj = file_get_contents('php://input'); 
+	$request = json_decode($json_obj, true);
 	$action = $request["result"]["action"];
 	$parameters = $request["result"]["parameters"];
 	$search = $parameters["search"];
@@ -36,7 +36,7 @@ Flight::route('POST /', function()
 		/*$next_context = "location";
 		$param1value = $res_loc;
 		$param2value = 0;*/
-		$context = "";
+	/*	$context = "";
 
 		$json = json_encode([
 	                'speech'   => $speech,
@@ -50,8 +50,18 @@ Flight::route('POST /', function()
 	else 
 	{
 		
-	}	   
-	//ob_end_clean();
+	}	*/  
+	
+	$context = "";
+	
+	$json = json_encode([
+	                'speech'   => "Hold On",
+	                'displayText' => "Hold On",
+	                'data' => [],
+	                'contextOut' => [$context],
+	                'source' => "v4",
+	  		 ]); 
+	ob_end_clean();
 	echo $json;
 
 	
