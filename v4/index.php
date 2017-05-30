@@ -52,11 +52,11 @@ Flight::route('POST /', function()
 		
 	}	*/  
 	
-	$context = "";
+	$context = array();
 	
 	$json = json_encode([
-	                'speech'   => "Hold On",
-	                'displayText' => "Hold On",
+	                'speech'   => "Hello World",
+	                'displayText' => "Hello World",
 	                'data' => [],
 	                'contextOut' => [$context],
 	                'source' => "v4",
