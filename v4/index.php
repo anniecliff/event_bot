@@ -109,16 +109,7 @@ Flight::route('POST /searchCenter2', function()
 {
    header('Content-type:application/json;charset=utf-8');
 	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
-	/*$opts = array(
-  'http'=>array(
-    'method'=>"GET",
-    'header'=>"Content-type:application/json;charset=utf-8" .
-              "Authorization: Bearer {984e6416dfea4be0b79816938f1253ec}\r\n"
-
-  )
-);
-*/
-//$context1 = stream_context_create($opts);
+	
 
 	ob_start();
 	
@@ -173,17 +164,6 @@ Flight::route('/searchCenter1', function()
 {
 	header('Content-type:application/json;charset=utf-8');
 	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
-	/*$opts = array(
-  'http'=>array(
-    'method'=>"GET",
-    'header'=>"Content-type:application/json;charset=utf-8" .
-              "Authorization: Bearer {984e6416dfea4be0b79816938f1253ec}\r\n"
-
-  )
-);
-*/
-//$context1 = stream_context_create($opts);
-
 	ob_start();
 	
 	$obj = json_decode(file_get_contents('php://input'),true);
@@ -234,6 +214,9 @@ Flight::route('/searchCenter1', function()
 	echo $json;
 
 });
+
+
+
 
 //Route to get client info
 //Annie, May 15, 2017
@@ -478,8 +461,7 @@ function getStaffName($staffid)
 // function to return all location that matches search string
 function searchCenter($search)
 {
-	//sheader('Content-Type: application/json');
-	ob_start();
+
 	$i=0;
 	
 	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
@@ -497,11 +479,10 @@ function searchCenter($search)
 	}
 	else 
 	{
-		$data = "No locations found";
+		$res_loc = "No locations found";
 	}
 
-	ob_end_clean();
-//	echo json_encode($array);
+
 	return  $res_loc;
 	
 }
