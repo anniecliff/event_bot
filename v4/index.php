@@ -22,7 +22,7 @@ Flight::route('POST /', function()
 	ob_start();
 	
 	//$data = Flight::request()->data;
-/*	$json_obj = file_get_contents('php://input'); 
+	$json_obj = file_get_contents('php://input'); 
 	$request = json_decode($json_obj, true);
 	$action = $request["result"]["action"];
 	$parameters = $request["result"]["parameters"];
@@ -36,7 +36,7 @@ Flight::route('POST /', function()
 		/*$next_context = "location";
 		$param1value = $res_loc;
 		$param2value = 0;*/
-	/*	$context = "";
+		$context = array("name" => "search");
 
 		$json = json_encode([
 	                'speech'   => $speech,
@@ -50,9 +50,9 @@ Flight::route('POST /', function()
 	else 
 	{
 		
-	}	*/  
+	}	  
 	
-	$context = array("name" => "search");
+/*	$context = array("name" => "search");
 	
 	$json = json_encode([
 	                'speech'   => "Hello World",
@@ -60,7 +60,7 @@ Flight::route('POST /', function()
 	                'data' => [],
 	                'contextOut' => [$context],
 	                'source' => "v4",
-	  		 ]); 
+	  		 ]);*/ 
 	ob_end_clean();
 	echo $json;
 
@@ -298,7 +298,7 @@ Flight::route('/getBookingDetails', function()
 	echo json_encode($returnarray);
 
 });
-/* ************************* Routes end here **************************** */
+/* ************************* Routes end here **************************** 
 
 Flight::start();
 
