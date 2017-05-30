@@ -21,8 +21,9 @@ Flight::route('POST /', function()
 	
 	ob_start();
 	
-	$json_obj = file_get_contents('php://input'); 
-	$request = json_decode($json_obj, true);
+	$data = Flight::request()->data;
+	//$json_obj = file_get_contents('php://input'); 
+	$request = json_decode($data, true);
 	$action = $request["result"]["action"];
 	$parameters = $request["result"]["parameters"];
 	$search = $parameters["search"];
@@ -35,7 +36,7 @@ Flight::route('POST /', function()
 		/*$next_context = "location";
 		$param1value = $res_loc;
 		$param2value = 0;*/
-		$context = "";
+		$context = 
 
 		$json = json_encode([
 	                'speech'   => $speech,
