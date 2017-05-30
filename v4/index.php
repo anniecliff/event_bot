@@ -29,9 +29,9 @@ Flight::route('POST /', function()
 	if($action == "searchCenter")
 	{
 	
-		$array = searchCenter($search);
+		$res_loc = searchCenter($search);
 		$speech = "Yes Center available ".$res_loc;
-		$source  = "v4";
+		$source  = "/v4/";
 		$next_context = "location";
 		$param1value = $res_loc;
 		$param2value = 0;
@@ -48,7 +48,7 @@ Flight::route('POST /', function()
 	}
 	else 
 	{
-		$json = "";
+		
 	}	   
 	ob_end_clean();
 	echo $json;
