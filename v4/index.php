@@ -191,7 +191,7 @@ Flight::route('/searchCenter1', function()
 	$parameters = $obj['parameters'];
 	$search = $parameters['search'];
 
-	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
+	$query  = "SELECT L.*,F.* FROM location_facilities_v2 AS F JOIN location_info as L  ON L.id = F.vo_id WHERE  F.facility_type = 1 AND L.location_desc like '%".$search."%'";
 
 	$res    = getData($query);
 	$count_res = mysqli_num_rows($res);
@@ -209,7 +209,7 @@ Flight::route('/searchCenter1', function()
 		$data = "No locations found";
 	}
 	
-		$speech = "Yes Center available ".$res_loc;
+		$speech = "Yes Center available ".$res_loc." Do you wanna book?";
 	//echo $res_loc;
 	$source  = "v4";
 	$next_context = "location";
