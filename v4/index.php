@@ -484,7 +484,7 @@ function searchCenter($search)
 
 	$i=0;
 	
-	$query  = "SELECT * FROM location_info WHERE location_desc like '%".$search."%'";
+	$query  = "SELECT L.*,F.* FROM location_facilities_v2 AS F JOIN location_info as L  ON L.id = F.vo_id WHERE  F.facility_type = 1 AND L.location_desc like '%".$search."%'";
 
 	$res    = getData($query);
 	$count_res = mysqli_num_rows($res);
@@ -492,7 +492,7 @@ function searchCenter($search)
 	{
 		while($row = mysqli_fetch_array($res))
 		{
-			$res_loc = "Yes Center available. ".$row['location_desc'];
+			$res_loc = "Yes Center available. ".$row['location_desc']." Do you wanna book a room?";
 
 		}	
 	
