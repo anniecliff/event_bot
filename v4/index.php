@@ -53,9 +53,9 @@ Flight::route('POST /', function()
 		$time   = $parameters["time"];
 		$date   = $parameters["date"];
 		
-		$res_loc = searchCenter($search);
+		$res_loc = searchCenter1($search);
 	
-		//$slots = getAvailableTimeSlot();
+		//$slots = getAvailableTimeSlot($time,$date,$res_loc);
 		$speech = $res_loc;
 		$source  = "v4";
 		/*$next_context = "location";
@@ -205,61 +205,6 @@ Flight::route('POST /searchCenter2', function()
 
 	echo $json;
 });
-Flight::route('/searchCenter1', function()
-{
-	header('Content-type:application/json;charset=utf-8');
-	header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
-	ob_start();
-	
-	$obj = json_decode(file_get_contents('php://input'),true);
-
-	$parameters = $obj['parameters'];
-	$search = $parameters['search'];
-
-	$query  = "SELECT L.*,F.* FROM location_facilities_v2 AS F JOIN location_info as L  ON L.id = F.vo_id WHERE  F.facility_type = 1 AND L.location_desc like '%".$search."%'";
-
-	$res    = getData($query);
-	$count_res = mysqli_num_rows($res);
-	if($count_res > 0)
-	{
-		while($row = mysqli_fetch_array($res))
-		{
-			$res_loc = $row['location_desc'];
-
-		}	
-	
-	}
-	else 
-	{
-		$data = "No locations found";
-	}
-	
-		$speech = "Yes Center available ".$res_loc." Do you wanna book?";
-	//echo $res_loc;
-	$source  = "v4";
-	$next_context = "location";
-	$param1value = $res_loc;
-	$param2value = 0;
-	$context = array(array("name" => $next_context, "parameters" => array("param1" => $param1value, "param2" => $param2value)));
-	//$context = "";
-	$json = json_encode([
-                'speech'   => $speech,
-                'displayText' => $speech,
-                'data' => [],
-                'contextOut' => [$context],
-                'source' => $source
-        ],JSON_UNESCAPED_SLASHES);
-
-
-
-   
-	ob_end_clean();
-//	$returnarray=searchCenter();
-
-	echo $json;
-
-});
-
 
 
 
@@ -525,6 +470,36 @@ function searchCenter($search)
 	else 
 	{
 		$res_loc = "No locations found";
+	}
+
+
+	return  $res_loc;
+	
+}
+
+
+// function to return all location that matches search string
+function searchCenter1($search)
+{
+
+	$i=0;
+	
+	$query  = "SELECT L.id as location_id,L.*,F.* FROM location_facilities_v2 AS F JOIN location_info as L  ON L.id = F.vo_id WHERE  F.facility_type = 1 AND L.location_desc like '%".$search."%'";
+
+	$res    = getData($query);
+	$count_res = mysqli_num_rows($res);
+	if($count_res > 0)
+	{
+		while($row = mysqli_fetch_array($res))
+		{
+			$res_loc = $row['location_id'];
+
+		}	
+	
+	}
+	else 
+	{
+		$res_loc = "";
 	}
 
 
