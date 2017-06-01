@@ -55,7 +55,7 @@ Flight::route('POST /', function()
 		
 		$res_loc = searchCenter1($search);
 	
-		$slots = getAvailableTimeSlot($time,$date,$res_loc);
+		$slots = getAvailableTimeSlot($date,$res_loc,$time);
 		$speech = $res_loc;
 		$source  = "v4";
 		/*$next_context = "location";
