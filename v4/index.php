@@ -26,10 +26,9 @@ Flight::route('POST /', function()
 	$request = json_decode($json_obj, true);
 	$action = $request["result"]["action"];
 	$parameters = $request["result"]["parameters"];
-	$search = $parameters["search"];
 	if($action == "searchCenter")
 	{
-	
+		$search = $parameters["search"];
 		$res_loc = searchCenter($search);
 		$speech = $res_loc;
 		$source  = "v4";
@@ -41,6 +40,32 @@ Flight::route('POST /', function()
 		$json = json_encode([
 	                'speech'   => $speech,
 	                'displayText' => $speech,
+	                'data' => [],
+	                'contextOut' => [$context],
+	                'source' => $source
+	        ]);
+	
+	}
+	else if($action == "getAvailability")
+	{
+		
+		$search = $parameters["search"];
+		$time   = $parameters["time"];
+		$date   = $parameters["date"];
+		
+		$res_loc = searchCenter($search);
+	
+		//$slots = getAvailableTimeSlot();
+		$speech = $res_loc;
+		$source  = "v4";
+		/*$next_context = "location";
+		$param1value = $res_loc;
+		$param2value = 0;*/
+		$context = array("name" => "date");
+
+		$json = json_encode([
+	                'speech'   => "Location ".$speech."test",
+	                'displayText' => "Location ".$speech."test",
 	                'data' => [],
 	                'contextOut' => [$context],
 	                'source' => $source
