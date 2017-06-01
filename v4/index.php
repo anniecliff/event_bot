@@ -64,7 +64,7 @@ Flight::route('POST /', function()
 		$context = array("name" => "date");
 
 		$json = json_encode([
-	                'speech'   => "Location ".$speech."test",
+	                'speech'   => "Location ".$slots,
 	                'displayText' => "Location ".$slots,
 	                'data' => [],
 	                'contextOut' => [$context],
