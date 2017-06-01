@@ -55,7 +55,7 @@ Flight::route('POST /', function()
 		
 		$res_loc = searchCenter1($search);
 	
-		//$slots = getAvailableTimeSlot($time,$date,$res_loc);
+		$slots = getAvailableTimeSlot($time,$date,$res_loc);
 		$speech = $res_loc;
 		$source  = "v4";
 		/*$next_context = "location";
@@ -65,7 +65,7 @@ Flight::route('POST /', function()
 
 		$json = json_encode([
 	                'speech'   => "Location ".$speech."test",
-	                'displayText' => "Location ".$speech."test",
+	                'displayText' => "Location ".$slots,
 	                'data' => [],
 	                'contextOut' => [$context],
 	                'source' => $source
@@ -77,8 +77,8 @@ Flight::route('POST /', function()
 		$context = array("name" => "search");
 	
 		$json = json_encode([
-		                'speech'   => "Hello World",
-		                'displayText' => "Hello World",
+		                'speech'   => "Try again ",
+		                'displayText' => "Try again!!!",
 		                'data' => [],
 		                'contextOut' => [$context],
 		                'source' => "v4",
@@ -708,14 +708,17 @@ function getVOFacilities_v2($void, $facilitytype)
 }
 
 //Function to get available time slots for a day
-function getAvailableTimeSlot()
+function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 {
-			$cid = $_POST["cid"];
+			/*$cid = $_POST["cid"];
 			$token = $_POST["token"];
 			$bookdate = $_POST["bookdate"];
 			$loc_id = $_POST["void"];
 			$facilities = $_POST["ftype"];
-			$facility_id = $_POST["fid"];
+			$facility_id = $_POST["fid"];*/
+			
+			$facilities = "1";
+			$facility_id = "52";
 			
 			/*$cid = "10002";
 			$token = "50b2061fc834cedec6def1affd60e998";
@@ -725,14 +728,14 @@ function getAvailableTimeSlot()
 			$facility_id = "52";*/
 			
 			
-			$auth_token = portal_getUserToken($cid);
+			/*$auth_token = portal_getUserToken($cid);
 			
-			$cnt = 0;
+			$cnt = 0;*/
 			
-			if ($token != "" || $cid != "")
+			/*if ($token != "" || $cid != "")
 			{
 			   if( $token == $auth_token )
-			   {
+			   {*/
 				if ($facilities == 2 || $facilities == 4)
 		      {
 		                // office suite and flexi office all same type
@@ -822,16 +825,16 @@ function getAvailableTimeSlot()
 					return $f_atime_slot;
 			
 			   }
-			   else
+			  /* else
 			   {
 			        return "Login Failed : 1";
-			   }
-			}
+			   }*/
+			/*}
 			else
 			{
 			       	return "Login Failed : 1";
 			}
-			
+			*/
 
 
 
