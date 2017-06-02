@@ -64,8 +64,8 @@ Flight::route('POST /', function()
 		$context = array("name" => "date");
 
 		$json = json_encode([
-	                'speech'   => "Location ".$slots,
-	                'displayText' => "Location ".$slots,
+	                'speech'   => $slots,
+	                'displayText' => $slots,
 	                'data' => [],
 	                'contextOut' => [$context],
 	                'source' => $source
@@ -811,7 +811,7 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 						if($checktime == $avail)
 						{
 							$flag =1;
-							return "Yes Available slot";						
+							break;						
 						
 						}	
 						else 
@@ -822,7 +822,12 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 					}
 					if($flag = 0)
 					{
-						return "Time slot already booked";
+						$result_loc = "Time slot already booked";
+					}
+					else
+					{
+						$result_loc = "Time slot available";
+							
 					}
 			/*
 					$timeslotobj[$cnt] = array(
@@ -832,7 +837,7 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
    				$f_atime_slot = array("Available Time Slots" => $timeslotobj);
 					return $time[0];*/
 			
-			
+			return $result_loc;
 
 
 }
