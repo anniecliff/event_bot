@@ -720,7 +720,7 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 			$facilities = "1";
 			$facility_id = "52";
 			$time =explode(":",$booktime);
-			
+			$flag=0;
 			
 			
 				if ($facilities == 2 || $facilities == 4)
@@ -805,15 +805,32 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 				}
 				
 				
-				
-			
-			
+					$checktime = $time[0].$time[1];
+					foreach($a_time_slots as $avail)
+					{
+						if($checktime == $avail)
+						{
+							$flag =1;
+							return "Yes Available slot";						
+						
+						}	
+						else 
+						{
+							$flag =0;	
+						}				
+					
+					}
+					if($flag = 0)
+					{
+						return "Time slot already booked";
+					}
+			/*
 					$timeslotobj[$cnt] = array(
 			                              "Time Slots" => $a_time_slots
 			                				);
 			                				
    				$f_atime_slot = array("Available Time Slots" => $timeslotobj);
-					return $time[0];
+					return $time[0];*/
 			
 			
 
