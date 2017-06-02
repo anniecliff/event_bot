@@ -813,7 +813,7 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 			                				);
 			                				
    				$f_atime_slot = array("Available Time Slots" => $timeslotobj);
-					return $time;
+					return $time[0];
 			
 			
 
