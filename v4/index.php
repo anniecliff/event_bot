@@ -806,7 +806,8 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 				
 				
 					$checktime = $time[0].$time[1];
-					foreach($a_time_slots as $avail)
+					$time_slots = explode(" ",$a_time_slots);
+					foreach($time_slots as $avail)
 					{
 						if($checktime == $avail)
 						{
