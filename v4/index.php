@@ -69,7 +69,7 @@ Flight::route('POST /', function()
 	                'data' => [],
 	                'contextOut' => [$context],
 	                'source' => $source
-	        ]);
+	        		]);
 	
 	}
 	else 
@@ -719,23 +719,10 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 			
 			$facilities = "1";
 			$facility_id = "52";
-			
-			/*$cid = "10002";
-			$token = "50b2061fc834cedec6def1affd60e998";
-			$bookdate = "2014-07-19";
-			$loc_id = "21";
-			$facilities = "1";
-			$facility_id = "52";*/
+			$time =explode(":",$booktime);
 			
 			
-			/*$auth_token = portal_getUserToken($cid);
 			
-			$cnt = 0;*/
-			
-			/*if ($token != "" || $cid != "")
-			{
-			   if( $token == $auth_token )
-			   {*/
 				if ($facilities == 2 || $facilities == 4)
 		      {
 		                // office suite and flexi office all same type
@@ -816,26 +803,19 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 			
 			   		}
 				}
+				
+				
+				
 			
 			
 					$timeslotobj[$cnt] = array(
 			                              "Time Slots" => $a_time_slots
 			                				);
+			                				
    				$f_atime_slot = array("Available Time Slots" => $timeslotobj);
-					return $f_atime_slot;
+					return $time;
 			
-			   /*  }
-			 else
-			   {
-			        return "Login Failed : 1";
-			   }*/
-			/*}
-			else
-			{
-			       	return "Login Failed : 1";
-			}
-			*/
-
+			
 
 
 }
