@@ -1393,29 +1393,57 @@ else
 
 }
 
+function get_client_conference_hours($cid)
+	{
+		$data_r = "SELECT * FROM client_facilities_core WHERE client_id=".$cid;
+		//echo $data_r;
+		$fdata = getData($data_r);
+		while($row = mysqli_fetch_array($fdata))
+		{
+			 $fdat2 = $row["meeting_room_hours_left"];
+		
+		}
 
+		//echo $fdat2;
+		return $fdat2;
+		//return $data_r;
+	}
+
+	function get_client_conference_hours_ref_id($cid)
+	{
+		$data_r = "SELECT * FROM client_facilities_core WHERE client_id=".$cid." AND status=1";
+	//			echo $data_r;
+		$fdata = getData($data_r);
+		while($row = mysqli_fetch_array($fdata))
+		{
+			 $fdat2 = $row["id"];
+		
+		}
+		return $fdat2;
+		//return $data_r;
+	}
 
 function getClientLocation($cid) 
 {
-	$query = "SELECT * FROM client_info WHERE clientid='".$cid." ";
+	$query = "SELECT * FROM client_info WHERE clientid=".$cid;
 	$result = getData($query);
-	$count = mysqli_num_rows($result);
+	/*$count = mysqli_num_rows($result);
 	if($count > 0)
+	{*/
+	while($row = mysqli_fetch_array($result))
 	{
-		while($row = mysqli_fetch_array($result))
-		{
 		
 			$location = $row['location'];		
 		
-		}	
+	}	
 	
 	
-	}
+	/*}
 	else 
 	{
 		
 		
-	}
+	}*/
 	return $location;
 
 
@@ -1435,11 +1463,17 @@ function isSaturday($date)
 }
 function getVOName($void)
 {
-      $data_q = "SELECT location_desc FROM location_info WHERE id='$void'";
+      $data_q = "SELECT location_desc FROM location_info WHERE id=".$void;
+    //  echo $data_q;
 	   $data_r = getData($data_q);
-
-		$fdata = mysqli_fetch_row($data_r);
-		return $fdata[0];
+	/*	while($row = mysqli_fetch_array($data_r))
+		{
+		
+			$fdata = $row['location_desc'];		
+		
+		}	
+		//$fdata = mysqli_fetch_row($data_r);
+		return $fdata;*/
 }
 
 
