@@ -1375,7 +1375,7 @@ $room_book_type = 1;
                 );
 
 		$f_book = array("Facility Booking" => $bookobj);*/
-               return $f_msg;
+              // return $f_msg;
 	//}
 
 
