@@ -1104,7 +1104,7 @@ $addon = "Non";
 $pax = "4";
 */
 
-
+$facilities_id = "35";
 $cnt = 0;
 $msg = "";
 $addon_msg = "";
@@ -1194,7 +1194,7 @@ $room_book_type = 1;
                   $room_book_type = 2;
 		 				$m_facilities_id = 0;
 	}
-	 $room_book_type = 1;
+	$room_book_type = 1;
 	$invid = 0;
 	
 	//$prep_num_hours = explode("|", $_POST["numslots"]);
@@ -1326,7 +1326,7 @@ $room_book_type = 1;
 				//$f_inv = $client_void."-".$invid;
 				$f_inv = $invid;
 
-				$inv_msg = "Invoice $f_inv Created for $facility_location facility Additional Hours Usage.";
+				$inv_msg = "Invoice". $f_inv." Created for". $facility_location." facility Additional Hours Usage.";
 				
 				if ($invid != 0)
 				{
@@ -1467,14 +1467,14 @@ function getVOName($void)
       $data_q = "SELECT location_desc FROM location_info WHERE id=".$void;
     //  echo $data_q;
 	   $data_r = getData($data_q);
-	/*	while($row = mysqli_fetch_array($data_r))
+		while($row = mysqli_fetch_array($data_r))
 		{
 		
 			$fdata = $row['location_desc'];		
 		
 		}	
 		//$fdata = mysqli_fetch_row($data_r);
-		return $fdata;*/
+		return $fdata;
 }
 
 
