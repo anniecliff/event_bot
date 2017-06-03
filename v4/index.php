@@ -1369,26 +1369,27 @@ $room_book_type = 1;
 		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
 
 
-		$bookobj[$cnt] = array(
+		/*$bookobj[$cnt] = array(
                                 "Booking Results" => $f_msg
                 );
 
-		$f_book = array("Facility Booking" => $bookobj);
-               return $f_book;
+		$f_book = array("Facility Booking" => $bookobj);*/
+               return $f_msg;
 	//}
 
 
    }
-   /*else
+   else
    {
-        echo "Login Failed : 1";
-   }*/
+        $f_msg = "Failed Booking.";
+   }
 /*}
 else
 {
        	echo "Login Failed : 1";
 }*/
 
+               return $f_msg;
 
 }
 
