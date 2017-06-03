@@ -83,7 +83,8 @@ Flight::route('POST /', function()
 		
 		$res_loc = searchCenter1($search);
 		$booktime =explode(":",$time);
-		$booked = doBookFacility($date,$res_loc,$booktime,$cid,$numhours);
+		$checktime = $booktime[0].$booktime[1];
+		$booked = doBookFacility($date,$res_loc,$checktime,$cid,$numhours);
 		$speech = $res_loc;
 		$source  = "v4";
 		/*$next_context = "location";
@@ -1690,7 +1691,7 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 		 $last_book_id = $mysqli->insert_id;
 		$closeResults = $mysqli->close();
 
-		echo "book -------".$last_book_id;
+	//	echo "book -------".$last_book_id;
 		/*$last_book_id = mysqli_insert_id();
 		//$fdata = mysql_fetch_array($data_r);*/
 		return $last_book_id;
