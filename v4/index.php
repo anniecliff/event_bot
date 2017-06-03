@@ -1104,7 +1104,7 @@ $addon = "Non";
 $pax = "4";
 */
 
-$facilities_id = "35";
+$facilities_id = "34";
 $cnt = 0;
 $msg = "";
 $addon_msg = "";
@@ -1273,7 +1273,7 @@ $room_book_type = 1;
 	{
 		//echo "echo hours left".$conf_hours_left;
 		// deduct hours only invoice addon
-		if ($conf_hours_left >= $num_hours)
+		/*if ($conf_hours_left >= $num_hours)
 		{
 			update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
 			//echo "hellloo welcome";
@@ -1302,7 +1302,7 @@ $room_book_type = 1;
 				
 		}
 		else
-		{*/
+		{
 				$meeting_price_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
 
 			
@@ -1349,7 +1349,7 @@ $room_book_type = 1;
 					$a_invid = $invfunc->create_client_facilities_addon_invoice($cid, $client_void, $addon_product_name, $num_hours, $bookdate, $addon_default_unit_price);
 					
 					$addon_msg = "Invoice $a_invid Created for Addon Equipment Usage.";
-				}*/
+				}
 				
 
 				// update new booking
@@ -1359,16 +1359,16 @@ $room_book_type = 1;
 		
 				$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
 	/*
-		}*/
+		}
 	}
 	else
 	{
 				$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
 		
-	}
+	}*/
 
-		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
-
+//		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
+			$f_msg = $chk_valid_booking;
 
 		/*$bookobj[$cnt] = array(
                                 "Booking Results" => $f_msg
