@@ -79,7 +79,7 @@ Flight::route('POST /', function()
 		$time   = $parameters["time"];
 		$date   = $parameters["date"];
 		$cid   = $parameters["Clientid"];
-		$numhours   = $parameters["TimePeriod"];
+		$numhours   = $parameters["numhours"];
 		
 		$res_loc = searchCenter1($search);
 		$booktime =explode(":",$time);
@@ -855,7 +855,7 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 					}
 					else
 					{
-						$result_loc = "Time slot available.  Please Provide your details for booking";
+						$result_loc = "Time slot available.  Please enter your client ID";
 							
 					}
 			/*
