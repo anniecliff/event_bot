@@ -1104,32 +1104,17 @@ $addon = "Non";
 $pax = "4";
 */
 
-$facilities_id = "34";
-$cnt = 0;
-$msg = "";
-$addon_msg = "";
-$inv_msg = "";
+	$facilities_id = "34";
+	$cnt = 0;
+	$msg = "";
+	$addon_msg = "";
+	$inv_msg = "";
 
-/*if ($token != "" || $cid != "")
-{
-   if( $token == $auth_token )
-   {*/
 
 	$mhours_hours = get_client_conference_hours($cid);
 	//echo "......".$mhours_hours."hours......";
 	$mhours_hours_id =get_client_conference_hours_ref_id($cid);
-//echo $mhours_hours_id;
-	/*$hdhours_hours = $clientfunc->get_client_hotdesking_hours($cid);
-	$hdhours_hours_id = $clientfunc->get_client_hotdesking_hours_ref_id($cid);
 
-	$dohours_hours = $clientfunc->get_client_day_office_hours($cid);
-	$dohours_hours_id = $clientfunc->get_client_day_office_hours_ref_id($cid);
-
-	$fohours_hours = $clientfunc->get_client_flexi_office_hours($cid);
-	$fohours_hours_id = $clientfunc->get_client_flexi_office_hours_ref_id($cid);
-
-	$facility_type = $bookingfunc->get_facility_type($facilities_id);
-	$facility_name = $bookingfunc->get_facilities_name($facility_type);	*/
 	
 	$q= "Select * from location_facilities_v2 where vo_id =".$loc_id." and facility_type =1";
 	$res = getData($q);
@@ -1144,33 +1129,11 @@ $inv_msg = "";
 		
 	}
 
-$facility_type=1;
-$facility_name="Meeting Room";
-$room_book_type = 1;
-		$m_facilities_id = $facilities_id;
+	$facility_type=1;
+	$facility_name="Meeting Room";
+	$room_book_type = 1;
+	$m_facilities_id = $facilities_id;
 
-/*	if ($facility_type == 2 || $facility_type == 4)
-	{
-		// office suite and flexi office all same type
-		$room_book_type = 2;
-		$m_facilities_id = 0;
-	}
-	elseif ($facility_type == 1) // Meeting room
-	{
-		$room_book_type = 1;
-		$m_facilities_id = $facilities_id;
-	}
-	elseif ($facility_type == 3) // hot desk
-       	{
-                $room_book_type = 3;
-                $m_facilities_id = $facilities_id;
-       	}
-	else
-	{
-		$room_book_type = $facility_type;
-		$m_facilities_id = $facilities_id;
-	}
-*/
 	$query1 = "SELECT shared_room_id FROM location_facilities_v2 WHERE id=".$facilities_id." ";
 	$res1   = getData($query1);
 	$count1 = mysqli_num_rows($res1);
@@ -1208,14 +1171,9 @@ $room_book_type = 1;
 	$facility_location =getVOName($loc_id);
 
 	// check if valid booking
-	//echo "$loc_id $m_facilities_id $bookdate $starth $num_slots $room_book_type";
-
 	$chk_valid_booking = check_valid_facilities_booking_v2($loc_id, $room_book_type, $bookdate, $starth, $num_slots, $m_facilities_id);
-	//echo " Valid flag ".$chk_valid_booking;
-
-	//exit(0);
+	
 			$meeting_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
-			//echo $pid= $meeting_info["product_id"];
 			
 			if ($facility_type == 1)
 			{
@@ -1223,27 +1181,7 @@ $room_book_type = 1;
 				$f_ref_id =  $mhours_hours_id;
 			
 			}				
-			/*elseif ($facility_type == 2) // Day Office  type
-			{
-				$conf_hours_left = $dohours_hours;
-				$f_ref_id =  $dohours_hours_id;
-			}
-			elseif ($facility_type == 3) // Hot Desking type
-			{
-				$conf_hours_left = $hdhours_hours;
-				$f_ref_id =  $hdhours_hours_id;
-			}
-			elseif ($facility_type == 4) // Flexi Office type
-			{
-				$conf_hours_left = $fohours_hours;
-				$f_ref_id =  $fohours_hours_id;
-			}
-			elseif ($facility_type == 5) // Discussion
-			{
-				$conf_hours_left = $drhours_hours;
-				$f_ref_id =  $drhours_hours_id;
-			}*/
-
+			
 	
 	$p_query = "SELECT * FROM products WHERE product_id= ".$meeting_info["product_id"];
 	//echo $p_query;
@@ -1253,27 +1191,15 @@ $room_book_type = 1;
 		$product_default_unit_price =$r11['price'];
 	}
 	
-	//echo $product_default_unit_price;
-	//$product_default_unit_price = $planfunc->getDefaultPrice($meeting_info["product_id"]);
-	
-	/*if ($addon != "Non")
-	{
-		$addon_product_name = $planfunc->getPlanName($addon);
-	}
-	else
-	{
-		$addon_product_name = "Non";
-	}*/
 	
 	$addon_product_name = "Non";
-	//echo "watsup ".$chk_valid_booking;
-	//exit(0);
+	
 	
 	if( $chk_valid_booking == 1)
 	{
 		//echo "echo hours left".$conf_hours_left;
 		// deduct hours only invoice addon
-		/*if ($conf_hours_left >= $num_hours)
+		if ($conf_hours_left >= $num_hours)
 		{
 			update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
 			//echo "hellloo welcome";
@@ -1283,26 +1209,6 @@ $room_book_type = 1;
 			//echo "bookid".$book_id;
 			
 			$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
-/*
-			// addon
-			if ($addon != "Non")
-			{
-				$addon_default_unit_price =getDefaultPrice($addon);
-				$addon_product_name = getPlanName($addon);
-					
-				$a_invid = $invfunc->create_client_facilities_addon_invoice($cid, $client_void, $addon_product_name, $num_hours, $bookdate, $addon_default_unit_price);
-					
-				//echo  "Invoice $a_invid Created for Addon Equipment Usage.";
-				$addon_msg = "Invoice $a_invid Created for Addon Equipment Usage.";				
-
-			}
-
-				//echo $facility_name." Booked Successfully. Booking ID is $book_id";
-				$msg = "Booking Completed. Booking ID is ".$book_id;
-				
-		}
-		else
-		{
 				$meeting_price_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
 
 			
@@ -1340,16 +1246,6 @@ $room_book_type = 1;
 					$p_inv_id = 0;
 					
 				}
-
-				// addon
-				/*if ($addon != "Non")
-				{
-					$addon_default_unit_price = $planfunc->getDefaultPrice($addon);
-					
-					$a_invid = $invfunc->create_client_facilities_addon_invoice($cid, $client_void, $addon_product_name, $num_hours, $bookdate, $addon_default_unit_price);
-					
-					$addon_msg = "Invoice $a_invid Created for Addon Equipment Usage.";
-				}
 				
 
 				// update new booking
@@ -1358,37 +1254,22 @@ $room_book_type = 1;
 				$msg = "Booking Completed. Booking ID is ".$book_id;
 		
 				$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
-	/*
-		}
+	
 	}
 	else
 	{
 				$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
 		
-	}*/
+	}
 
-//		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
-			$f_msg = $chk_valid_booking;
-
-		/*$bookobj[$cnt] = array(
-                                "Booking Results" => $f_msg
-                );
-
-		$f_book = array("Facility Booking" => $bookobj);*/
-              // return $f_msg;
-	//}
-
+		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
 
    }
    else
    {
         $f_msg = "Failed Booking.";
    }
-/*}
-else
-{
-       	echo "Login Failed : 1";
-}*/
+
 
                return $f_msg;
 
@@ -1464,19 +1345,38 @@ function isSaturday($date)
 }
 function getVOName($void)
 {
-      $data_q = "SELECT location_desc FROM location_info WHERE id=".$void;
-    //  echo $data_q;
-	   $data_r = getData($data_q);
-		while($row = mysqli_fetch_array($data_r))
+    /*  $query = "SELECT * FROM location_info WHERE id=".$void;
+	   $result = getData($query);
+		while($row = mysqli_fetch_array($result))
 		{
 		
 			$fdata = $row['location_desc'];		
 		
 		}	
-		//$fdata = mysqli_fetch_row($data_r);
-		return $fdata;
-}
 
+	//	$fdata = mysqli_fetch_assoc($data_r);
+		return $fdata;*/
+		
+		$mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
+		$myArray = array();
+		$query = "SELECT location_desc FROM location_info WHERE id=".$void;
+		if ($result = $mysqli->query($query)) {
+
+    		while($row = $result->fetch_array(MYSQL_ASSOC)) {
+            $myArray = $row['location_desc'];
+    		}
+    //echo json_encode($myArray);
+		}
+
+//$result->close();
+$mysqli->close();		
+		
+		
+		return $myArray;
+		
+		
+		
+}
 
 
 
