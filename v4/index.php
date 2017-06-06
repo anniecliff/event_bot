@@ -108,7 +108,7 @@ Flight::route('POST /', function()
 		$time   = $parameters["time"];
 		$date   = $parameters["date"];*/
 		$cid   = $parameters["Clientid"];
-		$book_id =$parameters["Bookid"];
+		$book_id =$parameters["BookId"];
 		/*$numhours   = $parameters["numhours"];
 		
 		$res_loc = searchCenter1($search);
@@ -120,7 +120,7 @@ Flight::route('POST /', function()
 		/*$next_context = "location";
 		$param1value = $res_loc;
 		$param2value = 0;*/
-		$context = array("name" => "book");
+		$context = array("name" => "bookingdetails");
 
 		$json = json_encode([
 	                'speech'   => $booked,
