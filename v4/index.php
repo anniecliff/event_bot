@@ -114,9 +114,9 @@ Flight::route('POST /', function()
 		$res_loc = searchCenter1($search);
 		$booktime =explode(":",$time);
 		$checktime = $booktime[0].$booktime[1];*/
-		//$booked = getBookingDetails($cid,$book_id);
+		$booked = getBookingDetails($cid,$book_id);
 		
-		$booked = "Hiiiii".$cid." my book id is".$book_id;
+		//$booked = "Hiiiii".$cid." my book id is".$book_id;
 		$speech = $booked;
 		$source  = "v4";
 		/*$next_context = "location";
@@ -330,14 +330,14 @@ Flight::route('/getBookingList', function()
 
 //Route to get BOOKNG Details 
 //Annie, May 16, 2017
-Flight::route('/getBookingDetails', function()
+/*Flight::route('/getBookingDetails', function()
 {
 	//enable_cors()();
 	$returnarray=getBookingDetails();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
 
-});
+});*/
 /* ************************* Routes end here **************************** */
 
 Flight::start();
@@ -1080,7 +1080,7 @@ function getBookingDetails($cid,$bookid)
 			
 					$f_book = array("Facility Booking Details" => $bookobj);
 //			                echo json_encode($f_book);
-					return $f_book;
+					return $type_name;
 			
 			 /*  }
 			   else
