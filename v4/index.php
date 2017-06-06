@@ -1220,8 +1220,7 @@ $pax = "4";
 	
 	// For billing, we get client vo location not the place he wanna rent
 	$client_void = getClientLocation($cid);
-	$faci_location =getVOName($loc_id);
-	$facility_location = $faci_location['location'];
+	$facility_location =getVOName($loc_id);
 
 	// check if valid booking
 	$chk_valid_booking = check_valid_facilities_booking_v2($loc_id, $room_book_type, $bookdate, $starth, $num_slots, $m_facilities_id);
@@ -1411,12 +1410,12 @@ function getVOName($void)
 		return $fdata;*/
 		
 		$mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
-		$myArray = array();
+		//$myArray = array();
 		$query = "SELECT location_desc FROM location_info WHERE id=".$void;
 		if ($result = $mysqli->query($query)) {
 
     		while($row = $result->fetch_array()) {
-            $myArray['location'] = $row['location_desc'];
+            $myArray = $row['location_desc'];
     		}
     //echo json_encode($myArray);
 		}
