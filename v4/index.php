@@ -1400,7 +1400,7 @@ function getVOName($void)
 		$query = "SELECT location_desc FROM location_info WHERE id=".$void;
 		if ($result = $mysqli->query($query)) {
 
-    		while($row = $result->fetch_array(MYSQL_ASSOC)) {
+    		while($row = $result->fetch_array()) {
             $myArray = $row['location_desc'];
     		}
     //echo json_encode($myArray);
