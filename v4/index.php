@@ -198,6 +198,19 @@ Flight::route('/getFacilitiesType', function()
 
 });
 
+
+
+//Route to book meeting room
+//Annie, May 15, 2017
+Flight::route('/doBookFacility', function()
+{
+	//enable_cors()();
+	$returnarray=doBookFacility();
+	header('Content-type:application/json;charset=utf-8');
+	echo json_encode($returnarray);
+
+});
+
 //Route to get call details
 //Annie, May 15, 2017
 Flight::route('/getCallDetails', function()
@@ -1105,7 +1118,8 @@ function getBookingDetails($cid,$bookid)
 }
 
 
-function doBookFacility($bookdate,$loc_id,$starttimeslot,$cid,$numhours)
+//function doBookFacility($bookdate,$loc_id,$starttimeslot,$cid,$numhours)
+function doBookFacility()
 {
 
 
@@ -1122,25 +1136,25 @@ $starttimeslot = $_POST["starttimeslot"];*/
 /*$addon = $_POST["addon"];
 $pax = $_POST["pax"];*/
 
-$addon = "Non";
+/*$addon = "Non";
 $pax = "4";
-$starth = $starttimeslot;
+$starth = $starttimeslot;*/
 /*$pre_start_hour = explode("-",$starttimeslot);
 $starth = $pre_start_hour[0];*/
 
-/*
+
 $starttimeslot = "1200-1500";
 $cid = "10002";
 $token = "ffe5c3517bcac0fc7c3261283988e93303bab637";
-$bookdate = "2014-04-13";
-$loc_id = "2";
-$facilities_id = "12";
+$bookdate = "2017-07-13";
+$loc_id = "14";
+$facilities_id = "34";
 $numhours = "3";
 $pre_start_hour = explode("-",$starttimeslot);
 $starth = $pre_start_hour[0];
 $addon = "Non";
 $pax = "4";
-*/
+
 
 	$facilities_id = "34";
 	$cnt = 0;
