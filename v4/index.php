@@ -85,7 +85,37 @@ Flight::route('POST /', function()
 		$booktime =explode(":",$time);
 		$checktime = $booktime[0].$booktime[1];
 		$booked = doBookFacility($date,$res_loc,$checktime,$cid,$numhours);
-		$speech = $res_loc;
+		//$speech = $res_loc;
+		$source  = "v4";
+		/*$next_context = "location";
+		$param1value = $res_loc;
+		$param2value = 0;*/
+		$context = array("name" => "book");
+
+		$json = json_encode([
+	                'speech'   => $booked,
+	                'displayText' => $booked,
+	                'data' => [],
+	                'contextOut' => [$context],
+	                'source' => $source
+	        		]);
+	
+	}
+	else if($action == "getBookingDetails")
+	{
+		
+		/*$search = $parameters["search"];
+		$time   = $parameters["time"];
+		$date   = $parameters["date"];*/
+		$cid   = $parameters["Clientid"];
+		$book_id =$parameters["Bookid"];
+		/*$numhours   = $parameters["numhours"];
+		
+		$res_loc = searchCenter1($search);
+		$booktime =explode(":",$time);
+		$checktime = $booktime[0].$booktime[1];*/
+		$booked = getBookingDetails($cid,$book_id);
+		$speech = $booked;
 		$source  = "v4";
 		/*$next_context = "location";
 		$param1value = $res_loc;
@@ -877,21 +907,21 @@ function getBookingList()
 
 			$agent = "10000";
 			
-			$cid = $_POST["cid"];
-			$token = $_POST["token"];
+		/*	$cid = $_POST["cid"];
+			$token = $_POST["token"];*/
 			
 			/*$cid = "10002";
 			$token = "50b2061fc834cedec6def1affd60e998";*/
 			
-			$auth_token =  portal_getUserToken($cid);
+			//$auth_token =  portal_getUserToken($cid);
 			
 			$cnt = 0;
-			
+		/*	
 			if ($token != "" || $cid != "")
 			{
 			   if( $token == $auth_token )
 			   {
-			
+			*/
 						$mtdate = date("2015-09-01", time());
 
                	$query = "SELECT * FROM client_booking_log WHERE client_id='$cid' AND status='1' AND book_date >= DATE(NOW()";
@@ -957,7 +987,7 @@ function getBookingList()
 					$f_book = array("Facility Booking List" => $bookobj);
 					return $f_book;
 			
-			   }
+			 /*  }
 			   else
 			   {
 			        return "Login Failed : 1";
@@ -966,10 +996,10 @@ function getBookingList()
 			else
 			{
 			       	return "Login Failed : 1";
-			}
+			}*/
 }
 
-function getBookingDetails()
+function getBookingDetails($cid,$bookid)
 {
 
 			$agent = "10000";
@@ -977,7 +1007,7 @@ function getBookingDetails()
 			/*$cid = $_POST["cid"];
 			$token = $_POST["token"];
 			$bookid = $_POST["bookid"];*/
-			
+			/*
 			$cid = "10002";
 			$token = "50b2061fc834cedec6def1affd60e998";
 			$bookid = "14331";
@@ -990,7 +1020,7 @@ function getBookingDetails()
 			if ($token != "" || $cid != "")
 			{
 			   if( $token == $auth_token )
-			   {
+			   {*/
 			
 					  $myquery = "SELECT * FROM client_booking_log WHERE book_id='$bookid' AND status='1'";
 					  
@@ -1047,9 +1077,10 @@ function getBookingDetails()
 					}
 			
 					$f_book = array("Facility Booking Details" => $bookobj);
-			                echo json_encode($f_book);
+//			                echo json_encode($f_book);
+					return $f_book;
 			
-			   }
+			 /*  }
 			   else
 			   {
 			        echo "Login Failed : 1";
@@ -1058,7 +1089,7 @@ function getBookingDetails()
 			else
 			{
 			       	echo "Login Failed : 1";
-			}
+			}*/
 			
 
 
@@ -1397,7 +1428,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 			        	/*$f_start_time = $bookingfunc->get_facilities_booking_weekdays_start_time($loc_id);
 			        	$f_end_time = $bookingfunc->get_facilities_booking_weekdays_end_time($loc_id);*/
 			        	$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
-			        				        	echo $query;
+			        				        //	echo $query;
 			        	$result = getData($query);
 			        	while($row = mysqli_fetch_array($result) )
 			        	{
