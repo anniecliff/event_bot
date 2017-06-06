@@ -1397,7 +1397,7 @@ function isSaturday($date)
 }
 function getVOName($void)
 {
-      $query = "SELECT * FROM location_info WHERE id=".$void;
+    /*  $query = "SELECT * FROM location_info WHERE id=".$void;
 	   $result = getData($query);
 		while($row = mysqli_fetch_array($result))
 		{
@@ -1407,15 +1407,15 @@ function getVOName($void)
 		}	
 
 	//	$fdata = mysqli_fetch_assoc($data_r);
-		return $fdata;
-		/*
+		return $fdata;*/
+		
 		$mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
-		//$myArray = array();
+		$myArray = array();
 		$query = "SELECT location_desc FROM location_info WHERE id=".$void;
 		if ($result = $mysqli->query($query)) {
 
     		while($row = $result->fetch_array()) {
-            $myArray = $row['location_desc'];
+            $myArray['location'] = $row['location_desc'];
     		}
     //echo json_encode($myArray);
 		}
@@ -1424,7 +1424,7 @@ function getVOName($void)
 $mysqli->close();		
 		
 		
-		return $myArray;*/
+		return $myArray['location'];
 		
 		
 		
