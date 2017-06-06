@@ -114,7 +114,9 @@ Flight::route('POST /', function()
 		$res_loc = searchCenter1($search);
 		$booktime =explode(":",$time);
 		$checktime = $booktime[0].$booktime[1];*/
-		$booked = getBookingDetails($cid,$book_id);
+		//$booked = getBookingDetails($cid,$book_id);
+		
+		$booked = "Hiiiii".$cid." my book id is".$book_id;
 		$speech = $booked;
 		$source  = "v4";
 		/*$next_context = "location";
