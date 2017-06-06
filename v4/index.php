@@ -1410,7 +1410,7 @@ function getVOName($void)
 		return $fdata;*/
 		
 		$mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
-		$myArray = array();
+		//$myArray = array();
 		$query = "SELECT location_desc FROM location_info WHERE id=".$void;
 		if ($result = $mysqli->query($query)) {
 
