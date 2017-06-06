@@ -330,14 +330,14 @@ Flight::route('/getBookingList', function()
 
 //Route to get BOOKNG Details 
 //Annie, May 16, 2017
-/*Flight::route('/getBookingDetails', function()
+Flight::route('/getBookingDetails', function()
 {
 	//enable_cors()();
 	$returnarray=getBookingDetails();
 	header('Content-type:application/json;charset=utf-8');
 	echo json_encode($returnarray);
 
-});*/
+});
 /* ************************* Routes end here **************************** */
 
 Flight::start();
@@ -1001,14 +1001,14 @@ function getBookingList()
 			}*/
 }
 
-function getBookingDetails($cid,$bookid)
+function getBookingDetails()
 {
 
 			$agent = "10000";
 			
-			/*$cid = $_POST["cid"];
-			$token = $_POST["token"];
-			$bookid = $_POST["bookid"];*/
+			$cid = $_POST["cid"];
+			//$token = $_POST["token"];
+			$bookid = $_POST["bookid"];
 			/*
 			$cid = "10002";
 			$token = "50b2061fc834cedec6def1affd60e998";
