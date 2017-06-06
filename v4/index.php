@@ -117,7 +117,7 @@ Flight::route('POST /', function()
 		$booked = getBookingDetails($cid,$book_id);
 		
 		//$booked = "Hiiiii".$cid." my book id is".$book_id;
-		$speech = $booked;
+		//$speech = $booked;
 		$source  = "v4";
 		/*$next_context = "location";
 		$param1value = $res_loc;
@@ -1062,8 +1062,11 @@ function getBookingDetails($cid,$bookid)
 						}
 //						$loc_id = $bookingfunc->get_location_id_via_booking_table($data["facilities_type"], $data["book_date"], $starth, $data["book_id"]);
 						$vo_name = getVOName($loc_id);
+						
+						
+						$msg = $vo_name."".$data["book_id"]."".$type_name."".$data["book_pax"]."". $data["book_addon"]."".$f_time."". $duration." Hour(s)"." on ".$data["book_date"]; 
 			
-						$bookobj[$cnt] = array(
+					/*	$bookobj[$cnt] = array(
 			                        "location" => $vo_name,
 			               			"book id" => $data["book_id"],
 			              				"facility name" => $type_name,
@@ -1073,14 +1076,14 @@ function getBookingDetails($cid,$bookid)
 			                        "duration" => $duration." Hour(s)",
 			               			"book date" => $data["book_date"]
 			
-			               		);
+			               		);*/
 			
 						//$cnt++;
 					}
 			
-					$f_book = array("Facility Booking Details" => $bookobj);
+					//$f_book = array("Facility Booking Details" => $bookobj);
 //			                echo json_encode($f_book);
-					return $type_name;
+					return $msg;
 			
 			 /*  }
 			   else
