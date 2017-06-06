@@ -1066,7 +1066,7 @@ function getBookingDetails($cid,$bookid)
 						$vo_name = getVOName($loc_id);
 						
 						
-						$msg = $vo_name."".$data["book_id"]."".$type_name."".$data["book_pax"]."". $data["book_addon"]."".$f_time."". $duration." Hour(s)"." on ".$data["book_date"]; 
+						$msg = "Booking Details : Location -".$vo_name.", Booking ID -".$data["book_id"].", Facility Name -".$type_name.", Pax -".$data["book_pax"].", AddOn -". $data["book_addon"].", Time-".$f_time." ,Duration -". $duration." Hour(s)"." on ".$data["book_date"]; 
 			
 					/*	$bookobj[$cnt] = array(
 			                        "location" => $vo_name,
