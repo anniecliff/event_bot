@@ -330,7 +330,7 @@ Flight::route('/getBookingList', function()
 
 //Route to get BOOKNG Details 
 //Annie, May 16, 2017
-Flight::route('/getBookingDetails', function()
+Flight::route('POST /getBookingDetails', function()
 {
 	//enable_cors()();
 	$returnarray=getBookingDetails();
