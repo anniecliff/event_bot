@@ -1053,7 +1053,7 @@ function getBookingDetails()
 						}
 			
 						$f_time = $starth ."-".$end_time;
-						$query3 = "SELECT * FROM facilities_booking WHERE ".$starth." = ".$data['book_id']." AND facilities_type='".$data['facilities_type']."' AND book_date='".$data['book_date']."'";
+						$query3 = "SELECT * FROM facilities_booking WHERE `".$starth."` = ".$data['book_id']." AND facilities_type='".$data['facilities_type']."' AND book_date='".$data['book_date']."'";
 						$res3  = getData($query3);
 						/*while($r1 = mysqli_fetch_array($res3))
 						{
