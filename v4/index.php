@@ -202,7 +202,7 @@ Flight::route('/getFacilitiesType', function()
 
 //Route to book meeting room
 //Annie, May 15, 2017
-Flight::route('/doBookFacility', function()
+Flight::route('POST /doBookFacility', function()
 {
 	//enable_cors()();
 	$returnarray=doBookFacility();
