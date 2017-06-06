@@ -1001,14 +1001,14 @@ function getBookingList()
 			}*/
 }
 
-function getBookingDetails()
+function getBookingDetails($cid,$bookid)
 {
 
 			$agent = "10000";
 			
-			$cid = $_POST["cid"];
+		/*	$cid = $_POST["cid"];
 			//$token = $_POST["token"];
-			$bookid = $_POST["bookid"];
+			$bookid = $_POST["bookid"];*/
 			/*
 			$cid = "10002";
 			$token = "50b2061fc834cedec6def1affd60e998";
