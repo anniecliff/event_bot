@@ -1053,14 +1053,14 @@ function getBookingDetails()
 						}
 			
 						$f_time = $starth ."-".$end_time;
-						$query3 = "SELECT location_id FROM facilities_booking WHERE".$starth." = ".$data['book_id']." AND facilities_type='".$data['facilities_type']."' AND book_date='".$data['book_date']."'";
+						$query3 = "SELECT * FROM facilities_booking WHERE".$starth." = ".$data['book_id']." AND facilities_type='".$data['facilities_type']."' AND book_date='".$data['book_date']."'";
 						$res3  = getData($query3);
 						while($r1 = mysqli_fetch_array($res3))
 						{
 								$loc_id = $r1['location_id'];
 						
 						}
-						//echo $query3;
+						echo $query3;
 						$loc_id=14;
 //						$loc_id = $bookingfunc->get_location_id_via_booking_table($data["facilities_type"], $data["book_date"], $starth, $data["book_id"]);
 						$vo_name = getVOName($loc_id);
