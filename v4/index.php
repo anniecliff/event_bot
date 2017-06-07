@@ -853,17 +853,18 @@ function getAvailableTimeSlot()
 				//AND facility_id='$facility_id'
 				echo $q1;
 				$pre_check_dates  = getData($q1);
-				/*$date_exist = mysqli_num_rows($pre_check_dates);
-       		$check_dates = mysqli_fetch_array($pre_check_dates);*/
+				$date_exist = mysqli_num_rows($pre_check_dates);
+       		$check_dates = mysqli_fetch_array($pre_check_dates);
        		
-       		$date_exist = 0;
-       		$check_dates = 0;
+       		/*$date_exist = 0;
+       		$check_dates = 0;*/
 				$a_time_slots = "";
 
 				if ($date_exist != 0)
 				{
 			
-					$loop_time = $time;
+					$flag =1;
+					/*$loop_time = $time;
 			
 					
 			   		while ($loop_time != $f_end_time)
@@ -876,11 +877,11 @@ function getAvailableTimeSlot()
 				   		}
 				    	   $loop_time = $loop_time + 100;
 								
-						}
+						}*/
 				}
 				else
 				{
-					$loop_time = $f_start_time;
+					/*$loop_time = $f_start_time;
 			
 			   		while ($loop_time != $f_end_time)
 			   		{
@@ -890,12 +891,14 @@ function getAvailableTimeSlot()
 			
 			           		$loop_time = $loop_time + 100;
 			
-			   		}
+			   		}*/
+			   		
+			   		$flag =0;
 				}
 				
 				
 					//$checktime = $time[0].$time[1];
-					$time_slots = explode(" ",$a_time_slots);
+					/*$time_slots = explode(" ",$a_time_slots);
 					print_r($a_time_slots);
 					echo "<pre>";
 					print_r($time_slots);
@@ -913,7 +916,7 @@ function getAvailableTimeSlot()
 							$flag =0;	
 						}				
 					
-					}
+					}*/
 					if($flag = 0)
 					{
 						$result_loc = "Time slot already booked";
