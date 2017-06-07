@@ -803,7 +803,7 @@ function getAvailableTimeSlot()
 			//print_r($time);
 			$flag=0;
 			$checktime = $time[0].$time[1];
-								echo "Check time".$checktime;
+								echo trim($checktime)."Check time".$checktime;
 				if ($facilities == 2 || $facilities == 4)
 		      {
 		                // office suite and flexi office all same type
