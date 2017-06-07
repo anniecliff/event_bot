@@ -782,7 +782,8 @@ function getVOFacilities_v2($void, $facilitytype)
 }
 
 //Function to get available time slots for a day
-function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
+//function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
+function getAvailableTimeSlot()
 {
 			/*$cid = $_POST["cid"];
 			$token = $_POST["token"];
@@ -790,7 +791,9 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 			$loc_id = $_POST["void"];
 			$facilities = $_POST["ftype"];
 			$facility_id = $_POST["fid"];*/
-			
+			$bookdate = $_POST["bookdate"];
+			$loc_id = $_POST["void"];
+			$booktime = $_POST['time'];
 			$facilities = "1";
 			$facility_id = "52";
 			$time =explode(":",$booktime);
@@ -841,6 +844,7 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 				}
 			
 				$q1  =     "SELECT * FROM facilities_booking WHERE facilities_type='$facilities' AND facility_id='$facility_id' AND location_id='$loc_id' AND book_date='$bookdate'";
+				echo $q1;
 				$pre_check_dates  = getData($q1);
 				$date_exist = mysqli_num_rows($pre_check_dates);
        		$check_dates = mysqli_fetch_array($pre_check_dates);
