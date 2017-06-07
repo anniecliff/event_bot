@@ -1408,7 +1408,7 @@ function isSaturday($date)
 }
 function getVOName($void)
 {
-		$query = "SELECT location_desc FROM location_info WHERE id=".$void;
+		$query = "SELECT * FROM location_info WHERE id=".$void;
 	   $result = getData($query);
 		while($row = mysqli_fetch_array($result))
 		{
