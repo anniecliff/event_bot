@@ -1184,10 +1184,19 @@ $pax = "4";
 	$addon_msg = "";
 	$inv_msg = "";
 
+	$data_r = "SELECT * FROM client_facilities_core WHERE client_id=".$cid;
+		//echo $data_r;
+	$fdata = getData($data_r);
+	while($row = mysqli_fetch_array($fdata))
+	{
+		 $mhours_hours = $row["meeting_room_hours_left"];
+		 $mhours_hours_id = $row["id"];
+	
+	}
 
-	$mhours_hours = get_client_conference_hours($cid);
+	/*$mhours_hours = get_client_conference_hours($cid);
 	//echo "......".$mhours_hours."hours......";
-	$mhours_hours_id =get_client_conference_hours_ref_id($cid);
+	$mhours_hours_id =get_client_conference_hours_ref_id($cid);*/
 
 	
 	$q= "Select * from location_facilities_v2 where vo_id =".$loc_id." and facility_type =1";
@@ -1207,7 +1216,7 @@ $pax = "4";
 	$facility_name="Meeting Room";
 	$room_book_type = 1;
 	$m_facilities_id = $facilities_id;
-
+/*
 	$query1 = "SELECT shared_room_id FROM location_facilities_v2 WHERE id=".$facilities_id." ";
 	$res1   = getData($query1);
 	$count1 = mysqli_num_rows($res1);
@@ -1231,7 +1240,7 @@ $pax = "4";
                   $room_book_type = 2;
 		 				$m_facilities_id = 0;
 	}
-	$room_book_type = 1;
+	$room_book_type = 1;*/
 	$invid = 0;
 	
 	//$prep_num_hours = explode("|", $_POST["numslots"]);
@@ -1249,13 +1258,13 @@ $pax = "4";
 	
 			$meeting_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
 			
-			if ($facility_type == 1)
-			{
+			/*if ($facility_type == 1)
+			{*/
 				$conf_hours_left = $mhours_hours;
 				$f_ref_id =  $mhours_hours_id;
-			
+		/*	
 			}				
-			
+			*/
 	
 	$p_query = "SELECT * FROM products WHERE product_id= ".$meeting_info["product_id"];
 	//echo $p_query;
@@ -1556,7 +1565,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 					// do insert
 					$data_q = "SELECT id FROM facilities_booking WHERE ".$time_slot_sql_field_stmt." AND id='".$date_entry_id["id"]."'"; 
 					//echo $data_q;
-					$data_r = getData($data_q) or die("Could not Check Valid Slots Booking table .\n");
+					$data_r = getData($data_q);
 					$q_count = mysqli_num_rows($data_r);
 				
 					//$jmsg .= "You do not access rights to this section.";
