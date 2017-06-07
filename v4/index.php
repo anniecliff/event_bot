@@ -1521,7 +1521,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 		else		
 		{
 			//echo "2nd Trap<br>";
-			while($r = mysqli_fetch_array($chk_data_r))
+			while($r = mysqli_fetch_array($rskdata))
 			{
 				$date_entry_id = $r['id'];
 			
