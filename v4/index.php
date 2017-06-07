@@ -886,6 +886,10 @@ function getAvailableTimeSlot()
 				
 					$checktime = $time[0].$time[1];
 					$time_slots = explode(" ",$a_time_slots);
+					print_r($a_time_slots);
+					echo "<pre>";
+					print_r($time_slots);
+					echo "Check time".$checktime;
 					foreach($time_slots as $avail)
 					{
 						if($checktime == $avail)
