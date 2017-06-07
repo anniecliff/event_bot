@@ -1178,7 +1178,7 @@ $addon = "Non";
 $pax = "4";
 
 
-	$facilities_id = "34";
+	//$facilities_id = "35";
 	$cnt = 0;
 	$msg = "";
 	$addon_msg = "";
@@ -1255,6 +1255,7 @@ $pax = "4";
 
 	// check if valid booking
 	$chk_valid_booking = check_valid_facilities_booking_v2($loc_id, $room_book_type, $bookdate, $starth, $num_slots, $m_facilities_id);
+	echo $chk_valid_booking;
 	
 			$meeting_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
 			
