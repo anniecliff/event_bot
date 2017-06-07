@@ -1148,23 +1148,6 @@ function doBookFacility()
 $agent = "-1";
 
 
-/*$cid = $_POST["cid"];
-$token = $_POST["token"];
-$bookdate = $_POST["bookdate"];
-$loc_id = $_POST["void"];
-$facilities_id = $_POST["fid"];
-$numhours = $_POST["numhours"];
-$starttimeslot = $_POST["starttimeslot"];*/
-/*$addon = $_POST["addon"];
-$pax = $_POST["pax"];*/
-
-/*$addon = "Non";
-$pax = "4";
-$starth = $starttimeslot;*/
-/*$pre_start_hour = explode("-",$starttimeslot);
-$starth = $pre_start_hour[0];*/
-
-
 $starttimeslot = "1800-2100";
 $cid = "10002";
 $token = "ffe5c3517bcac0fc7c3261283988e93303bab637";
@@ -1285,7 +1268,7 @@ $pax = "4";
 		// deduct hours only invoice addon
 			if ($conf_hours_left >= $num_hours)
 			{
-				update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
+				//update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
 					// all bill
 					// hours left < booked hours
 					if ($conf_hours_left > 0)
