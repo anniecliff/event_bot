@@ -1788,7 +1788,7 @@ function create_client_facilities_invoice($cid, $void, $facility_type, $num_hour
 		
 		$incurrency = getLocationCurrency($void);
 		
-		$meeting_rm_loc = getVOName($rm_location);
+		$meeting_rm_loc = $rm_location;
 
 		$facilities_name = get_Facilities_Type($facility_type);
 		$product_name = $meeting_rm_loc." ".$facilities_name." ".$num_hours ." Additional Hour(s) Rental.";
