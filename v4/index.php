@@ -319,7 +319,7 @@ Flight::route('/getVOFacilities', function()
 
 //Route to get available time slots for a day
 //Annie, May 16, 2017
-Flight::route('/getAvailableTimeSlot', function()
+Flight::route('POST /getAvailableTimeSlot', function()
 {
 	//enable_cors()();
 	$returnarray=getAvailableTimeSlot();
