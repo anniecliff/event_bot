@@ -1288,10 +1288,10 @@ $pax = "4";
 			//echo "hellloo welcome";
 				
 			// update new booking
-			$book_id = update_facilities_booking($cid,$loc_id,$facility_type,$pax, $bookdate,$starth, $num_slots, $addon_product_name, 0, 0, $agent);
+			/*$book_id = update_facilities_booking($cid,$loc_id,$facility_type,$pax, $bookdate,$starth, $num_slots, $addon_product_name, 0, 0, $agent);
 			//echo "bookid".$book_id;
 			
-			$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
+			$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);*/
 				$meeting_price_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
 
 			
