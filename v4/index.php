@@ -792,10 +792,11 @@ function getAvailableTimeSlot()
 			$facilities = $_POST["ftype"];
 			$facility_id = $_POST["fid"];*/
 			$bookdate = $_POST["bookdate"];
+			$checktime = $_POST["checktime"];
 			$booktime = $_POST["booktime"];
 			$loc_id = $_POST["void"];
 
-			echo "Book Time".$booktime;
+			echo "Book Time".$checktime;
 			$facilities = "1";
 			$facility_id = "52";
 			$time =explode(":",$booktime);
