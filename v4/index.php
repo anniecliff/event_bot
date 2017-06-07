@@ -1764,7 +1764,7 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 			}
 
 			// do insert
-			$data_q = "INSERT INTO facilities_booking(facilities_type, location_id, facility_id, book_date, ".$time_slot_sql_field_stmt.") VALUES(".$facility_type.", ".$locid.",".$facility_id.",".$bookdate.", ".$time_slot_sql_value_stmt.")";
+			$data_q = "INSERT INTO facilities_booking(facilities_type, location_id, facility_id, book_date, ".$time_slot_sql_field_stmt.") VALUES(".$facility_type.", ".$locid.",".$facility_id.",'".$bookdate."', ".$time_slot_sql_value_stmt.")";
 			$data_r = setData($data_q);
 			
 			//$jmsg .= "You do not access rights to this section.";
