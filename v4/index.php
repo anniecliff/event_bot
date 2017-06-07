@@ -1563,7 +1563,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 				if ($pass_day_hour_flag == 0)
 				{
 					// do insert
-					$data_q = "SELECT id FROM facilities_booking WHERE ".$time_slot_sql_field_stmt." AND id='".$date_entry_id["id"]."'"; 
+					$data_q = "SELECT id FROM facilities_booking WHERE ".$time_slot_sql_field_stmt." AND id='".$date_entry_id."'"; 
 					//echo $data_q;
 					$data_r = getData($data_q);
 					$q_count = mysqli_num_rows($data_r);
