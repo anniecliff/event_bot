@@ -1283,68 +1283,68 @@ $pax = "4";
 	{
 		//echo "echo hours left".$conf_hours_left;
 		// deduct hours only invoice addon
-		if ($conf_hours_left >= $num_hours)
-		{
-			update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-			//echo "hellloo welcome";
-				
-			// update new booking
-			/*$book_id = update_facilities_booking($cid,$loc_id,$facility_type,$pax, $bookdate,$starth, $num_slots, $addon_product_name, 0, 0, $agent);
-			//echo "bookid".$book_id;
-			
-			$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);*/
-				//$meeting_price_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
-
-			
-				// all bill
-				// hours left < booked hours
-				if ($conf_hours_left > 0)
-				{
-					$num_hour_deduct = $conf_hours_left - $num_hours;
-					$f_hours_deduct = abs($num_hour_deduct); // get absolute number no negative sign the raminder need to bill
-					update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-					$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $f_hours_deduct, $bookdate, $facility_location, $meeting_info["price"]);
-				}
-				else
-				{
-
-					// so already negative. just continue deduct the $num_hours and charge
-				   update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-					$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $num_hours, $bookdate, $facility_location, $meeting_info["price"]);
-				}
-				
-				//$f_inv = $client_void."-".$invid;
-				$f_inv = $invid;
-
-				$inv_msg = "Invoice". $f_inv." Created for". $facility_location." facility Additional Hours Usage.";
-				
-				if ($invid != 0)
-				{
-					$pre_in = explode("-", $invid);
-					$p_vo_id = $pre_in[0];
-					$p_inv_id = $pre_in[1];
-				}
-				else
-				{
-					$p_vo_id = 0;
-					$p_inv_id = 0;
+			if ($conf_hours_left >= $num_hours)
+			{
+				update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
+				//echo "hellloo welcome";
 					
-				}
-				
-
 				// update new booking
-				$book_id =update_facilities_booking($cid, $loc_id, $facility_type, $pax, $bookdate, $starth, $num_slots, $addon_product_name, $p_vo_id, $p_inv_id, $agent);
+				/*$book_id = update_facilities_booking($cid,$loc_id,$facility_type,$pax, $bookdate,$starth, $num_slots, $addon_product_name, 0, 0, $agent);
+				//echo "bookid".$book_id;
+				
+				$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);*/
+					//$meeting_price_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
 	
-				$msg = "Booking Completed. Booking ID is ".$book_id;
-		
-				$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
+				
+					// all bill
+					// hours left < booked hours
+					if ($conf_hours_left > 0)
+					{
+						$num_hour_deduct = $conf_hours_left - $num_hours;
+						$f_hours_deduct = abs($num_hour_deduct); // get absolute number no negative sign the raminder need to bill
+						update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
+						$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $f_hours_deduct, $bookdate, $facility_location, $meeting_info["price"]);
+					}
+					else
+					{
 	
-	}
-	else
-	{
-				$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
+						// so already negative. just continue deduct the $num_hours and charge
+					   update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
+						$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $num_hours, $bookdate, $facility_location, $meeting_info["price"]);
+					}
+					
+					//$f_inv = $client_void."-".$invid;
+					$f_inv = $invid;
+	
+					$inv_msg = "Invoice". $f_inv." Created for". $facility_location." facility Additional Hours Usage.";
+					
+					if ($invid != 0)
+					{
+						$pre_in = explode("-", $invid);
+						$p_vo_id = $pre_in[0];
+						$p_inv_id = $pre_in[1];
+					}
+					else
+					{
+						$p_vo_id = 0;
+						$p_inv_id = 0;
+						
+					}
+					
+	
+					// update new booking
+					$book_id =update_facilities_booking($cid, $loc_id, $facility_type, $pax, $bookdate, $starth, $num_slots, $addon_product_name, $p_vo_id, $p_inv_id, $agent);
 		
-	}
+					$msg = "Booking Completed. Booking ID is ".$book_id;
+			
+					$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
+		
+		}
+		else
+		{
+					$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
+			
+		}
 
 		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
 
@@ -1508,7 +1508,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 		$chk_data_r = "SELECT id FROM facilities_booking WHERE facilities_type=".$facility_type." AND location_id=".$loc_id." AND facility_id=".$facility_id." AND book_date='".$bookdate."'";
 		
 		$rskdata =getData($chk_data_r);
-		//echo $chk_data_r;
+		echo $chk_data_r;
 		//$fchk_date =0;
 		$fchk_date = mysqli_num_rows($rskdata);
 	//	echo $fchk_date;
@@ -1565,7 +1565,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 				{
 					// do insert
 					$data_q = "SELECT id FROM facilities_booking WHERE ".$time_slot_sql_field_stmt." AND id='".$date_entry_id."'"; 
-					//echo $data_q;
+					echo $data_q;
 					$data_r = getData($data_q);
 					$q_count = mysqli_num_rows($data_r);
 				
