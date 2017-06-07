@@ -854,6 +854,7 @@ function getAvailableTimeSlot()
 				$date_exist = mysqli_num_rows($pre_check_dates);
        		$check_dates = mysqli_fetch_array($pre_check_dates);
 				$a_time_slots = "";
+				echo "fstartime ".$f_start_time;
 				if ($date_exist != 0)
 				{
 			
