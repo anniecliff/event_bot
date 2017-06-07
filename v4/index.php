@@ -1529,7 +1529,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 			
 			//$date_entry_id = mysqli_fetch_array($chk_data_r);
 						
-			$pstarttime = mysqli_real_escape_string($starttime);
+			$pstarttime = trim($starttime);
 					
 				// Populate the time slots via insert
 				$inc_time = $pstarttime;
