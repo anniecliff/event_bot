@@ -1508,7 +1508,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 		$chk_data_r = "SELECT id FROM facilities_booking WHERE facilities_type=".$facility_type." AND location_id=".$loc_id." AND facility_id=".$facility_id." AND book_date='".$bookdate."'";
 		
 		$rskdata =getData($chk_data_r);
-		echo $chk_data_r;
+		//echo $chk_data_r;
 		//$fchk_date =0;
 		$fchk_date = mysqli_num_rows($rskdata);
 	//	echo $fchk_date;
@@ -1527,7 +1527,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 				$date_entry_id = $r['id'];
 			
 			}
-			
+			echo "Date entry id".$date_entry_id;
 			//$date_entry_id = mysqli_fetch_array($chk_data_r);
 						
 			$pstarttime = trim($starttime);
