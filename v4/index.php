@@ -855,7 +855,7 @@ function getAvailableTimeSlot()
 				$pre_check_dates  = getData($q1);
 				$date_exist = mysqli_num_rows($pre_check_dates);
        		$check_dates = mysqli_fetch_array($pre_check_dates);
-       		
+       		echo $date_exist;
        		/*$date_exist = 0;
        		$check_dates = 0;*/
 				$a_time_slots = "";
