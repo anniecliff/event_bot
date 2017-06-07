@@ -917,7 +917,7 @@ function getAvailableTimeSlot()
 						}				
 					
 					}*/
-					if($flag = 0)
+					if($flag == 0)
 					{
 						$result_loc = "Time slot already booked";
 					}
