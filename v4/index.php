@@ -1324,10 +1324,11 @@ $pax = "4";
 	
 					// update new booking
 					$book_id =update_facilities_booking($cid, $loc_id, $facility_type, $pax, $bookdate, $starth, $num_slots, $addon_product_name, $p_vo_id, $p_inv_id, $agent);
+					update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
 		
 					$msg = "Booking Completed. Booking ID is ".$book_id;
 			
-					$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
+
 		
 		}
 		else
@@ -1668,10 +1669,44 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 		
 		// check to use check week day start time or weekend		
 		$check_is_Sat = isSaturday($bookdate);
+			while($row = mysqli_fetch_array($result) )
+     	{
+     		$f_fac_start_time = $row['facility_start_time'];
+     		$f_fac_end_time   = $row['facility_end_time'];
+     		$f_week_start_time = $row['facility_weekend_start_time'];
+			$f_week_end_time   = $row['facility_weekend_end_time'];
+     	}
+		// not sat
 		if ($check_is_Sat == false)
 				{
+			        
+			        /*	$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
+			        				        //	echo $query;
+			        	$result = getData($query);
+			        	while($row = mysqli_fetch_array($result) )
+			        	{
+			        		
+			        	}*/
+			        	$f_start_time = $f_fac_start_time;
+			        		$f_end_time   = $f_fac_end_time;
+			        	
+				}
+				else
+				{
+			        $f_start_time = $f_week_start_time;
+			        		$f_end_time   = $f_week_end_time ;
+			        	/*$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
+			        	//echo $query;
+			        	$result = getData($query);
+			        	while($row = mysqli_fetch_array($result) )
+			        	{
+			        		
+			        	}*/
+				}
+		/*if ($check_is_Sat == false)
+				{
 			        	/*$f_start_time = $bookingfunc->get_facilities_booking_weekdays_start_time($loc_id);
-			        	$f_end_time = $bookingfunc->get_facilities_booking_weekdays_end_time($loc_id);*/
+			        	$f_end_time = $bookingfunc->get_facilities_booking_weekdays_end_time($loc_id);
 			        	$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
 			        	$result = getData($query);
 			        	while($row = mysqli_fetch_array($result) )
@@ -1691,7 +1726,7 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 			        		$f_start_time = $row['facility_weekend_start_time'];
 			        		$f_end_time   = $row['facility_weekend_end_time'];
 			        	}
-				}
+				}*/
 		
 		// check if 24/7
 		if ($f_start_time == 100 && $f_end_time == 2400)
@@ -1767,7 +1802,7 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 
 			// do update
 
-			$update_booking_stmt = "UPDATE facilities_booking SET ".$time_slot_sql_field_stmt." WHERE id = '".$date_entry_id["id"]."'";
+			$update_booking_stmt = "UPDATE facilities_booking SET ".$time_slot_sql_field_stmt." WHERE id = '".$date_entry_id."'";
 						//echo $update_booking_stmt;
 
 			$update_booking_result = setData($update_booking_stmt);
