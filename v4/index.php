@@ -802,8 +802,8 @@ function getAvailableTimeSlot()
 			$time =explode(":",$booktime);
 			//print_r($time);
 			$flag=0;
-								$checktime = $time[0].$time[1];
-			
+			$checktime = $time[0].$time[1];
+								echo "Check time".$checktime;
 				if ($facilities == 2 || $facilities == 4)
 		      {
 		                // office suite and flexi office all same type
@@ -857,7 +857,7 @@ function getAvailableTimeSlot()
        		$date_exist = 0;
        		$check_dates = 0;
 				$a_time_slots = "";
-				echo "fstartime ".$f_start_time;
+
 				if ($date_exist != 0)
 				{
 			
@@ -892,12 +892,12 @@ function getAvailableTimeSlot()
 				}
 				
 				
-					$checktime = $time[0].$time[1];
+					//$checktime = $time[0].$time[1];
 					$time_slots = explode(" ",$a_time_slots);
 					print_r($a_time_slots);
 					echo "<pre>";
 					print_r($time_slots);
-					echo "Check time".$checktime;
+
 					foreach($time_slots as $avail)
 					{
 						if($checktime == $avail)
