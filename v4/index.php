@@ -1095,7 +1095,7 @@ function getBookingDetails($cid,$bookid)
 								$loc_id = $r1['location_id'];
 						
 						}
-						echo $query3;
+					//	echo $query3;
 						//$loc_id=14;
 //						$loc_id = $bookingfunc->get_location_id_via_booking_table($data["facilities_type"], $data["book_date"], $starth, $data["book_id"]);
 						$vo_name = getVOName($loc_id);
@@ -1255,7 +1255,7 @@ $pax = "4";
 
 	// check if valid booking
 	$chk_valid_booking = check_valid_facilities_booking_v2($loc_id, $room_book_type, $bookdate, $starth, $num_slots, $m_facilities_id);
-	echo $chk_valid_booking;
+	//echo $chk_valid_booking;
 	
 			$meeting_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
 			
@@ -1508,10 +1508,10 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 		$chk_data_r = "SELECT id FROM facilities_booking WHERE facilities_type=".$facility_type." AND location_id=".$loc_id." AND facility_id=".$facility_id." AND book_date='".$bookdate."'";
 		
 		$rskdata =getData($chk_data_r);
-		echo $chk_data_r;
+		//echo $chk_data_r;
 		//$fchk_date =0;
 		$fchk_date = mysqli_num_rows($rskdata);
-		echo $fchk_date;
+		//echo $fchk_date;
 		if ($fchk_date == 0)
 		{
 			// New entry. Valid
@@ -1527,7 +1527,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 				$date_entry_id = $r['id'];
 			
 			}
-			echo "Date entry id".$date_entry_id;
+		//	echo "Date entry id".$date_entry_id;
 			//$date_entry_id = mysqli_fetch_array($chk_data_r);
 						
 			$pstarttime = trim($starttime);
@@ -1565,7 +1565,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 				{
 					// do insert
 					$data_q = "SELECT id FROM facilities_booking WHERE ".$time_slot_sql_field_stmt." AND id='".$date_entry_id."'"; 
-					echo $data_q;
+					//echo $data_q;
 					$data_r = getData($data_q);
 					$q_count = mysqli_num_rows($data_r);
 				
