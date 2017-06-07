@@ -798,7 +798,7 @@ function getAvailableTimeSlot()
 			$facilities = "1";
 			$facility_id = "52";
 			$time =explode(":",$booktime);
-			print_r($time);
+			//print_r($time);
 			$flag=0;
 			
 			
