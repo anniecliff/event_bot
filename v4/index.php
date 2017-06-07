@@ -858,20 +858,20 @@ function getAvailableTimeSlot()
 				if ($date_exist != 0)
 				{
 			
-					$loop_time = $f_start_time;
+					$loop_time = $time;
 			
 					
 			   		while ($loop_time != $f_end_time)
 			   		{
 			    	   		$period_end_time = $loop_time + 100;
 					
-						if ($check_dates[$loop_time] == 0)
-						{
-							$a_time_slots .= $loop_time."-". $period_end_time." ";
-			   		}
-			    	   $loop_time = $loop_time + 100;
-							
-					}
+							if ($check_dates[$loop_time] == 0)
+							{
+								$a_time_slots .= $loop_time."-". $period_end_time." ";
+				   		}
+				    	   $loop_time = $loop_time + 100;
+								
+						}
 				}
 				else
 				{
