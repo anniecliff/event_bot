@@ -1266,7 +1266,7 @@ $pax = "4";
 		/*	
 			}				
 			*/
-	
+/*	
 	$p_query = "SELECT * FROM products WHERE product_id= ".$meeting_info["product_id"];
 	//echo $p_query;
 	$p_result  = getData($p_query);
@@ -1274,7 +1274,7 @@ $pax = "4";
 	{
 		$product_default_unit_price =$r11['price'];
 	}
-	
+	*/
 	
 	$addon_product_name = "Non";
 	
