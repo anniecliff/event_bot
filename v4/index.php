@@ -802,7 +802,7 @@ function getAvailableTimeSlot()
 			$time =explode(":",$booktime);
 			//print_r($time);
 			$flag=0;
-			
+								$checktime = $time[0].$time[1];
 			
 				if ($facilities == 2 || $facilities == 4)
 		      {
@@ -847,7 +847,7 @@ function getAvailableTimeSlot()
 			        	}
 				}
 			
-				$q1  =     "SELECT * FROM facilities_booking WHERE facilities_type='$facilities' AND `".$time."`= 0 AND location_id='$loc_id' AND book_date='$bookdate'";
+				$q1  =     "SELECT * FROM facilities_booking WHERE facilities_type='$facilities' AND `".$checktime."`= 0 AND location_id='$loc_id' AND book_date='$bookdate'";
 				//AND facility_id='$facility_id'
 				echo $q1;
 				$pre_check_dates  = getData($q1);
