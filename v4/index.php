@@ -1152,26 +1152,26 @@ function getBookingDetails($cid,$bookid)
 }
 
 
-function doBookFacility($bookdate,$loc_id,$starttimeslot,$cid,$numhours)
-//function doBookFacility()
+//function doBookFacility($bookdate,$loc_id,$starttimeslot,$cid,$numhours)
+function doBookFacility()
 {
 
 
 $agent = "-1";
 
 
-/*$starttimeslot = "1800-2100";
+$starttimeslot = "1800-2100";
 $cid = "10002";
 $token = "ffe5c3517bcac0fc7c3261283988e93303bab637";
 $bookdate = "2017-07-13";
-$loc_id = "14";*/
+$loc_id = "14";
 $facilities_id = "34";
-/*$numhours = "3";
+$numhours = "3";
 $pre_start_hour = explode("-",$starttimeslot);
-$starth = $pre_start_hour[0];*/
+$starth = $pre_start_hour[0];
 $addon = "Non";
 $pax = "4";
-$starth=$starttimeslot;
+//$starth=$starttimeslot;
 
 	//$facilities_id = "35";
 	$cnt = 0;
