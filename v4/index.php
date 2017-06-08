@@ -1070,7 +1070,7 @@ function getBookingList()
                	$booking_history = getData($query);
                	/*if(mysqli_num_rows($booking_history) >0)
                	{*/
-       		      while($data = mysqli_fetch_array($booking_history))
+       		      /*while($data = mysqli_fetch_array($booking_history))
 				      {
 								$data_r = "SELECT facilities_type FROM facilities_type WHERE id= ".$data["facilities_type"];
                			$fdata = getData($data_r);
@@ -1123,10 +1123,10 @@ function getBookingList()
 					               		    );
 					
 								$cnt++;
-					}
+					}*/
 					//}
-					$f_book = array("Facility Booking List" => $bookobj);
-					return $f_book;
+				/*	$f_book = array("Facility Booking List" => $bookobj);
+					return $f_book;*/
 			
 			 /*  }
 			   else
