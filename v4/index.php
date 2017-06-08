@@ -1063,9 +1063,10 @@ function getBookingList()
 			   if( $token == $auth_token )
 			   {
 			*/
+			$book_date = "2017-07-14";
 						$mtdate = date("2015-09-01", time());
 
-               	$query = "SELECT * FROM client_booking_log WHERE client_id='$cid' AND status='1' AND book_date >= DATE(NOW())";
+               	$query = "SELECT * FROM client_booking_log WHERE client_id='$cid' AND status='1' AND book_date = '".$book_date."'";
                	echo $query;
                	$booking_history = getData($query);
                	if(mysqli_num_rows($booking_history) >0)
@@ -1082,7 +1083,7 @@ function getBookingList()
 								}               			
 //								$loc_id = $clientfunc->get_client_booking_location($data["book_date"], $data["book_id"], $data["facilities_type"], $data["book_start_time"]);
 								
-								$q_stmt = "SELECT location_id FROM facilities_booking WHERE book_date='".$data["book_date"]."' AND '".$data["book_start_time"]."' = '".$data["book_id"]."' AND facilities_type='".$data["facilities_type"]."'";
+								$q_stmt = "SELECT location_id FROM facilities_booking WHERE book_date='".$data["book_date"]."' AND `".$data["book_start_time"]."` = '".$data["book_id"]."' AND facilities_type='".$data["facilities_type"]."'";
 								echo $q_stmt;								
 								$res= getData($q_stmt);
 //								print_r($res);
