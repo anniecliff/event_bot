@@ -851,11 +851,11 @@ function getAvailableTimeSlot()
 			
 				$q1  =     "SELECT * FROM facilities_booking WHERE facilities_type='$facilities' AND `$checktime`= 0 AND location_id='$loc_id' AND book_date='$bookdate'";
 				//AND facility_id='$facility_id'
-				//echo $q1;
+				echo $q1;
 				$pre_check_dates  = getData($q1);
 				$date_exist = mysqli_num_rows($pre_check_dates);
        		$check_dates = mysqli_fetch_array($pre_check_dates);
-       		//echo $date_exist;
+       		echo $date_exist;
        		/*$date_exist = 0;
        		$check_dates = 0;*/
 				$a_time_slots = "";
