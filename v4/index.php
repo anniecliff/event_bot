@@ -148,7 +148,8 @@ $starth=$checktime;
 			{
 					// all bill
 					// hours left < booked hours
-					if ($conf_hours_left > 0)
+					update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
+					/*if ($conf_hours_left > 0)
 					{
 						$num_hour_deduct = $conf_hours_left - $num_hours;
 						$f_hours_deduct = abs($num_hour_deduct); // get absolute number no negative sign the raminder need to bill
@@ -161,7 +162,7 @@ $starth=$checktime;
 						// so already negative. just continue deduct the $num_hours and charge
 					   update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
 						//$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $num_hours, $bookdate, $facility_location, $meeting_info["price"]);
-					}
+					}*/
 					
 				
 					$p_vo_id = 0;
@@ -228,24 +229,14 @@ $booked = $f_msg;
 	else if($action == "getBookingDetails")
 	{
 		
-		/*$search = $parameters["search"];
-		$time   = $parameters["time"];
-		$date   = $parameters["date"];*/
+		
 		$cid   = $parameters["Clientid"];
 		$book_id =$parameters["BookId"];
-		/*$numhours   = $parameters["numhours"];
-		
-		$res_loc = searchCenter1($search);
-		$booktime =explode(":",$time);
-		$checktime = $booktime[0].$booktime[1];*/
+	
 		$booked = getBookingDetails($cid,$book_id);
 		
-		//$booked = "Hiiiii".$cid." my book id is".$book_id;
-		//$speech = $booked;
 		$source  = "v4";
-		/*$next_context = "location";
-		$param1value = $res_loc;
-		$param2value = 0;*/
+
 		$context = array("name" => "book");
 
 		$json = json_encode([
@@ -270,16 +261,7 @@ $booked = $f_msg;
 		  		 ]);
 		
 	}	  
-	
-/*	$context = array("name" => "search");
-	
-	$json = json_encode([
-	                'speech'   => "Hello World",
-	                'displayText' => "Hello World",
-	                'data' => [],
-	                'contextOut' => [$context],
-	                'source' => "v4",
-	  		 ]);*/ 
+ 
 	ob_end_clean();
 	echo $json;
 
