@@ -79,12 +79,13 @@ Flight::route('POST /', function()
 		$numhours   = $parameters["numhours"];
 		$search = $parameters["search"];
 		$time   = $parameters["time"];
-		
+		$hours  = explode(" ",$numhours);
+		$numhours1 = $hours[0];
 		
 		$res_loc = searchCenter1($search);
 		$booktime =explode(":",$time);
 		$checktime = $booktime[0].$booktime[1];
-		$booked = doBookFacility($date,$res_loc,$checktime,$cid,$numhours);
+		$booked = doBookFacility($date,$res_loc,$checktime,$cid,$numhours1);
 		//$speech = $res_loc;
 		$source  = "v4";
 		/*$next_context = "location";
@@ -1328,7 +1329,7 @@ $starth=$starttimeslot;
 		}
 		else
 		{
-					$msg = "Booking Failed. Please try again or contact our Customer Care Team.".$conf_hours_left;
+					$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
 			
 		}
 		$f_msg = $msg." ".$addon_msg;
