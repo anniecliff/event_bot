@@ -1334,7 +1334,7 @@ $pax = "4";
 
 		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
 
-   }
+   /*}
    /*else
    {
         $f_msg = "Failed Booking.";
