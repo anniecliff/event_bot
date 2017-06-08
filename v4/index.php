@@ -1307,7 +1307,7 @@ $pax = "4";
 	
 					// update new booking
 					$book_id =update_facilities_booking($cid, $loc_id, $facility_type, $pax, $bookdate, $starth, $num_slots, $addon_product_name, $p_vo_id, $p_inv_id, $agent);
-					update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
+					update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $facilities_id, $bookdate, $starth, $num_slots);
 		
 					$msg = "Booking Completed. Booking ID is ".$book_id;
 			
@@ -1723,19 +1723,19 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 		
 		// check if date exist for exact location and facilities type
 		$q3 = "SELECT * FROM facilities_booking WHERE facility_id=".$facility_id." AND location_id=".$locid." AND book_date='".$bookdate."'";
-		echo $q3;
+	//	echo $q3;
 		$chk_data_r = getData($q3);
-	//	$fchk_date = mysqli_num_rows($chk_data_r);
-		/*while($resk = mysqli_fetch_array($chk_data_r))
+		$fchk_date = mysqli_num_rows($chk_data_r);
+		while($resk = mysqli_fetch_array($chk_data_r))
 		{
 		
 				$date_entry_id = $resk['id'];
 		
-		}*/
+		}
 
 		$pstarttime = $starttime;
-		$fchk_date == 0;	
-		$date_entry_id=1231232;	
+		/*$fchk_date == 0;	
+		$date_entry_id=1231232;	*/
 		// 1 already exist 0 does not exist
 		if ($fchk_date == 0)
 		{
