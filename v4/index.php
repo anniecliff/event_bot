@@ -75,21 +75,22 @@ Flight::route('POST /', function()
 	else if($action == "doBookFacility")
 	{
 		$cid   = $parameters["Clientid"];
-		$date   = $parameters["date"];
+		$bookdate   = $parameters["date"];
 		$numhours   = $parameters["numhours"];
 		$search = $parameters["search"];
 		$time   = $parameters["time"];
 		$hours  = explode(" ",$numhours);
 		$numhours1 = $hours[0];
 		
-		$res_loc = searchCenter1($search);
+		$loc_id = searchCenter1($search);
+		//$loc_id =$res_loc;
 		$booktime =explode(":",$time);
 		$checktime = $booktime[0].$booktime[1];
-		//$booked = doBookFacility($date,$res_loc,$checktime,$cid,$numhours1);
+		//$booked = ($date,$res_loc,$checktime,$cid,$numhours1);
 		//$speech = $res_loc;
 		
 /* *******************Code *************************/		
-		
+		//$bookdate,$loc_id,$starttimeslot,$cid,$numhours
 		
 		$agent = "-1";
 
