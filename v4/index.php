@@ -76,11 +76,11 @@ Flight::route('POST /', function()
 	{
 		$cid   = $parameters["Clientid"];
 		$bookdate   = $parameters["date"];
-		$numhours   = $parameters["numhours"];
+		$numhours1   = $parameters["numhours"];
 		$search = $parameters["search"];
 		$time   = $parameters["time"];
-		$hours  = explode(" ",$numhours);
-		$numhours1 = $hours[0];
+		$hours  = explode(" ",$numhours1);
+		$numhours = $hours[0];
 		
 		$loc_id = searchCenter1($search);
 		//$loc_id =$res_loc;
