@@ -1734,7 +1734,7 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 		}
 
 		$pstarttime = $starttime;
-		$fchk_date == 0		
+		$fchk_date == 0;		
 		// 1 already exist 0 does not exist
 		if ($fchk_date == 0)
 		{
