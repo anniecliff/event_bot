@@ -1652,7 +1652,7 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 		
 		// check to use check week day start time or weekend		
 		$check_is_Sat = isSaturday($bookdate);
-		$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
+		$query  = "SELECT * FROM location_info WHERE id='$locid'";
 			        				        //	echo $query;
      	$result = getData($query);
 		while($row = mysqli_fetch_array($result) )
