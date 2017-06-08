@@ -85,8 +85,130 @@ Flight::route('POST /', function()
 		$res_loc = searchCenter1($search);
 		$booktime =explode(":",$time);
 		$checktime = $booktime[0].$booktime[1];
-		$booked = doBookFacility($date,$res_loc,$checktime,$cid,$numhours1);
+		//$booked = doBookFacility($date,$res_loc,$checktime,$cid,$numhours1);
 		//$speech = $res_loc;
+		
+/* *******************Code *************************/		
+		
+		
+		$agent = "-1";
+
+
+
+$addon = "Non";
+$pax = "4";
+$starth=$checktime;
+
+	//$facilities_id = "35";
+	$cnt = 0;
+	$msg = "";
+	$addon_msg = "";
+	$inv_msg = "";
+
+	$data_r = "SELECT * FROM client_facilities_core WHERE client_id=".$cid;
+		//echo $data_r;
+	$fdata = getData($data_r);
+	while($row = mysqli_fetch_array($fdata))
+	{
+		 $conf_hours_left = $row["meeting_room_hours_left"];
+		 $f_ref_id= $row["id"];
+	
+	}
+
+	
+	$q= "Select * from location_facilities_v2 where vo_id =".$loc_id." and facility_type =1";
+	$res = getData($q);
+	$count = mysqli_num_rows($res);
+	if($count > 0)
+	{
+		while($row = mysqli_fetch_array($res))
+		{
+			$facilities_id = $row['id'];
+					
+		}		
+		
+	}
+
+	$facility_type=1;
+	$facility_name="Meeting Room";
+	$room_book_type = 1;
+	
+	$invid = 0;
+	
+	//$prep_num_hours = explode("|", $_POST["numslots"]);
+	
+	$num_hours = $numhours;
+	$num_slots = $numhours;
+
+	$addon_product_name = "Non";
+	
+		// deduct hours only invoice addon
+			if ($conf_hours_left >= $num_hours)
+			{
+					// all bill
+					// hours left < booked hours
+					if ($conf_hours_left > 0)
+					{
+						$num_hour_deduct = $conf_hours_left - $num_hours;
+						$f_hours_deduct = abs($num_hour_deduct); // get absolute number no negative sign the raminder need to bill
+						update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
+						//$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $f_hours_deduct, $bookdate, $facility_location, $meeting_info["price"]);
+					}
+					else
+					{
+	
+						// so already negative. just continue deduct the $num_hours and charge
+					   update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
+						//$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $num_hours, $bookdate, $facility_location, $meeting_info["price"]);
+					}
+					
+				
+					$p_vo_id = 0;
+						$p_inv_id = 0;
+	
+					// update new booking
+					$book_id =update_facilities_booking($cid, $loc_id, $facility_type, $pax, $bookdate, $starth, $num_slots, $addon_product_name, $p_vo_id, $p_inv_id, $agent);
+					update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $facilities_id, $bookdate, $starth, $num_slots);
+		
+					$msg = "Booking Completed. Booking ID is ".$book_id;
+			
+
+		
+		}
+		else
+		{
+					$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
+			
+		}
+		$f_msg = $msg." ".$addon_msg;
+		
+
+$booked = $f_msg;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+/* ************************ Code Ends here *************************/		
 		$source  = "v4";
 		/*$next_context = "location";
 		$param1value = $res_loc;
