@@ -1276,14 +1276,14 @@ $pax = "4";
 						$num_hour_deduct = $conf_hours_left - $num_hours;
 						$f_hours_deduct = abs($num_hour_deduct); // get absolute number no negative sign the raminder need to bill
 						update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-						$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $f_hours_deduct, $bookdate, $facility_location, $meeting_info["price"]);
+						//$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $f_hours_deduct, $bookdate, $facility_location, $meeting_info["price"]);
 					}
 					else
 					{
 	
 						// so already negative. just continue deduct the $num_hours and charge
 					   update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-						$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $num_hours, $bookdate, $facility_location, $meeting_info["price"]);
+						//$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $num_hours, $bookdate, $facility_location, $meeting_info["price"]);
 					}
 					
 					//$f_inv = $client_void."-".$invid;
