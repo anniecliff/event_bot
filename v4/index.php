@@ -1328,7 +1328,7 @@ $starth=$starttimeslot;
 		}
 		else
 		{
-					$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
+					$msg = "Booking Failed. Please try again or contact our Customer Care Team.".$conf_hours_left;
 			
 		}
 		$f_msg = $msg." ".$addon_msg;
