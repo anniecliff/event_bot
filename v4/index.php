@@ -123,7 +123,7 @@ Flight::route('POST /', function()
 		/*$next_context = "location";
 		$param1value = $res_loc;
 		$param2value = 0;*/
-		$context = array("name" => "bookingdetails");
+		$context = array("name" => "book");
 
 		$json = json_encode([
 	                'speech'   => $booked,
