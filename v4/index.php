@@ -1304,7 +1304,7 @@ $starth=$starttimeslot;
 	
 				//	$inv_msg = "Invoice". $invid." Created for". $facility_location." facility Additional Hours Usage.";
 					
-					if ($invid != 0)
+					/*if ($invid != 0)
 					{
 						$pre_in = explode("-", $invid);
 						$p_vo_id = $pre_in[0];
@@ -1315,8 +1315,9 @@ $starth=$starttimeslot;
 						$p_vo_id = 0;
 						$p_inv_id = 0;
 						
-					}
-					
+					}*/
+					$p_vo_id = 0;
+						$p_inv_id = 0;
 	
 					// update new booking
 					$book_id =update_facilities_booking($cid, $loc_id, $facility_type, $pax, $bookdate, $starth, $num_slots, $addon_product_name, $p_vo_id, $p_inv_id, $agent);
@@ -1616,12 +1617,14 @@ function update_client_facility_booking_hours($cid, $num_hours, $num_hours_left,
 	{
 				$num_hour_deduct= 0;
 				$num_hour_deduct = $num_hours_left - $num_hours;
-				if ($ftype == 1)
+				$update_booking_stmt = "UPDATE client_facilities_core SET meeting_room_hours_left=".$num_hour_deduct." WHERE status='1' AND 
+client_id = '".$cid."' AND id='$f_ref_id'";
+				/*if ($ftype == 1)
 				{
 					$update_booking_stmt = "UPDATE client_facilities_core SET meeting_room_hours_left=".$num_hour_deduct." WHERE status='1' AND 
 client_id = '".$cid."' AND id='$f_ref_id'";
-				}
-				elseif ($ftype == 2)
+				}*/
+				/*elseif ($ftype == 2)
 				{
 					$update_booking_stmt = "UPDATE client_facilities_core SET day_office_hours_left=".$num_hour_deduct." WHERE status='1' AND client_id 
 = '".$cid."' AND id='$f_ref_id'";
@@ -1640,7 +1643,7 @@ client_id = '".$cid."' AND id='$f_ref_id'";
 				{
 						$update_booking_stmt = "UPDATE client_facilities_core SET discussion_room_hours_left=".$num_hour_deduct." WHERE status='1' 
 AND client_id = '".$cid."' AND id='$f_ref_id'";
-				}
+				}*/
 
 				$update_booking_result = setData($update_booking_stmt);
 }
