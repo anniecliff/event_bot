@@ -1726,15 +1726,16 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 		echo $q3;
 		$chk_data_r = getData($q3);
 	//	$fchk_date = mysqli_num_rows($chk_data_r);
-		while($resk = mysqli_fetch_array($chk_data_r))
+		/*while($resk = mysqli_fetch_array($chk_data_r))
 		{
 		
 				$date_entry_id = $resk['id'];
 		
-		}
+		}*/
 
 		$pstarttime = $starttime;
-		$fchk_date == 0;		
+		$fchk_date == 0;	
+		$date_entry_id=1231232;	
 		// 1 already exist 0 does not exist
 		if ($fchk_date == 0)
 		{
