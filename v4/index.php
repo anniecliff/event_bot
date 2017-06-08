@@ -1046,6 +1046,7 @@ function getBookingList()
 {
 
 			$agent = "10000";
+			$cid="10002";
 			
 		/*	$cid = $_POST["cid"];
 			$token = $_POST["token"];*/
