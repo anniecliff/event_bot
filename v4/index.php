@@ -76,7 +76,7 @@ Flight::route('POST /', function()
 	{
 		
 		$cid = $parameters["clientid"];
-		$book_date   = $parameters["date"];
+		$book_date   = $parameters["book_date"];
 		
 		$speech = getBookingList($cid,$book_date);
 
@@ -87,8 +87,8 @@ Flight::route('POST /', function()
 		$context = array("name" => "details");
 
 		$json = json_encode([
-	                'speech'   => $slots,
-	                'displayText' => $slots,
+	                'speech'   => $speech,
+	                'displayText' => $speech,
 	                'data' => [],
 	                'contextOut' => [$context],
 	                'source' => $source
