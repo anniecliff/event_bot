@@ -1723,9 +1723,9 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 		
 		// check if date exist for exact location and facilities type
 		$q3 = "SELECT * FROM facilities_booking WHERE facility_id=".$facility_id." AND location_id=".$locid." AND book_date='".$bookdate."'";
-		
+		echo $q3;
 		$chk_data_r = getData($q3);
-		$fchk_date = mysqli_num_rows($chk_data_r);
+	//	$fchk_date = mysqli_num_rows($chk_data_r);
 		while($resk = mysqli_fetch_array($chk_data_r))
 		{
 		
@@ -1734,7 +1734,7 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 		}
 
 		$pstarttime = $starttime;
-				
+		$fchk_date == 0		
 		// 1 already exist 0 does not exist
 		if ($fchk_date == 0)
 		{
