@@ -848,53 +848,65 @@ function getAvailableTimeSlot()
 			        		$f_end_time   = $row['facility_weekend_end_time'];
 			        	}
 				}
-			
-				$q1  =     "SELECT * FROM facilities_booking WHERE facilities_type='$facilities' AND `$checktime`= 0 AND location_id='$loc_id' AND book_date='$bookdate'";
+				
+				
+				$timequery = "SELECT * FROM facilities_booking WHERE facilities_type='$facilities'AND location_id='$loc_id' AND book_date='$bookdate'";
+				$time_result = getData($timequery);
+				$num_rows_time = mysqli_num_rows($time_result);
+				if($num_rows_time > 0)
+				{
+				
+						$q1  =     "SELECT * FROM facilities_booking WHERE facilities_type='$facilities' AND `$checktime`= 0 AND location_id='$loc_id' AND book_date='$bookdate'";
 				//AND facility_id='$facility_id'
-				echo $q1;
-				$pre_check_dates  = getData($q1);
-				$date_exist = mysqli_num_rows($pre_check_dates);
-       		$check_dates = mysqli_fetch_array($pre_check_dates);
-       		echo $date_exist;
-       		/*$date_exist = 0;
-       		$check_dates = 0;*/
-				$a_time_slots = "";
-
-				if ($date_exist != 0)
-				{
-			
-					$flag =1;
-					/*$loop_time = $time;
-			
+						//echo $q1;
+						$pre_check_dates  = getData($q1);
+						$date_exist = mysqli_num_rows($pre_check_dates);
+		       		$check_dates = mysqli_fetch_array($pre_check_dates);
+		       	//	echo $date_exist;
+		       		/*$date_exist = 0;
+		       		$check_dates = 0;*/
+						$a_time_slots = "";
+		
+						if ($date_exist != 0)
+						{
 					
-			   		while ($loop_time != $f_end_time)
-			   		{
-			    	   		$period_end_time = $loop_time + 100;
+							$flag =1;
+							/*$loop_time = $time;
 					
-							if ($check_dates[$loop_time] == 0)
-							{
-								$a_time_slots .= $loop_time."-". $period_end_time." ";
-				   		}
-				    	   $loop_time = $loop_time + 100;
-								
-						}*/
+							
+					   		while ($loop_time != $f_end_time)
+					   		{
+					    	   		$period_end_time = $loop_time + 100;
+							
+									if ($check_dates[$loop_time] == 0)
+									{
+										$a_time_slots .= $loop_time."-". $period_end_time." ";
+						   		}
+						    	   $loop_time = $loop_time + 100;
+										
+								}*/
+						}
+						else
+						{
+							/*$loop_time = $f_start_time;
+					
+					   		while ($loop_time != $f_end_time)
+					   		{
+					    	   		$period_end_time = $loop_time + 100;
+		                  
+										$a_time_slots .= $loop_time."-". $period_end_time." ";
+					
+					           		$loop_time = $loop_time + 100;
+					
+					   		}*/
+					   		
+					   		$flag =0;
+						}
+						
+				
 				}
-				else
-				{
-					/*$loop_time = $f_start_time;
-			
-			   		while ($loop_time != $f_end_time)
-			   		{
-			    	   		$period_end_time = $loop_time + 100;
-                  
-								$a_time_slots .= $loop_time."-". $period_end_time." ";
-			
-			           		$loop_time = $loop_time + 100;
-			
-			   		}*/
-			   		
-			   		$flag =0;
-				}
+				else { $flag =1;}
+				
 				
 				
 					//$checktime = $time[0].$time[1];
