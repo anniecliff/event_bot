@@ -74,12 +74,12 @@ Flight::route('POST /', function()
 	}
 	else if($action == "doBookFacility")
 	{
-		
+		$cid   = $parameters["Clientid"];
+		$date   = $parameters["date"];
+		$numhours   = $parameters["numhours"];
 		$search = $parameters["search"];
 		$time   = $parameters["time"];
-		$date   = $parameters["date"];
-		$cid   = $parameters["Clientid"];
-		$numhours   = $parameters["numhours"];
+		
 		
 		$res_loc = searchCenter1($search);
 		$booktime =explode(":",$time);
@@ -1250,7 +1250,7 @@ $starth=$starttimeslot;
 	$facility_location =getVOName($loc_id);
 
 	// check if valid booking
-	$chk_valid_booking = check_valid_facilities_booking_v2($loc_id, $room_book_type, $bookdate, $starth, $num_slots, $facilities_id);
+	//$chk_valid_booking = check_valid_facilities_booking_v2($loc_id, $room_book_type, $bookdate, $starth, $num_slots, $facilities_id);
 	//echo $chk_valid_booking;
 	$meeting_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
 			
@@ -1274,8 +1274,8 @@ $starth=$starttimeslot;
 	$addon_product_name = "Non";
 	
 	
-	if( $chk_valid_booking == 1)
-	{
+	/*if( $chk_valid_booking == 1)
+	{*/
 		//echo "echo hours left".$conf_hours_left;
 		// deduct hours only invoice addon
 			if ($conf_hours_left >= $num_hours)
@@ -1326,11 +1326,11 @@ $starth=$starttimeslot;
 
 		
 		}
-		else
+		/*else
 		{
 					$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
 			
-		}
+		}*/
 
 		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
 
