@@ -146,25 +146,10 @@ $starth=$checktime;
 		// deduct hours only invoice addon
 			if ($conf_hours_left >= $num_hours)
 			{
-					// all bill
-					// hours left < booked hours
-					update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-					/*if ($conf_hours_left > 0)
-					{
-						$num_hour_deduct = $conf_hours_left - $num_hours;
-						$f_hours_deduct = abs($num_hour_deduct); // get absolute number no negative sign the raminder need to bill
-						update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-						//$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $f_hours_deduct, $bookdate, $facility_location, $meeting_info["price"]);
-					}
-					else
-					{
-	
-						// so already negative. just continue deduct the $num_hours and charge
-					   update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-						//$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $num_hours, $bookdate, $facility_location, $meeting_info["price"]);
-					}*/
-					
-				
+					$num_hour_deduct= 0;
+					$num_hour_deduct = $conf_hours_left - $num_hours;
+					$update_booking_stmt = "UPDATE client_facilities_core SET meeting_room_hours_left=".$num_hour_deduct." WHERE status='1' AND client_id = '".$cid."' AND id='$f_ref_id'";
+					$update_booking_result = setData($update_booking_stmt);
 					$p_vo_id = 0;
 						$p_inv_id = 0;
 	
