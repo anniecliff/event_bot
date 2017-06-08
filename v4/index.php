@@ -1069,108 +1069,79 @@ function getBookingList($cid,$book_date)
 {
 
 			$agent = "10000";
-			//$cid="10002";
-			
-		/*	$cid = $_POST["cid"];
-			$token = $_POST["token"];*/
-			
-			/*$cid = "10002";
-			$token = "50b2061fc834cedec6def1affd60e998";*/
-			
-			//$auth_token =  portal_getUserToken($cid);
-			
-			$cnt = 0;
-		/*	
-			if ($token != "" || $cid != "")
-			{
-			   if( $token == $auth_token )
-			   {
-			*/
-			//$book_date = "2017-07-14";
-						$mtdate = date("2015-09-01", time());
+		   $cnt = 0;
+		   $mtdate = date("2015-09-01", time());
 
-               	$query = "SELECT * FROM client_booking_log WHERE client_id='$cid' AND status='1' AND book_date = '".$book_date."'";
-               	//echo $query;
-               	$booking_history = getData($query);
-               	if(mysqli_num_rows($booking_history) >0)
-               	{
-       		      while($data = mysqli_fetch_array($booking_history))
-				      {
-								$data_r = "SELECT facilities_type FROM facilities_type WHERE id= ".$data["facilities_type"];
-							//	echo $data_r;
-               			$fdata = getData($data_r);
-								while($row1 = mysqli_fetch_array($fdata) ) 
-								{
-									$type_name = $row1['facilities_type'];
-									               			
-								}               			
-//								$loc_id = $clientfunc->get_client_booking_location($data["book_date"], $data["book_id"], $data["facilities_type"], $data["book_start_time"]);
-								
-								$q_stmt = "SELECT location_id FROM facilities_booking WHERE book_date='".$data["book_date"]."' AND `".$data["book_start_time"]."` = '".$data["book_id"]."' AND facilities_type='".$data["facilities_type"]."'";
-								//echo $q_stmt;								
-								$res= getData($q_stmt);
+      	$query = "SELECT * FROM client_booking_log WHERE client_id='$cid' AND status='1' AND book_date = '".$book_date."'";
+      	//echo $query;
+      	$booking_history = getData($query);
+      	if(mysqli_num_rows($booking_history) >0)
+      	{
+ 		      while($data = mysqli_fetch_array($booking_history))
+	      {
+					$data_r = "SELECT facilities_type FROM facilities_type WHERE id= ".$data["facilities_type"];
+				//	echo $data_r;
+      			$fdata = getData($data_r);
+					while($row1 = mysqli_fetch_array($fdata) ) 
+					{
+						$type_name = $row1['facilities_type'];
+						               			
+					}               			
+
+					
+					$q_stmt = "SELECT location_id FROM facilities_booking WHERE book_date='".$data["book_date"]."' AND `".$data["book_start_time"]."` = '".$data["book_id"]."' AND facilities_type='".$data["facilities_type"]."'";
+					//echo $q_stmt;								
+					$res= getData($q_stmt);
 //								print_r($res);
-								if(mysqli_num_rows($res) >0) 
-								{
-									while($row2 = mysqli_fetch_array($res)) 
-									{
-										$loc_id = $row2['location_id'];
-									               			
-									}  
-								}
-//								$fdata = mysql_fetch_array($data_r)
-//								$loc_id = mysqli_fetch_array($data_r);
-								
-								
-								
-								//$voname = getVOName($loc_id);
-						       
-								$end_time = $data["book_start_time"];
-								$slots = $data["book_hours_slots"];
-					
-								for ($i=0;$i<$slots;$i++)
-								{
-									$end_time = $end_time + 100;
-									if ($end_time == "2400")
-									{
-										$end_time = "0000";
-									}
-								}
-					
-								$timebook = $data["book_start_time"]."-".$end_time;
-								
-								
-								$msg = "Your Booking ID is ".$data["book_id"].". Details for your booking : Location Name - ".$voname.", Facility Name : ".$type_name.", Book Date and Time :".$data["book_date"]." at".$timebook;
-					
-								$bookobj[$cnt] = array(
-						               		      "book id" => $data["book_id"],
-					        	      		         "location name" => $voname,
-									                  "facility name" => $type_name,
-					               			      "book date" => $data["book_date"],
-									                  "time" => $timebook					
-					               		    );
-					
-								$cnt++;
+					if(mysqli_num_rows($res) >0) 
+					{
+						while($row2 = mysqli_fetch_array($res)) 
+						{
+							$loc_id = $row2['location_id'];
+						               			
+						}  
 					}
-					}
-					else{
-					
-							$msg =" Sorry we didnt find any bookings for this date now"; 					
-					
-					}
-					//$f_book = array("Facility Booking List" => $bookobj);
-					return $msg;
 			
-			 /*  }
-			   else
-			   {
-			        return "Login Failed : 1";
-			   }
-			}
-			else
-			{
-			       	return "Login Failed : 1";
-			}*/
+					
+					$voname = getVOName($loc_id);
+			       
+					$end_time = $data["book_start_time"];
+					$slots = $data["book_hours_slots"];
+		
+					for ($i=0;$i<$slots;$i++)
+					{
+						$end_time = $end_time + 100;
+						if ($end_time == "2400")
+						{
+							$end_time = "0000";
+						}
+					}
+		
+					$timebook = $data["book_start_time"]."-".$end_time;
+					
+					
+					$msg = "Your Booking ID is ".$data["book_id"].". Details for your booking : Location Name - ".$voname.", Facility Name : ".$type_name.", Book Date and Time :".$data["book_date"]." at".$timebook;
+		
+					$bookobj[$cnt] = array(
+			               		      "book id" => $data["book_id"],
+		        	      		         "location name" => $voname,
+						                  "facility name" => $type_name,
+		               			      "book date" => $data["book_date"],
+						                  "time" => $timebook					
+		               		    );
+		
+					$cnt++;
+					}
+				}
+				else
+				{
+				
+						$msg =" Sorry we didnt find any bookings for this date now"; 					
+				
+				}
+
+				return $msg;
+			
 }
 
 function getBookingDetails($cid,$bookid)
