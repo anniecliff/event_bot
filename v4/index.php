@@ -72,6 +72,29 @@ Flight::route('POST /', function()
 	        		]);
 	
 	}
+	else if($action == "getBookingList")
+	{
+		
+		$cid = $parameters["clientid"];
+		$book_date   = $parameters["date"];
+		
+		$speech = getBookingList($cid,$book_date);
+
+		$source  = "v4";
+		/*$next_context = "location";
+		$param1value = $res_loc;
+		$param2value = 0;*/
+		$context = array("name" => "details");
+
+		$json = json_encode([
+	                'speech'   => $slots,
+	                'displayText' => $slots,
+	                'data' => [],
+	                'contextOut' => [$context],
+	                'source' => $source
+	        		]);
+	
+	}
 	else if($action == "doBookFacility")
 	{
 		$cid   = $parameters["Clientid"];
@@ -1042,11 +1065,11 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 
 }
 
-function getBookingList()
+function getBookingList($cid,$book_date)
 {
 
 			$agent = "10000";
-			$cid="10002";
+			//$cid="10002";
 			
 		/*	$cid = $_POST["cid"];
 			$token = $_POST["token"];*/
@@ -1063,7 +1086,7 @@ function getBookingList()
 			   if( $token == $auth_token )
 			   {
 			*/
-			$book_date = "2017-07-14";
+			//$book_date = "2017-07-14";
 						$mtdate = date("2015-09-01", time());
 
                	$query = "SELECT * FROM client_booking_log WHERE client_id='$cid' AND status='1' AND book_date = '".$book_date."'";
@@ -1115,6 +1138,9 @@ function getBookingList()
 								}
 					
 								$timebook = $data["book_start_time"]."-".$end_time;
+								
+								
+								$msg = "Your Booking ID is ".$data["book_id"].". Details for your booking : Location Name - ".$voname.", Facility Name : ".$type_name.", Book Date and Time :".$data["book_date"]." at".$timebook;
 					
 								$bookobj[$cnt] = array(
 						               		      "book id" => $data["book_id"],
@@ -1127,8 +1153,13 @@ function getBookingList()
 								$cnt++;
 					}
 					}
-					$f_book = array("Facility Booking List" => $bookobj);
-					return $f_book;
+					else{
+					
+							$msg =" Sorry we didnt find any bookings for this date now"; 					
+					
+					}
+					//$f_book = array("Facility Booking List" => $bookobj);
+					return $msg;
 			
 			 /*  }
 			   else
