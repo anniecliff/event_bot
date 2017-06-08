@@ -1326,19 +1326,19 @@ $pax = "4";
 
 		
 		}
-		/*else
+		else
 		{
 					$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
 			
-		}*/
+		}
 
 		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
 
    }
-   else
+   /*else
    {
         $f_msg = "Failed Booking.";
-   }
+   }*/
 
 
                return $f_msg;
