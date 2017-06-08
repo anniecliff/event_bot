@@ -1246,13 +1246,13 @@ $starth=$starttimeslot;
 
 	
 	// For billing, we get client vo location not the place he wanna rent
-	$client_void = getClientLocation($cid);
-	$facility_location =getVOName($loc_id);
+	//$client_void = getClientLocation($cid);
+	//$facility_location =getVOName($loc_id);
 
 	// check if valid booking
 	//$chk_valid_booking = check_valid_facilities_booking_v2($loc_id, $room_book_type, $bookdate, $starth, $num_slots, $facilities_id);
 	//echo $chk_valid_booking;
-	$meeting_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
+	//$meeting_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
 			
 			/*if ($facility_type == 1)
 			{*/
@@ -1301,7 +1301,7 @@ $starth=$starttimeslot;
 					//$f_inv = $client_void."-".$invid;
 					//$f_inv = $invid;
 	
-					$inv_msg = "Invoice". $invid." Created for". $facility_location." facility Additional Hours Usage.";
+				//	$inv_msg = "Invoice". $invid." Created for". $facility_location." facility Additional Hours Usage.";
 					
 					if ($invid != 0)
 					{
@@ -1331,8 +1331,9 @@ $starth=$starttimeslot;
 					$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
 			
 		}
+		$f_msg = $msg." ".$addon_msg;
 
-		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
+//		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
 
    /*}
    /*else
