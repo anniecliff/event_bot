@@ -1065,10 +1065,10 @@ function getBookingList()
 						$mtdate = date("2015-09-01", time());
 
                	$query = "SELECT * FROM client_booking_log WHERE client_id='$cid' AND status='1' AND book_date >= DATE(NOW()";
-//               	echo $query;
+               	echo $query;
                	$booking_history = getData($query);
-               	if(mysqli_num_rows($booking_history) >0)
-               	{
+               	/*if(mysqli_num_rows($booking_history) >0)
+               	{*/
        		      while($data = mysqli_fetch_array($booking_history))
 				      {
 								$data_r = "SELECT facilities_type FROM facilities_type WHERE id= ".$data["facilities_type"];
@@ -1123,7 +1123,7 @@ function getBookingList()
 					
 								$cnt++;
 					}
-					}
+					//}
 					$f_book = array("Facility Booking List" => $bookobj);
 					return $f_book;
 			
