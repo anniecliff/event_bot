@@ -916,7 +916,7 @@ function cancelMeetingRoom()
 		$agent = "10000";
 		
 		$cid = $_POST["cid"];
-		$token = $_POST["token"];
+		//$token = $_POST["token"];
 		$bookid = $_POST["bookid"];
 		
 		/*$cid = "22570";
@@ -1074,6 +1074,7 @@ function cancelMeetingRoom()
 }
 function check_valid_booking_cancellation($in_date, $in_time)
 {
+		echo "in_date".$in_date."& intime".$in_time;
 		$valid_cancel = 0;
 		//$max_hours = 60 * 60 * 24;
 		$max_hours = 86400;
@@ -1098,7 +1099,7 @@ function check_valid_booking_cancellation($in_date, $in_time)
 			// can cancel
 			$valid_cancel = 1;
 		}
-
+		echo $valid_cancel;
 		return $valid_cancel;
 }
 function free_facilities_slot($facilities_type, $book_date, $start_time, $slots, $bookid, $facility_id)
