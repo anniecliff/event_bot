@@ -72,20 +72,148 @@ Flight::route('POST /', function()
 	        		]);
 	
 	}
-	else if($action == "doBookFacility")
+	else if($action == "cancelMeetingRoom")
 	{
 		
+		$cid = $parameters["clientid"];
+		$book_date   = $parameters["book_date"];
+		
+		$speech = getBookingList($cid,$book_date);
+
+		$source  = "v4";
+		/*$next_context = "location";
+		$param1value = $res_loc;
+		$param2value = 0;*/
+		$context = array("name" => "details");
+
+		$json = json_encode([
+	                'speech'   => $speech,
+	                'displayText' => $speech,
+	                'data' => [],
+	                'contextOut' => [$context],
+	                'source' => $source
+	        		]);
+	
+	}
+	else if($action == "getBookingList")
+	{
+		
+		$cid = $parameters["clientid"];
+		$book_date   = $parameters["book_date"];
+		
+		$speech = getBookingList($cid,$book_date);
+
+		$source  = "v4";
+		/*$next_context = "location";
+		$param1value = $res_loc;
+		$param2value = 0;*/
+		$context = array("name" => "details");
+
+		$json = json_encode([
+	                'speech'   => $speech,
+	                'displayText' => $speech,
+	                'data' => [],
+	                'contextOut' => [$context],
+	                'source' => $source
+	        		]);
+	
+	}
+	else if($action == "doBookFacility")
+	{
+		$cid   = $parameters["Clientid"];
+		$bookdate   = $parameters["date"];
+		$numhours1   = $parameters["numhours"];
 		$search = $parameters["search"];
 		$time   = $parameters["time"];
-		$date   = $parameters["date"];
-		$cid   = $parameters["Clientid"];
-		$numhours   = $parameters["numhours"];
+		$hours  = explode(" ",$numhours1);
+		$numhours = $hours[0];
 		
-		$res_loc = searchCenter1($search);
+		$loc_id = searchCenter1($search);
+		//$loc_id =$res_loc;
 		$booktime =explode(":",$time);
 		$checktime = $booktime[0].$booktime[1];
-		$booked = doBookFacility($date,$res_loc,$checktime,$cid,$numhours);
+		//$booked = ($date,$res_loc,$checktime,$cid,$numhours1);
 		//$speech = $res_loc;
+		
+/* *******************Code *************************/		
+		//$bookdate,$loc_id,$starttimeslot,$cid,$numhours
+		
+		$agent = "-1";
+		$addon = "Non";
+		$pax = "4";
+		$starth=$checktime;
+
+	//$facilities_id = "35";
+		$cnt = 0;
+		$msg = "";
+		$addon_msg = "";
+		$inv_msg = "";
+	
+		$data_r = "SELECT * FROM client_facilities_core WHERE client_id=".$cid;
+			//echo $data_r;
+		$fdata = getData($data_r);
+		while($row = mysqli_fetch_array($fdata))
+		{
+			 $conf_hours_left = $row["meeting_room_hours_left"];
+			 $f_ref_id= $row["id"];
+		
+		}
+	
+		
+		$q= "Select * from location_facilities_v2 where vo_id =".$loc_id." and facility_type =1";
+		$res = getData($q);
+		$count = mysqli_num_rows($res);
+		if($count > 0)
+		{
+			while($row = mysqli_fetch_array($res))
+			{
+				$facilities_id = $row['id'];
+						
+			}		
+			
+		}
+	
+		$facility_type=1;
+		$facility_name="Meeting Room";
+		$room_book_type = 1;
+		
+		$invid = 0;
+		
+		//$prep_num_hours = explode("|", $_POST["numslots"]);
+		
+		$num_hours = $numhours;
+		$num_slots = $numhours;
+	
+		$addon_product_name = "Non";
+	
+		// deduct hours only invoice addon
+		if ($conf_hours_left >= $num_hours)
+		{
+					$num_hour_deduct= 0;
+					$num_hour_deduct = $conf_hours_left - $num_hours;
+					$update_booking_stmt = "UPDATE client_facilities_core SET meeting_room_hours_left=".$num_hour_deduct." WHERE status='1' AND client_id = '".$cid."' AND id='$f_ref_id'";
+					$update_booking_result = setData($update_booking_stmt);
+					$p_vo_id = 0;
+						$p_inv_id = 0;
+	
+					// update new booking
+					$book_id =update_facilities_booking($cid, $loc_id, $facility_type, $pax, $bookdate, $starth, $num_slots, $addon_product_name, $p_vo_id, $p_inv_id, $agent);
+					update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $facilities_id, $bookdate, $starth, $num_slots);
+		
+					$msg = "Booking Completed. Booking ID is ".$book_id;
+			
+
+		
+		}
+		else
+		{
+					$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
+			
+		}
+		$f_msg = $msg." ".$addon_msg;
+		$booked = $f_msg;
+				
+/* ************************ Code Ends here *************************/		
 		$source  = "v4";
 		/*$next_context = "location";
 		$param1value = $res_loc;
@@ -104,25 +232,15 @@ Flight::route('POST /', function()
 	else if($action == "getBookingDetails")
 	{
 		
-		/*$search = $parameters["search"];
-		$time   = $parameters["time"];
-		$date   = $parameters["date"];*/
+		
 		$cid   = $parameters["Clientid"];
 		$book_id =$parameters["BookId"];
-		/*$numhours   = $parameters["numhours"];
-		
-		$res_loc = searchCenter1($search);
-		$booktime =explode(":",$time);
-		$checktime = $booktime[0].$booktime[1];*/
+	
 		$booked = getBookingDetails($cid,$book_id);
 		
-		//$booked = "Hiiiii".$cid." my book id is".$book_id;
-		//$speech = $booked;
 		$source  = "v4";
-		/*$next_context = "location";
-		$param1value = $res_loc;
-		$param2value = 0;*/
-		$context = array("name" => "bookingdetails");
+
+		$context = array("name" => "book");
 
 		$json = json_encode([
 	                'speech'   => $booked,
@@ -146,16 +264,7 @@ Flight::route('POST /', function()
 		  		 ]);
 		
 	}	  
-	
-/*	$context = array("name" => "search");
-	
-	$json = json_encode([
-	                'speech'   => "Hello World",
-	                'displayText' => "Hello World",
-	                'data' => [],
-	                'contextOut' => [$context],
-	                'source' => "v4",
-	  		 ]);*/ 
+ 
 	ob_end_clean();
 	echo $json;
 
@@ -210,6 +319,23 @@ Flight::route('POST /doBookFacility', function()
 	echo json_encode($returnarray);
 
 });
+
+
+
+//Route to cancel meeting room booking
+//Annie, June 9, 2017
+Flight::route('POST /cancelMeetingRoom', function()
+{
+	//enable_cors()();
+	$returnarray=cancelMeetingRoom();
+	header('Content-type:application/json;charset=utf-8');
+	echo json_encode($returnarray);
+
+});
+
+
+
+
 
 //Route to get call details
 //Annie, May 15, 2017
@@ -752,8 +878,7 @@ function getVOFacilities()
 		       		return "Login Failed : 1";
 			}
 		}
-		else
-			        return "Login Failed : 1";
+		else {       return "Login Failed : 1"; }
 
 }
 function getVOFacilities_av($void)
@@ -781,9 +906,229 @@ function getVOFacilities_v2($void, $facilitytype)
 		return $res;
 }
 
+
+//function to cancel Meeting room booking
+
+function cancelMeetingRoom()
+{
+
+		
+		$agent = "10000";
+		
+		$cid = $_POST["cid"];
+		//$token = $_POST["token"];
+		$bookid = $_POST["bookid"];
+		
+		/*$cid = "22570";
+		$token = "27c1a8e69ab13f0f4818f9c3b3e49806";
+		$bookid = "17439";*/
+		
+	
+		
+		$cnt = 0;
+		$msg = "";
+		$addon_msg = "";
+		$inv_msg = "";
+		$bookquery = "SELECT * FROM client_booking_log WHERE book_id='$bookid' AND status='1'";
+		$bookings = getData($bookquery);		
+		while($book_data = mysqli_fetch_array($bookings))
+		{
+		
+				$bookdate = $book_data["book_date"];
+				$ftype = $book_data["facilities_type"];
+				$starttime = $book_data["book_start_time"];
+				$book_hr = $book_data["book_hours_slots"];
+				$vo_id = $book_data["vo_id"];
+				$inv_id = $book_data["invoice_id"];
+		
+		
+		}
+				
+		
+		/*$bookings = $bookfunc->get_client_booking($bookid);
+		$book_data = mysql_fetch_array($bookings);*/
+		$valid_cancel = check_valid_booking_cancellation($bookdate, $starttime);
+		if ($valid_cancel == 1) {
+			
+				$update_booking_stmt = "UPDATE client_booking_log SET status='2' WHERE book_id = '".$bookid."'";
+				$update_booking_result = setData($update_booking_stmt);
+				//$bookfunc->cancel_client_booking_log($bookid);
+		
+				/*$bookdate = $book_data["book_date"];
+				$ftype = $book_data["facilities_type"];
+				$starttime = $book_data["book_start_time"];
+				$book_hr = $book_data["book_hours_slots"];
+				$vo_id = $book_data["vo_id"];
+				$inv_id = $book_data["invoice_id"];*/
+		
+				// Tell which field to update
+				if ($ftype == 1)
+				{
+		       		 	$facility_field = "meeting_room_hours_left";
+			        		$facility_limit = "meeting_room_hours_limit";
+				        	$slot_table_ftype = 1;
+							$stmt = "SELECT id FROM client_facilities_core WHERE client_id='$cid' AND status='1'";				        	
+				        	$rslt = getData($stmt);
+				        	while($row = mysqli_fetch_array($rslt))
+				        	{
+				        		$f_ref_id = $row["id"];
+							}				        	
+				        //	$f_ref_id = $clientfunc->get_client_conference_hours_ref_id($cid);
+		
+				}
+				/*elseif ($ftype == 2)
+				{
+		        		$facility_field = "day_office_hours_left";
+				        $facility_limit = "day_office_hours_limit";
+				        $slot_table_ftype = 2;
+			        	$facility_id = 0;
+				        $f_ref_id = $clientfunc->get_client_day_office_hours_ref_id($cid);
+				}
+				elseif ($ftype == 3)
+				{
+		        		$facility_field = "hot_desking_hours_left";
+			        	$facility_limit = "hot_desking_hours_limit";
+			 	       	$slot_table_ftype = 3;
+				        $f_ref_id = $clientfunc->get_client_hotdesking_hours_ref_id($cid);
+		
+				}
+				elseif ($ftype == 4)
+				{
+		        		$facility_field = "flexi_office_hours_left";
+				        $facility_limit = "flexi_office_hours_limits ";
+				        $slot_table_ftype = 2;
+			        	$facility_id = 0;
+				        $f_ref_id = $clientfunc->get_client_flexi_office_hours_ref_id($cid);
+				}
+				elseif ($ftype == 5)
+				{
+		        		$facility_field = "discussion_room_hours_left";
+			        	$facility_limit = "discussion_room_limits";
+				        $slot_table_ftype = 5;
+		
+				}
+		*/
+		
+				// refund client hours
+				//$refund_msg = $clientfunc->returnClientFacilityHours($cid, $facility_field, $facility_limit, $book_hr, $f_ref_id);
+		
+				// void any invoice
+				if ($inv_id != 0)
+				{
+		        		$invid = $vo_id."-".$inv_id;
+			        	$reason = "Cancellation of Booking for VO Facilities - Self Serviced.";
+				        $invfunc->voidInvoice($invid, $reason, 0);
+				        $inv_msg = " Your Invoice $invid have been Voided. ";
+				}
+				else
+				{
+		        		$inv_msg = " ";
+				}
+			
+			//	$facility_id = $bookfunc->get_Facility_id_from_booking($bookid, $bookdate, $starttime, $slot_table_ftype);
+				$db_stmt = "SELECT facility_id FROM facilities_booking WHERE facilities_type = '$slot_table_ftype' AND book_date='$bookdate' AND `$start_time`='$bookid'";			
+				$db_result = getData($db_stmt);
+				
+				while($db_row = mysqli_fetch_array($db_result))
+				{
+			
+						$facility_id = $db_row["facility_id"];
+			
+				}			
+			
+			
+			
+		
+				// free up the booking slot
+				free_facilities_slot($slot_table_ftype, $bookdate, $starttime, $book_hr, $bookid, $facility_id);
+		
+				$msg = "Booking Cancelled Successfully.";
+		
+		
+		
+				$f_msg = $msg." ".$inv_msg." ".$addon_msg;
+		
+		
+				$bookobj[$cnt] = array(
+		                                "Cancellation Results" => $f_msg
+		                );
+		
+				$f_book = array("Facility Booking Cancellation" => $bookobj);
+		                echo json_encode($f_book);
+			}
+			else
+			{
+		
+				$f_msg = "Cancellation unsuccessful or not permitted.";
+		
+		
+		                $bookobj[$cnt] = array(
+		                                "Cancellation Results" => $f_msg
+		                );
+		
+		                $f_book = array("Facility Booking Cancellation" => $bookobj);
+		                echo json_encode($f_book);
+		
+			}
+		
+}
+function check_valid_booking_cancellation($in_date, $in_time)
+{
+		$valid_cancel = 0;
+		//$max_hours = 60 * 60 * 24;
+		$max_hours = 86400;
+		//$process_date=date("Y-m-d", time()-$max_hours);
+		//$book_time = strtotime(date('G:i',  $in_time));
+		//echo date('G:i', $in_time);
+		$standard = strtotime($in_time);
+		$c_time = date('G:i', $standard);
+		
+		$f_time = $in_date." ".$c_time;
+		
+		//$current_w_max = time()+$max_hours;
+		//echo strtotime($f_time)." vs ".$current_w_max." ";
+		//echo $book_time;
+		if (strtotime($f_time) < time()+$max_hours)
+		{
+			// Cannot cancel 
+			$valid_cancel = 0;
+		}
+		else
+		{
+			// can cancel
+			$valid_cancel = 1;
+		}
+
+		return $valid_cancel;
+}
+function free_facilities_slot($facilities_type, $book_date, $start_time, $slots, $bookid, $facility_id)
+{
+		
+		for ($i=0; $i<$slots; $i++)
+		{
+			if ($i==0)
+			{
+				$slot_updates = " `$start_time`='0'";
+				$new_slot = $start_time;
+
+			}
+			else
+			{
+				$new_slot = $new_slot + 100;
+				$slot_updates .= " ,`$new_slot`='0'";
+			}
+		}
+		$update_booking_stmt = "UPDATE facilities_booking SET ".$slot_updates." WHERE facilities_type='$facilities_type' AND book_date='$book_date' AND facility_id='$facility_id' AND `$start_time`='$bookid'";
+		
+		//echo $update_booking_stmt;
+		$update_booking_result = setData($update_booking_stmt);
+}
+
+
+
 //Function to get available time slots for a day
-//function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
-function getAvailableTimeSlot()
+function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
+//function getAvailableTimeSlot()
 {
 			/*$cid = $_POST["cid"];
 			$token = $_POST["token"];
@@ -796,14 +1141,16 @@ function getAvailableTimeSlot()
 			//$booktime = $_POST["booktime"];
 			$loc_id = $_POST["void"];
 
-			echo "Book Time".$booktime;
+			//echo "Book Time".$booktime;
 			$facilities = "1";
 			$facility_id = "52";
 			$time =explode(":",$booktime);
 			//print_r($time);
 			$flag=0;
-			$checktime = $time[0].$time[1];
-								echo "Check time".$checktime;
+			$checktime1 = $time[0].$time[1];
+			$checktime  = trim($checktime1);
+			
+
 				if ($facilities == 2 || $facilities == 4)
 		      {
 		                // office suite and flexi office all same type
@@ -846,54 +1193,69 @@ function getAvailableTimeSlot()
 			        		$f_end_time   = $row['facility_weekend_end_time'];
 			        	}
 				}
-			
-				$q1  =     "SELECT * FROM facilities_booking WHERE facilities_type='$facilities' AND `$checktime`= 0 AND location_id='$loc_id' AND book_date='$bookdate'";
+				
+				
+				$timequery = "SELECT * FROM facilities_booking WHERE facilities_type='$facilities'AND location_id='$loc_id' AND book_date='$bookdate'";
+				$time_result = getData($timequery);
+				$num_rows_time = mysqli_num_rows($time_result);
+				if($num_rows_time > 0)
+				{
+				
+						$q1  =     "SELECT * FROM facilities_booking WHERE facilities_type='$facilities' AND `$checktime`= 0 AND location_id='$loc_id' AND book_date='$bookdate'";
 				//AND facility_id='$facility_id'
-				echo $q1;
-				$pre_check_dates  = getData($q1);
-				/*$date_exist = mysqli_num_rows($pre_check_dates);
-       		$check_dates = mysqli_fetch_array($pre_check_dates);*/
-       		
-       		$date_exist = 0;
-       		$check_dates = 0;
-				$a_time_slots = "";
-
-				if ($date_exist != 0)
-				{
-			
-					$loop_time = $time;
-			
+						//echo $q1;
+						$pre_check_dates  = getData($q1);
+						$date_exist = mysqli_num_rows($pre_check_dates);
+		       		$check_dates = mysqli_fetch_array($pre_check_dates);
+		       	//	echo $date_exist;
+		       		/*$date_exist = 0;
+		       		$check_dates = 0;*/
+						$a_time_slots = "";
+		
+						if ($date_exist != 0)
+						{
 					
-			   		while ($loop_time != $f_end_time)
-			   		{
-			    	   		$period_end_time = $loop_time + 100;
+							$flag =1;
+							/*$loop_time = $time;
 					
-							if ($check_dates[$loop_time] == 0)
-							{
-								$a_time_slots .= $loop_time."-". $period_end_time." ";
-				   		}
-				    	   $loop_time = $loop_time + 100;
-								
+							
+					   		while ($loop_time != $f_end_time)
+					   		{
+					    	   		$period_end_time = $loop_time + 100;
+							
+									if ($check_dates[$loop_time] == 0)
+									{
+										$a_time_slots .= $loop_time."-". $period_end_time." ";
+						   		}
+						    	   $loop_time = $loop_time + 100;
+										
+								}*/
 						}
+						else
+						{
+							/*$loop_time = $f_start_time;
+					
+					   		while ($loop_time != $f_end_time)
+					   		{
+					    	   		$period_end_time = $loop_time + 100;
+		                  
+										$a_time_slots .= $loop_time."-". $period_end_time." ";
+					
+					           		$loop_time = $loop_time + 100;
+					
+					   		}*/
+					   		
+					   		$flag =0;
+						}
+						
+				
 				}
-				else
-				{
-					$loop_time = $f_start_time;
-			
-			   		while ($loop_time != $f_end_time)
-			   		{
-			    	   		$period_end_time = $loop_time + 100;
-                  
-								$a_time_slots .= $loop_time."-". $period_end_time." ";
-			
-			           		$loop_time = $loop_time + 100;
-			
-			   		}
-				}
+				else { $flag =1;}
+				
 				
 				
 					//$checktime = $time[0].$time[1];
-					$time_slots = explode(" ",$a_time_slots);
+					/*$time_slots = explode(" ",$a_time_slots);
 					print_r($a_time_slots);
 					echo "<pre>";
 					print_r($time_slots);
@@ -911,8 +1273,8 @@ function getAvailableTimeSlot()
 							$flag =0;	
 						}				
 					
-					}
-					if($flag = 0)
+					}*/
+					if($flag == 0)
 					{
 						$result_loc = "Time slot already booked";
 					}
@@ -934,410 +1296,328 @@ function getAvailableTimeSlot()
 
 }
 
-function getBookingList()
+function getBookingList($cid,$book_date)
 {
 
 			$agent = "10000";
-			
-		/*	$cid = $_POST["cid"];
-			$token = $_POST["token"];*/
-			
-			/*$cid = "10002";
-			$token = "50b2061fc834cedec6def1affd60e998";*/
-			
-			//$auth_token =  portal_getUserToken($cid);
-			
-			$cnt = 0;
-		/*	
-			if ($token != "" || $cid != "")
-			{
-			   if( $token == $auth_token )
-			   {
-			*/
-						$mtdate = date("2015-09-01", time());
+		   $cnt = 0;
+		   $mtdate = date("2015-09-01", time());
 
-               	$query = "SELECT * FROM client_booking_log WHERE client_id='$cid' AND status='1' AND book_date >= DATE(NOW()";
-//               	echo $query;
-               	$booking_history = getData($query);
-               	if(mysqli_num_rows($booking_history) >0)
-               	{
-       		      while($data = mysqli_fetch_array($booking_history))
-				      {
-								$data_r = "SELECT facilities_type FROM facilities_type WHERE id= ".$data["facilities_type"];
-               			$fdata = getData($data_r);
-								while($row1 = mysqli_fetch_array($fdata) ) 
-								{
-									$type_name = $row1['facilities_type'];
-									               			
-								}               			
-//								$loc_id = $clientfunc->get_client_booking_location($data["book_date"], $data["book_id"], $data["facilities_type"], $data["book_start_time"]);
-								
-								$q_stmt = "SELECT location_id FROM facilities_booking WHERE book_date='".$data["book_date"]."' AND '".$data["book_start_time"]."' = '".$data["book_id"]."' AND facilities_type='".$data["facilities_type"]."'";
-//								echo $q_stmt;								
-								$res= getData($q_stmt);
+      	$query = "SELECT * FROM client_booking_log WHERE client_id='$cid' AND status='1' AND book_date = '".$book_date."'";
+      	//echo $query;
+      	$booking_history = getData($query);
+      	if(mysqli_num_rows($booking_history) >0)
+      	{
+ 		      while($data = mysqli_fetch_array($booking_history))
+	      {
+					$data_r = "SELECT facilities_type FROM facilities_type WHERE id= ".$data["facilities_type"];
+				//	echo $data_r;
+      			$fdata = getData($data_r);
+					while($row1 = mysqli_fetch_array($fdata) ) 
+					{
+						$type_name = $row1['facilities_type'];
+						               			
+					}               			
+
+					
+					$q_stmt = "SELECT location_id FROM facilities_booking WHERE book_date='".$data["book_date"]."' AND `".$data["book_start_time"]."` = '".$data["book_id"]."' AND facilities_type='".$data["facilities_type"]."'";
+					//echo $q_stmt;								
+					$res= getData($q_stmt);
 //								print_r($res);
-								if(mysqli_num_rows($res) >0) 
-								{
-									while($row2 = mysqli_fetch_array($res)) 
-									{
-										$loc_id = $row2['location_id'];
-									               			
-									}  
-								}
-//								$fdata = mysql_fetch_array($data_r)
-//								$loc_id = mysqli_fetch_array($data_r);
-								
-								
-								
-								$voname = getVOName($loc_id);
-						       
-								$end_time = $data["book_start_time"];
-								$slots = $data["book_hours_slots"];
-					
-								for ($i=0;$i<$slots;$i++)
-								{
-									$end_time = $end_time + 100;
-									if ($end_time == "2400")
-									{
-										$end_time = "0000";
-									}
-								}
-					
-								$timebook = $data["book_start_time"]."-".$end_time;
-					
-								$bookobj[$cnt] = array(
-						               		      "book id" => $data["book_id"],
-					        	      		         "location name" => $voname,
-									                  "facility name" => $type_name,
-					               			      "book date" => $data["book_date"],
-									                  "time" => $timebook					
-					               		    );
-					
-								$cnt++;
+					if(mysqli_num_rows($res) >0) 
+					{
+						while($row2 = mysqli_fetch_array($res)) 
+						{
+							$loc_id = $row2['location_id'];
+						               			
+						}  
 					}
-					}
-					$f_book = array("Facility Booking List" => $bookobj);
-					return $f_book;
 			
-			 /*  }
-			   else
-			   {
-			        return "Login Failed : 1";
-			   }
-			}
-			else
-			{
-			       	return "Login Failed : 1";
-			}*/
+					
+					$voname = getVOName($loc_id);
+			       
+					$end_time = $data["book_start_time"];
+					$slots = $data["book_hours_slots"];
+		
+					for ($i=0;$i<$slots;$i++)
+					{
+						$end_time = $end_time + 100;
+						if ($end_time == "2400")
+						{
+							$end_time = "0000";
+						}
+					}
+		
+					$timebook = $data["book_start_time"]."-".$end_time;
+					
+					
+					$msg = "Your Booking ID is ".$data["book_id"].". Details for your booking : Location Name - ".$voname.", Facility Name : ".$type_name.", Book Date and Time :".$data["book_date"]." at".$timebook;
+		
+					$bookobj[$cnt] = array(
+			               		      "book id" => $data["book_id"],
+		        	      		         "location name" => $voname,
+						                  "facility name" => $type_name,
+		               			      "book date" => $data["book_date"],
+						                  "time" => $timebook					
+		               		    );
+		
+					$cnt++;
+					}
+				}
+				else
+				{
+				
+						$msg =" Sorry we didnt find any bookings for this date now"; 					
+				
+				}
+
+				return $msg;
+			
 }
 
 function getBookingDetails($cid,$bookid)
 {
 
 			$agent = "10000";
-			
-		/*	$cid = $_POST["cid"];
-			//$token = $_POST["token"];
-			$bookid = $_POST["bookid"];*/
-			/*
-			$cid = "10002";
-			$token = "50b2061fc834cedec6def1affd60e998";
-			$bookid = "14331";
-			
-			
-			$auth_token = portal_getUserToken($cid);
-			
-			$cnt = 0;
-			
-			if ($token != "" || $cid != "")
-			{
-			   if( $token == $auth_token )
-			   {*/
-			
-					  $myquery = "SELECT * FROM client_booking_log WHERE book_id='$bookid' AND status='1'";
-					  //echo $myquery;
-			        $booking_details = getData($myquery);
+		
+		  $myquery = "SELECT * FROM client_booking_log WHERE book_id='$bookid' AND status='1'";
+		  //echo $myquery;
+        $booking_details = getData($myquery);
+	
+	     while($data = mysqli_fetch_array($booking_details))
+	     {
+				$query2 = "SELECT facilities_type FROM facilities_type WHERE id='$id'";
+				$res    = getData($query2);
+				while($r = mysqli_fetch_array($res)) {	
+					$type_name = $r['facilities_type'];
+				}			     	
+		     	
 				
-				     while($data = mysqli_fetch_array($booking_details))
-				     {
-						$query2 = "SELECT facilities_type FROM facilities_type WHERE id='$id'";
-						$res    = getData($query2);
-						while($r = mysqli_fetch_array($res)) {	
-							$type_name = $r['facilities_type'];
-						}			     	
-				     	
-//						$type_name = $bookingfunc->get_facility_name($data["facilities_type"]);
-						
-						$starth = $data["book_start_time"];
-						$duration = $data["book_hours_slots"];
-				       
-						$end_time = $starth;
-						for ($i=0; $i<$duration; $i++)
-						{
-					
-							$end_time = $end_time + 100;
-							if ($end_time == "2400")
-							{
-								$end_time = "0000";
-							}
-						}
+				$starth = $data["book_start_time"];
+				$duration = $data["book_hours_slots"];
+		       
+				$end_time = $starth;
+				for ($i=0; $i<$duration; $i++)
+				{
 			
-						$f_time = $starth ."-".$end_time;
-						$query3 = "SELECT * FROM facilities_booking WHERE `".$starth."` = ".$data['book_id']." AND facilities_type='".$data['facilities_type']."' AND book_date='".$data['book_date']."'";
-						$res3  = getData($query3);
-						while($r1 = mysqli_fetch_array($res3))
-						{
-								$loc_id = $r1['location_id'];
-						
-						}
-						echo $query3;
-						//$loc_id=14;
-//						$loc_id = $bookingfunc->get_location_id_via_booking_table($data["facilities_type"], $data["book_date"], $starth, $data["book_id"]);
-						$vo_name = getVOName($loc_id);
-						
-						
-						$msg = "Booking Details : Location -".$vo_name.", Booking ID -".$data["book_id"].", Facility Name -".$type_name.", Pax -".$data["book_pax"].", AddOn -". $data["book_addon"].", Time-".$f_time." ,Duration -". $duration." Hour(s)"." on ".$data["book_date"]; 
-			
-					/*	$bookobj[$cnt] = array(
-			                        "location" => $vo_name,
-			               			"book id" => $data["book_id"],
-			              				"facility name" => $type_name,
-			                        "pax" => $data["book_pax"],
-			                        "addon" => $data["book_addon"],
-			                        "time" => $f_time,
-			                        "duration" => $duration." Hour(s)",
-			               			"book date" => $data["book_date"]
-			
-			               		);*/
-			
-						//$cnt++;
+					$end_time = $end_time + 100;
+					if ($end_time == "2400")
+					{
+						$end_time = "0000";
 					}
+				}
+	
+				$f_time = $starth ."-".$end_time;
+				$query3 = "SELECT * FROM facilities_booking WHERE `".$starth."` = ".$data['book_id']." AND facilities_type='".$data['facilities_type']."' AND book_date='".$data['book_date']."'";
+				$res3  = getData($query3);
+				while($r1 = mysqli_fetch_array($res3))
+				{
+						$loc_id = $r1['location_id'];
+				
+				}
 			
-					//$f_book = array("Facility Booking Details" => $bookobj);
-//			                echo json_encode($f_book);
-					return $msg;
+				$vo_name = getVOName($loc_id);
+				
+				
+				$msg = "Booking Details : Location -".$vo_name.", Booking ID -".$data["book_id"].", Facility Name -".$type_name.", Pax -".$data["book_pax"].", AddOn -". $data["book_addon"].", Time-".$f_time." ,Duration -". $duration." Hour(s)"." on ".$data["book_date"]; 
+	
+		
+		}
+
+		return $msg;
 			
-			 /*  }
-			   else
-			   {
-			        echo "Login Failed : 1";
-			   }
-			}
-			else
-			{
-			       	echo "Login Failed : 1";
-			}*/
-			
-
-
-
-
 }
 
 
-//function doBookFacility($bookdate,$loc_id,$starttimeslot,$cid,$numhours)
-function doBookFacility()
+function doBookFacility($bookdate,$loc_id,$starttimeslot,$cid,$numhours)
+//function doBookFacility()
 {
 
 
-$agent = "-1";
-
-
-/*$cid = $_POST["cid"];
-$token = $_POST["token"];
-$bookdate = $_POST["bookdate"];
-$loc_id = $_POST["void"];
-$facilities_id = $_POST["fid"];
-$numhours = $_POST["numhours"];
-$starttimeslot = $_POST["starttimeslot"];*/
-/*$addon = $_POST["addon"];
-$pax = $_POST["pax"];*/
-
-/*$addon = "Non";
-$pax = "4";
-$starth = $starttimeslot;*/
-/*$pre_start_hour = explode("-",$starttimeslot);
-$starth = $pre_start_hour[0];*/
-
-
-$starttimeslot = "1800-2100";
-$cid = "10002";
-$token = "ffe5c3517bcac0fc7c3261283988e93303bab637";
-$bookdate = "2017-07-13";
-$loc_id = "14";
-$facilities_id = "34";
-$numhours = "3";
-$pre_start_hour = explode("-",$starttimeslot);
-$starth = $pre_start_hour[0];
-$addon = "Non";
-$pax = "4";
-
-
-	$facilities_id = "34";
-	$cnt = 0;
-	$msg = "";
-	$addon_msg = "";
-	$inv_msg = "";
-
-
-	$mhours_hours = get_client_conference_hours($cid);
-	//echo "......".$mhours_hours."hours......";
-	$mhours_hours_id =get_client_conference_hours_ref_id($cid);
-
+		$agent = "-1";
+		
+		
+		/*$starttimeslot = "1800-2100";
+		$cid = "10002";
+		$token = "ffe5c3517bcac0fc7c3261283988e93303bab637";
+		$bookdate = "2017-07-13";
+		$loc_id = "14";
+		$facilities_id = "34";
+		$numhours = "3";
+		$pre_start_hour = explode("-",$starttimeslot);
+		$starth = $pre_start_hour[0];*/
+		$addon = "Non";
+		$pax = "4";
+		$starth=$starttimeslot;
 	
-	$q= "Select * from location_facilities_v2 where vo_id =".$loc_id." and facility_type =1";
-	$res = getData($q);
-	$count = mysqli_num_rows($res);
-	if($count > 0)
-	{
-		while($row = mysqli_fetch_array($res))
+		//$facilities_id = "35";
+		$cnt = 0;
+		$msg = "";
+		$addon_msg = "";
+		$inv_msg = "";
+	
+		$data_r = "SELECT * FROM client_facilities_core WHERE client_id=".$cid;
+			//echo $data_r;
+		$fdata = getData($data_r);
+		while($row = mysqli_fetch_array($fdata))
 		{
-			$facilities_id = $row['id'];
-					
-		}		
+			 $conf_hours_left = $row["meeting_room_hours_left"];
+			 $f_ref_id= $row["id"];
 		
-	}
-
-	$facility_type=1;
-	$facility_name="Meeting Room";
-	$room_book_type = 1;
-	$m_facilities_id = $facilities_id;
-
-	$query1 = "SELECT shared_room_id FROM location_facilities_v2 WHERE id=".$facilities_id." ";
-	$res1   = getData($query1);
-	$count1 = mysqli_num_rows($res1);
-	if($count1 > 0)
-	{
-		while($r1 = mysqli_fetch_array($res1))
+		}
+	/*	$conf_hours_left = $mhours_hours;
+		$f_ref_id =  $mhours_hours_id;*/
+		/*$mhours_hours = get_client_conference_hours($cid);
+		//echo "......".$mhours_hours."hours......";
+		$mhours_hours_id =get_client_conference_hours_ref_id($cid);*/
+	
+		
+		$q= "Select * from location_facilities_v2 where vo_id =".$loc_id." and facility_type =1";
+		$res = getData($q);
+		$count = mysqli_num_rows($res);
+		if($count > 0)
 		{
-		
-			$shared_room_flag = $r1['shared_room_id'];
-		
-		}	
-	
-	
-	
-	}
-
-	//$shared_room_flag = $bookingfunc->get_facilities_shared_room_id($facilities_id);
-	// check if shared room for hotdesk and office Suite
-	if ($shared_room_flag != 0)
-	{
-                  $room_book_type = 2;
-		 				$m_facilities_id = 0;
-	}
-	$room_book_type = 1;
-	$invid = 0;
-	
-	//$prep_num_hours = explode("|", $_POST["numslots"]);
-	
-	$num_hours = $numhours;
-	$num_slots = $numhours;
-
-	
-	// For billing, we get client vo location not the place he wanna rent
-	$client_void = getClientLocation($cid);
-	$facility_location =getVOName($loc_id);
-
-	// check if valid booking
-	$chk_valid_booking = check_valid_facilities_booking_v2($loc_id, $room_book_type, $bookdate, $starth, $num_slots, $m_facilities_id);
-	
-			$meeting_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
-			
-			if ($facility_type == 1)
+			while($row = mysqli_fetch_array($res))
 			{
-				$conf_hours_left = $mhours_hours;
-				$f_ref_id =  $mhours_hours_id;
+				$facilities_id = $row['id'];
+						
+			}		
 			
-			}				
-			
+		}
 	
-	$p_query = "SELECT * FROM products WHERE product_id= ".$meeting_info["product_id"];
-	//echo $p_query;
-	$p_result  = getData($p_query);
-	while($r11 = mysqli_fetch_array($p_result))
-	{
-		$product_default_unit_price =$r11['price'];
-	}
-	
-	
-	$addon_product_name = "Non";
-	
-	
-	if( $chk_valid_booking == 1)
-	{
-		//echo "echo hours left".$conf_hours_left;
-		// deduct hours only invoice addon
-		if ($conf_hours_left >= $num_hours)
+		$facility_type=1;
+		$facility_name="Meeting Room";
+		$room_book_type = 1;
+		//$m_facilities_id = $facilities_id;
+	/*
+		$query1 = "SELECT shared_room_id FROM location_facilities_v2 WHERE id=".$facilities_id." ";
+		$res1   = getData($query1);
+		$count1 = mysqli_num_rows($res1);
+		if($count1 > 0)
 		{
-			update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-			//echo "hellloo welcome";
-				
-			// update new booking
-			$book_id = update_facilities_booking($cid,$loc_id,$facility_type,$pax, $bookdate,$starth, $num_slots, $addon_product_name, 0, 0, $agent);
-			//echo "bookid".$book_id;
+			while($r1 = mysqli_fetch_array($res1))
+			{
 			
-			$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
-				$meeting_price_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
-
+				$shared_room_flag = $r1['shared_room_id'];
 			
-				// all bill
-				// hours left < booked hours
-				if ($conf_hours_left > 0)
-				{
-					$num_hour_deduct = $conf_hours_left - $num_hours;
-					$f_hours_deduct = abs($num_hour_deduct); // get absolute number no negative sign the raminder need to bill
-					update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-					$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $f_hours_deduct, $bookdate, $facility_location, $meeting_price_info["price"]);
-				}
-				else
-				{
-
-					// so already negative. just continue deduct the $num_hours and charge
-				   update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
-					$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $num_hours, $bookdate, $facility_location, $meeting_price_info["price"]);
-				}
-				
-				//$f_inv = $client_void."-".$invid;
-				$f_inv = $invid;
-
-				$inv_msg = "Invoice". $f_inv." Created for". $facility_location." facility Additional Hours Usage.";
-				
-				if ($invid != 0)
-				{
-					$pre_in = explode("-", $invid);
-					$p_vo_id = $pre_in[0];
-					$p_inv_id = $pre_in[1];
-				}
-				else
-				{
-					$p_vo_id = 0;
-					$p_inv_id = 0;
-					
-				}
-				
-
-				// update new booking
-				$book_id =update_facilities_booking($cid, $loc_id, $facility_type, $pax, $bookdate, $starth, $num_slots, $addon_product_name, $p_vo_id, $p_inv_id, $agent);
-	
-				$msg = "Booking Completed. Booking ID is ".$book_id;
+			}	
 		
-				$update_book_table = update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $m_facilities_id, $bookdate, $starth, $num_slots);
-	
-	}
-	else
-	{
-				$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
 		
-	}
+		
+		}
+	
+		//$shared_room_flag = $bookingfunc->get_facilities_shared_room_id($facilities_id);
+		// check if shared room for hotdesk and office Suite
+		if ($shared_room_flag != 0)
+		{
+	                  $room_book_type = 2;
+			 				$m_facilities_id = 0;
+		}
+		$room_book_type = 1;*/
+		$invid = 0;
+		
+		//$prep_num_hours = explode("|", $_POST["numslots"]);
+		
+		$num_hours = $numhours;
+		$num_slots = $numhours;
+	
+		
+		// For billing, we get client vo location not the place he wanna rent
+		//$client_void = getClientLocation($cid);
+		//$facility_location =getVOName($loc_id);
+	
+		// check if valid booking
+		//$chk_valid_booking = check_valid_facilities_booking_v2($loc_id, $room_book_type, $bookdate, $starth, $num_slots, $facilities_id);
+		//echo $chk_valid_booking;
+		//$meeting_info = getFacilitiesProductInfo($client_void, $loc_id, $facilities_id);
+				
+				/*if ($facility_type == 1)
+				{*/
+					/*$conf_hours_left = $mhours_hours;
+					$f_ref_id =  $mhours_hours_id;*/
+			/*	
+				}				
+				*/
+	/*	
+		$p_query = "SELECT * FROM products WHERE product_id= ".$meeting_info["product_id"];
+		//echo $p_query;
+		$p_result  = getData($p_query);
+		while($r11 = mysqli_fetch_array($p_result))
+		{
+			$product_default_unit_price =$r11['price'];
+		}
+		*/
+		
+		$addon_product_name = "Non";
+		
+		
+		/*if( $chk_valid_booking == 1)
+		{*/
+			//echo "echo hours left".$conf_hours_left;
+			// deduct hours only invoice addon
+				if ($conf_hours_left >= $num_hours)
+				{
+					//update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
+						// all bill
+						// hours left < booked hours
+						if ($conf_hours_left > 0)
+						{
+							$num_hour_deduct = $conf_hours_left - $num_hours;
+							$f_hours_deduct = abs($num_hour_deduct); // get absolute number no negative sign the raminder need to bill
+							update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
+							//$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $f_hours_deduct, $bookdate, $facility_location, $meeting_info["price"]);
+						}
+						else
+						{
+		
+							// so already negative. just continue deduct the $num_hours and charge
+						   update_client_facility_booking_hours($cid, $num_hours, $conf_hours_left, $facility_type, $f_ref_id);
+							//$invid = create_client_facilities_invoice($cid, $client_void, $facility_type, $num_hours, $bookdate, $facility_location, $meeting_info["price"]);
+						}
+						
+						//$f_inv = $client_void."-".$invid;
+						//$f_inv = $invid;
+		
+					//	$inv_msg = "Invoice". $invid." Created for". $facility_location." facility Additional Hours Usage.";
+						
+						/*if ($invid != 0)
+						{
+							$pre_in = explode("-", $invid);
+							$p_vo_id = $pre_in[0];
+							$p_inv_id = $pre_in[1];
+						}
+						else
+						{
+							$p_vo_id = 0;
+							$p_inv_id = 0;
+							
+						}*/
+						$p_vo_id = 0;
+							$p_inv_id = 0;
+		
+						// update new booking
+						$book_id =update_facilities_booking($cid, $loc_id, $facility_type, $pax, $bookdate, $starth, $num_slots, $addon_product_name, $p_vo_id, $p_inv_id, $agent);
+						update_facilities_booking_table_v2($book_id, $loc_id, $room_book_type, $facilities_id, $bookdate, $starth, $num_slots);
+			
+						$msg = "Booking Completed. Booking ID is ".$book_id;
+				
 
-		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
+		
+		}
+		else
+		{
+					$msg = "Booking Failed. Please try again or contact our Customer Care Team.";
+			
+		}
+		$f_msg = $msg." ".$addon_msg;
 
-   }
-   else
+//		$f_msg = $msg." ".$inv_msg." ".$addon_msg;
+
+   /*}
+   /*else
    {
         $f_msg = "Failed Booking.";
-   }
+   }*/
 
 
                return $f_msg;
@@ -1378,23 +1658,12 @@ function getClientLocation($cid)
 {
 	$query = "SELECT * FROM client_info WHERE clientid=".$cid;
 	$result = getData($query);
-	/*$count = mysqli_num_rows($result);
-	if($count > 0)
-	{*/
 	while($row = mysqli_fetch_array($result))
 	{
 		
 			$location = $row['location'];		
 		
 	}	
-	
-	
-	/*}
-	else 
-	{
-		
-		
-	}*/
 	return $location;
 
 
@@ -1414,7 +1683,7 @@ function isSaturday($date)
 }
 function getVOName($void)
 {
-    /*  $query = "SELECT * FROM location_info WHERE id=".$void;
+		$query = "SELECT * FROM location_info WHERE id=".$void;
 	   $result = getData($query);
 		while($row = mysqli_fetch_array($result))
 		{
@@ -1424,9 +1693,9 @@ function getVOName($void)
 		}	
 
 	//	$fdata = mysqli_fetch_assoc($data_r);
-		return $fdata;*/
+		return $fdata;
 		
-		$mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
+		/*$mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
 		//$myArray = array();
 		$query = "SELECT location_desc FROM location_info WHERE id=".$void;
 		if ($result = $mysqli->query($query)) {
@@ -1441,7 +1710,7 @@ function getVOName($void)
 $mysqli->close();		
 		
 		
-		return $myArray;
+		return $myArray;*/
 		
 		
 		
@@ -1459,33 +1728,42 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 		
 		// test = 1 or not test =0
 		$test = 0;
-		
+		$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
+			        				        //	echo $query;
+     	$result = getData($query);
+     	while($row = mysqli_fetch_array($result) )
+     	{
+     		$f_fac_start_time = $row['facility_start_time'];
+     		$f_fac_end_time   = $row['facility_end_time'];
+     		$f_week_start_time = $row['facility_weekend_start_time'];
+			$f_week_end_time   = $row['facility_weekend_end_time'];
+     	}
 		// not sat
 		if ($check_is_Sat == false)
 				{
-			        	/*$f_start_time = $bookingfunc->get_facilities_booking_weekdays_start_time($loc_id);
-			        	$f_end_time = $bookingfunc->get_facilities_booking_weekdays_end_time($loc_id);*/
-			        	$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
+			        
+			        /*	$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
 			        				        //	echo $query;
 			        	$result = getData($query);
 			        	while($row = mysqli_fetch_array($result) )
 			        	{
-			        		$f_start_time = $row['facility_start_time'];
-			        		$f_end_time   = $row['facility_end_time'];
-			        	}
+			        		
+			        	}*/
+			        	$f_start_time = $f_fac_start_time;
+			        		$f_end_time   = $f_fac_end_time;
 			        	
 				}
 				else
 				{
-			        
-			        	$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
+			        $f_start_time = $f_week_start_time;
+			        		$f_end_time   = $f_week_end_time ;
+			        	/*$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
 			        	//echo $query;
 			        	$result = getData($query);
 			        	while($row = mysqli_fetch_array($result) )
 			        	{
-			        		$f_start_time = $row['facility_weekend_start_time'];
-			        		$f_end_time   = $row['facility_weekend_end_time'];
-			        	}
+			        		
+			        	}*/
 				}
 			//	echo $f_end_time;
 
@@ -1496,7 +1774,7 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 		//echo $chk_data_r;
 		//$fchk_date =0;
 		$fchk_date = mysqli_num_rows($rskdata);
-	//	echo $fchk_date;
+		//echo $fchk_date;
 		if ($fchk_date == 0)
 		{
 			// New entry. Valid
@@ -1507,15 +1785,15 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 		else		
 		{
 			//echo "2nd Trap<br>";
-			while($r = mysqli_fetch_array($chk_data_r))
+			while($r = mysqli_fetch_array($rskdata))
 			{
 				$date_entry_id = $r['id'];
 			
 			}
-			
+		//	echo "Date entry id".$date_entry_id;
 			//$date_entry_id = mysqli_fetch_array($chk_data_r);
 						
-			$pstarttime = mysqli_real_escape_string($starttime);
+			$pstarttime = trim($starttime);
 					
 				// Populate the time slots via insert
 				$inc_time = $pstarttime;
@@ -1549,9 +1827,9 @@ function check_valid_facilities_booking_v2($loc_id, $facility_type, $bookdate, $
 				if ($pass_day_hour_flag == 0)
 				{
 					// do insert
-					$data_q = "SELECT id FROM facilities_booking WHERE ".$time_slot_sql_field_stmt." AND id='".$date_entry_id["id"]."'"; 
+					$data_q = "SELECT id FROM facilities_booking WHERE ".$time_slot_sql_field_stmt." AND id='".$date_entry_id."'"; 
 					//echo $data_q;
-					$data_r = getData($data_q) or die("Could not Check Valid Slots Booking table .\n");
+					$data_r = getData($data_q);
 					$q_count = mysqli_num_rows($data_r);
 				
 					//$jmsg .= "You do not access rights to this section.";
@@ -1615,12 +1893,14 @@ function update_client_facility_booking_hours($cid, $num_hours, $num_hours_left,
 	{
 				$num_hour_deduct= 0;
 				$num_hour_deduct = $num_hours_left - $num_hours;
-				if ($ftype == 1)
+				$update_booking_stmt = "UPDATE client_facilities_core SET meeting_room_hours_left=".$num_hour_deduct." WHERE status='1' AND 
+client_id = '".$cid."' AND id='$f_ref_id'";
+				/*if ($ftype == 1)
 				{
 					$update_booking_stmt = "UPDATE client_facilities_core SET meeting_room_hours_left=".$num_hour_deduct." WHERE status='1' AND 
 client_id = '".$cid."' AND id='$f_ref_id'";
-				}
-				elseif ($ftype == 2)
+				}*/
+				/*elseif ($ftype == 2)
 				{
 					$update_booking_stmt = "UPDATE client_facilities_core SET day_office_hours_left=".$num_hour_deduct." WHERE status='1' AND client_id 
 = '".$cid."' AND id='$f_ref_id'";
@@ -1639,30 +1919,19 @@ client_id = '".$cid."' AND id='$f_ref_id'";
 				{
 						$update_booking_stmt = "UPDATE client_facilities_core SET discussion_room_hours_left=".$num_hour_deduct." WHERE status='1' 
 AND client_id = '".$cid."' AND id='$f_ref_id'";
-				}
+				}*/
 
 				$update_booking_result = setData($update_booking_stmt);
-				/*echo $update_booking_stmt ;
-				echo $update_booking_result;*/
-
-				//$update_booking_result = mysql_query ($update_booking_stmt) or die("Could not update Client Facilities Booking Table. \n");
-
 }
 
 
 function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$starttime, $num_slots, $addon, $void, $inv_id, $staff_id)
 {
-		//echo "Cid : ".$cid." Loc : ".$locid." FC: ".$facility_type." Pax : ".$pax." Book Date : ". $bookdate." Start Time: ".$starttime." Num Slots: ". $num_slots." Addon : ". $addon;
+
 		$mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
 		$result = $mysqli->query("INSERT INTO client_booking_log(client_id, facilities_type, book_date, book_pax, book_addon, book_start_time, book_hours_slots, status, vo_id, invoice_id,staff_id)VALUES(".$cid.", ".$facility_type.",'".$bookdate."' , ".$pax.", '".$addon."', ".$starttime.", ".$num_slots.", 1, ".$void.", ".$inv_id.", ".$staff_id.")");
-		//$data_q = ";
-		//$data_r = setData($data_q) ;
-		 $last_book_id = $mysqli->insert_id;
+		$last_book_id = $mysqli->insert_id;
 		$closeResults = $mysqli->close();
-
-	//	echo "book -------".$last_book_id;
-		/*$last_book_id = mysqli_insert_id();
-		//$fdata = mysql_fetch_array($data_r);*/
 		return $last_book_id;
 }
 
@@ -1676,10 +1945,47 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 		
 		// check to use check week day start time or weekend		
 		$check_is_Sat = isSaturday($bookdate);
+		$query  = "SELECT * FROM location_info WHERE id='$locid'";
+			        				        //	echo $query;
+     	$result = getData($query);
+		while($row = mysqli_fetch_array($result) )
+     	{
+     		$f_fac_start_time = $row['facility_start_time'];
+     		$f_fac_end_time   = $row['facility_end_time'];
+     		$f_week_start_time = $row['facility_weekend_start_time'];
+			$f_week_end_time   = $row['facility_weekend_end_time'];
+     	}
+		// not sat
 		if ($check_is_Sat == false)
 				{
+			        
+			        /*	$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
+			        				        //	echo $query;
+			        	$result = getData($query);
+			        	while($row = mysqli_fetch_array($result) )
+			        	{
+			        		
+			        	}*/
+			        	$f_start_time = $f_fac_start_time;
+			        		$f_end_time   = $f_fac_end_time;
+			        	
+				}
+				else
+				{
+			        $f_start_time = $f_week_start_time;
+			        		$f_end_time   = $f_week_end_time ;
+			        	/*$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
+			        	//echo $query;
+			        	$result = getData($query);
+			        	while($row = mysqli_fetch_array($result) )
+			        	{
+			        		
+			        	}*/
+				}
+		/*if ($check_is_Sat == false)
+				{
 			        	/*$f_start_time = $bookingfunc->get_facilities_booking_weekdays_start_time($loc_id);
-			        	$f_end_time = $bookingfunc->get_facilities_booking_weekdays_end_time($loc_id);*/
+			        	$f_end_time = $bookingfunc->get_facilities_booking_weekdays_end_time($loc_id);
 			        	$query  = "SELECT * FROM location_info WHERE id='$loc_id'";
 			        	$result = getData($query);
 			        	while($row = mysqli_fetch_array($result) )
@@ -1699,7 +2005,7 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 			        		$f_start_time = $row['facility_weekend_start_time'];
 			        		$f_end_time   = $row['facility_weekend_end_time'];
 			        	}
-				}
+				}*/
 		
 		// check if 24/7
 		if ($f_start_time == 100 && $f_end_time == 2400)
@@ -1709,7 +2015,8 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 
 		
 		// check if date exist for exact location and facilities type
-		$q3 = "SELECT id FROM facilities_booking WHERE facility_id=".$facility_id." AND location_id=".$locid." AND book_date='".$bookdate."'";
+		$q3 = "SELECT * FROM facilities_booking WHERE facility_id=".$facility_id." AND location_id=".$locid." AND book_date='".$bookdate."'";
+	//	echo $q3;
 		$chk_data_r = getData($q3);
 		$fchk_date = mysqli_num_rows($chk_data_r);
 		while($resk = mysqli_fetch_array($chk_data_r))
@@ -1719,11 +2026,9 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 		
 		}
 
-		
-		//echo "Entry ID : ". $date_entry_id["id"];
-		
 		$pstarttime = $starttime;
-				
+		/*$fchk_date == 0;	
+		$date_entry_id=1231232;	*/
 		// 1 already exist 0 does not exist
 		if ($fchk_date == 0)
 		{
@@ -1750,14 +2055,8 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 			}
 
 			// do insert
-			$data_q = "INSERT INTO facilities_booking(facilities_type, location_id, facility_id, book_date, ".$time_slot_sql_field_stmt.") VALUES(".$facility_type.", ".$locid.",".$facility_id.",".$bookdate.", ".$time_slot_sql_value_stmt.")";
+			$data_q = "INSERT INTO facilities_booking(facilities_type, location_id, facility_id, book_date, ".$time_slot_sql_field_stmt.") VALUES(".$facility_type.", ".$locid.",".$facility_id.",'".$bookdate."', ".$time_slot_sql_value_stmt.")";
 			$data_r = setData($data_q);
-			
-			//$jmsg .= "You do not access rights to this section.";
-				
-			/*echo "<script language=\"javascript\"> alert('$data_q')</script>";*/
-			//echo $data_q;
-
 		}
 		else
 		{
@@ -1784,7 +2083,7 @@ function update_facilities_booking($cid,$locid,$facility_type,$pax, $bookdate,$s
 
 			// do update
 
-			$update_booking_stmt = "UPDATE facilities_booking SET ".$time_slot_sql_field_stmt." WHERE id = '".$date_entry_id["id"]."'";
+			$update_booking_stmt = "UPDATE facilities_booking SET ".$time_slot_sql_field_stmt." WHERE id = '".$date_entry_id."'";
 						//echo $update_booking_stmt;
 
 			$update_booking_result = setData($update_booking_stmt);
@@ -1805,17 +2104,14 @@ function create_client_facilities_invoice($cid, $void, $facility_type, $num_hour
 		
 		$incurrency = getLocationCurrency($void);
 		
-		$meeting_rm_loc = getVOName($rm_location);
+		$meeting_rm_loc = $rm_location;
 
 		$facilities_name = get_Facilities_Type($facility_type);
 		$product_name = $meeting_rm_loc." ".$facilities_name." ".$num_hours ." Additional Hour(s) Rental.";
 		
 		$comments = $num_hours ." Hour(s) Rental.";
-		
-		//$price = $this->get_Product_Price($meeting_room[$rm_location]);
 		$price = get_Product_Price($productid);
-		//$price = $product_price;
-	
+
 		$f_total = "Additional ". $price * $num_hours;
 		
 		$addinvstmt = "INSERT INTO ".$inv_table."	
@@ -1825,16 +2121,8 @@ function create_client_facilities_invoice($cid, $void, $facility_type, $num_hour
 		
 		$mysqli = new mysqli("myvoffice.me", "myvoff_entrp", "V2PM@.@tGr!Z", "myvoff_vos");
 		$result = $mysqli->query($addinvstmt);
-		//$data_q = ";
-		//$data_r = setData($data_q) ;
-		 $inv_id = $mysqli->insert_id;
+		$inv_id = $mysqli->insert_id;
 		$closeResults = $mysqli->close();
-
-			
-			
-	//	$resultaddinvstmt = setData($addinvstmt);
-		//$inv_id =  mysqli_insert_id();
-
 		$optype = 1; // Create New Invoice
 		logInvoiceTransaction($void, $inv_id, $optype, "0");
 		
