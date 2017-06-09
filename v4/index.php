@@ -1337,7 +1337,7 @@ function getBookingList($cid,$book_date)
 					}
 			
 					
-					$voname = getVOName($loc_id);
+					/*$voname = getVOName($loc_id);
 			       
 					$end_time = $data["book_start_time"];
 					$slots = $data["book_hours_slots"];
@@ -1351,10 +1351,11 @@ function getBookingList($cid,$book_date)
 						}
 					}
 		
-					$timebook = $data["book_start_time"]."-".$end_time;
+					$timebook = $data["book_start_time"]."-".$end_time;*/
 					
 					
-					$msg = "Your Booking ID is ".$data["book_id"].". Details for your booking : Location Name - ".$voname.", Facility Name : ".$type_name.", Book Date and Time :".$data["book_date"]." at".$timebook;
+					$msg = "Your Booking ID is ".$data["book_id"];
+					//.". Details for your booking : Location Name - ".$voname.", Facility Name : ".$type_name.", Book Date and Time :".$data["book_date"]." at".$timebook;
 		
 					/*$bookobj[$cnt] = array(
 			               		      "book id" => $data["book_id"],
