@@ -101,8 +101,8 @@ Flight::route('POST /', function()
 		$cid = $parameters["clientid"];
 		$book_date   = $parameters["book_date"];
 		
-		$speech = getBookingList($cid,$book_date);
-
+//		$speech = getBookingList($cid,$book_date);
+		$speech = $cid." - ".$book_date;
 		$source  = "v4";
 		/*$next_context = "location";
 		$param1value = $res_loc;
