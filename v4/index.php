@@ -1026,17 +1026,17 @@ function cancelMeetingRoom()
 				}
 			
 			//	$facility_id = $bookfunc->get_Facility_id_from_booking($bookid, $bookdate, $starttime, $slot_table_ftype);
-				$db_stmt = "SELECT facility_id FROM facilities_booking WHERE facilities_type = 1 AND book_date='$bookdate' AND `$start_time`='$bookid'";			
+				$db_stmt = "SELECT facility_id FROM facilities_booking WHERE facilities_type = 1 AND book_date='$bookdate' AND `".$starttime."`='$bookid'";			
 				$db_result = getData($db_stmt);
 				
-				/*while($db_row = mysqli_fetch_array($db_result))
+				while($db_row = mysqli_fetch_array($db_result))
 				{
 			
 						$facility_id = $db_row["facility_id"];
 			
-				}		*/	
+				}			
 			
-			echo $db_stmt;
+			//echo $db_stmt;
 			
 		
 				// free up the booking slot
@@ -1099,7 +1099,7 @@ function check_valid_booking_cancellation($in_date, $in_time)
 			// can cancel
 			$valid_cancel = 1;
 		}
-		echo $valid_cancel;
+		//echo $valid_cancel;
 		return $valid_cancel;
 }
 function free_facilities_slot($facilities_type, $book_date, $start_time, $slots, $bookid, $facility_id)
