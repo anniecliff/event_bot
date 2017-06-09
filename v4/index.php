@@ -1055,8 +1055,8 @@ function cancelMeetingRoom()
 		
 				$f_book = array("Facility Booking Cancellation" => $bookobj);
 		                echo json_encode($f_book);
-			}
-			/*else
+			/*}
+			else
 			{
 		
 				$f_msg = "Cancellation unsuccessful or not permitted.";
