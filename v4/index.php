@@ -1074,7 +1074,7 @@ function cancelMeetingRoom()
 }
 function check_valid_booking_cancellation($in_date, $in_time)
 {
-		echo "in_date".$in_date."& intime".$in_time;
+		//echo "in_date".$in_date."& intime".$in_time;
 		$valid_cancel = 0;
 		//$max_hours = 60 * 60 * 24;
 		$max_hours = 86400;
@@ -1085,7 +1085,7 @@ function check_valid_booking_cancellation($in_date, $in_time)
 		$c_time = date('G:i', $standard);
 		
 		$f_time = $in_date." ".$c_time;
-		
+		echo $f_time;
 		//$current_w_max = time()+$max_hours;
 		//echo strtotime($f_time)." vs ".$current_w_max." ";
 		//echo $book_time;
