@@ -1085,9 +1085,9 @@ function check_valid_booking_cancellation($in_date, $in_time)
 		$c_time = date('G:i', $standard);
 		
 		$f_time = $in_date." ".$c_time;
-		echo strtotime($f_time)." - ".time()+$max_hours;
-		//$current_w_max = time()+$max_hours;
-		//echo strtotime($f_time)." vs ".$current_w_max." ";
+		//echo strtotime($f_time)." - ".time()+$max_hours;
+		$current_w_max = time()+$max_hours;
+		echo strtotime($f_time)." vs ".$current_w_max." ";
 		//echo $book_time;
 		if (strtotime($f_time) < time()+$max_hours)
 		{
