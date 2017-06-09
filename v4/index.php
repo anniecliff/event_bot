@@ -949,7 +949,7 @@ function cancelMeetingRoom($cid,$bookid)
 				/*$bookings = $bookfunc->get_client_booking($bookid);
 				$book_data = mysql_fetch_array($bookings);*/
 				$valid_cancel = check_valid_booking_cancellation($bookdate, $starttime);
-				//if ($valid_cancel == 1) {
+				if ($valid_cancel == 1) {
 					
 						$update_booking_stmt = "UPDATE client_booking_log SET status='2' WHERE book_id = '".$bookid."'";
 						$update_booking_result = setData($update_booking_stmt);
@@ -1023,10 +1023,31 @@ function cancelMeetingRoom($cid,$bookid)
 		
 				
 			}
+		}
+		else
+			{
+		
+				$f_msg = "Cancellation unsuccessful or not permitted.";
+		
+				
+			}
 		return $f_msg;
 }
 function check_valid_booking_cancellation($in_date, $in_time)
 {
+	
+		$dateFromDatabase = strtotime("2012-12-04 12:05:04");
+		$dateTwelveHoursAgo = strtotime("-24 hours");
+		
+		if ($dateFromDatabase >= $dateTwelveHoursAgo) {
+		    // less than 12 hours ago
+		}
+		else {
+		    // more than 12 hours ago
+		}	
+	
+	
+	
 		//echo "in_date".$in_date."& intime".$in_time;
 		$valid_cancel = 0;
 		//$max_hours = 60 * 60 * 24;
@@ -1040,7 +1061,7 @@ function check_valid_booking_cancellation($in_date, $in_time)
 		$f_time = $in_date." ".$c_time;
 		//echo strtotime($f_time)." - ".time()+$max_hours;
 		$current_w_max = time()+$max_hours;
-		echo strtotime($f_time)." vs ".$current_w_max." ";
+		//echo strtotime($f_time)." vs ".$current_w_max." ";
 		//echo $book_time;
 		if (strtotime($f_time) < time()+$max_hours)
 		{
@@ -1062,7 +1083,7 @@ function free_facilities_slot($facilities_type, $book_date, $start_time, $slots,
 		{
 			if ($i==0)
 			{
-				$slot_updates = " `$start_time`='0'";
+				$slot_updates = "`$start_time`='0'";
 				$new_slot = $start_time;
 
 			}
@@ -1090,10 +1111,10 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 			$loc_id = $_POST["void"];
 			$facilities = $_POST["ftype"];
 			$facility_id = $_POST["fid"];*/
-			$bookdate = $_POST["bookdate"];
+			/*$bookdate = $_POST["bookdate"];
 			$booktime = $_POST["checktime"];
 			//$booktime = $_POST["booktime"];
-			$loc_id = $_POST["void"];
+			$loc_id = $_POST["void"];*/
 
 			//echo "Book Time".$booktime;
 			$facilities = "1";
