@@ -931,146 +931,99 @@ function cancelMeetingRoom($cid,$bookid)
 		$inv_msg = "";
 		$bookquery = "SELECT * FROM client_booking_log WHERE book_id='$bookid' AND status='1'";
 		$bookings = getData($bookquery);		
-		while($book_data = mysqli_fetch_array($bookings))
-		{
-		
-				$bookdate = $book_data["book_date"];
-				$ftype = $book_data["facilities_type"];
-				$starttime = $book_data["book_start_time"];
-				$book_hr = $book_data["book_hours_slots"];
-				$vo_id = $book_data["vo_id"];
-				$inv_id = $book_data["invoice_id"];
-		
-		
-		}
+		if(mysqli_num_rows($bookings) > 0){
+				while($book_data = mysqli_fetch_array($bookings))
+				{
 				
-		
-		/*$bookings = $bookfunc->get_client_booking($bookid);
-		$book_data = mysql_fetch_array($bookings);*/
-		$valid_cancel = check_valid_booking_cancellation($bookdate, $starttime);
-		//if ($valid_cancel == 1) {
-			
-				$update_booking_stmt = "UPDATE client_booking_log SET status='2' WHERE book_id = '".$bookid."'";
-				$update_booking_result = setData($update_booking_stmt);
-				//$bookfunc->cancel_client_booking_log($bookid);
-		
-				/*$bookdate = $book_data["book_date"];
-				$ftype = $book_data["facilities_type"];
-				$starttime = $book_data["book_start_time"];
-				$book_hr = $book_data["book_hours_slots"];
-				$vo_id = $book_data["vo_id"];
-				$inv_id = $book_data["invoice_id"];*/
-		
-				// Tell which field to update
-				if ($ftype == 1)
-				{
-		       		 	$facility_field = "meeting_room_hours_left";
-			        		$facility_limit = "meeting_room_hours_limit";
-				        	$slot_table_ftype = 1;
-							$stmt = "SELECT id FROM client_facilities_core WHERE client_id='$cid' AND status='1'";				        	
-				        	$rslt = getData($stmt);
-				        	while($row = mysqli_fetch_array($rslt))
-				        	{
-				        		$f_ref_id = $row["id"];
-							}				        	
-				        //	$f_ref_id = $clientfunc->get_client_conference_hours_ref_id($cid);
-		
-				}
-				/*elseif ($ftype == 2)
-				{
-		        		$facility_field = "day_office_hours_left";
-				        $facility_limit = "day_office_hours_limit";
-				        $slot_table_ftype = 2;
-			        	$facility_id = 0;
-				        $f_ref_id = $clientfunc->get_client_day_office_hours_ref_id($cid);
-				}
-				elseif ($ftype == 3)
-				{
-		        		$facility_field = "hot_desking_hours_left";
-			        	$facility_limit = "hot_desking_hours_limit";
-			 	       	$slot_table_ftype = 3;
-				        $f_ref_id = $clientfunc->get_client_hotdesking_hours_ref_id($cid);
-		
-				}
-				elseif ($ftype == 4)
-				{
-		        		$facility_field = "flexi_office_hours_left";
-				        $facility_limit = "flexi_office_hours_limits ";
-				        $slot_table_ftype = 2;
-			        	$facility_id = 0;
-				        $f_ref_id = $clientfunc->get_client_flexi_office_hours_ref_id($cid);
-				}
-				elseif ($ftype == 5)
-				{
-		        		$facility_field = "discussion_room_hours_left";
-			        	$facility_limit = "discussion_room_limits";
-				        $slot_table_ftype = 5;
-		
-				}
-		*/
-		
-				// refund client hours
-				//$refund_msg = $clientfunc->returnClientFacilityHours($cid, $facility_field, $facility_limit, $book_hr, $f_ref_id);
-		
-				// void any invoice
-				if ($inv_id != 0)
-				{
-		        		$invid = $vo_id."-".$inv_id;
-			        	$reason = "Cancellation of Booking for VO Facilities - Self Serviced.";
-				        $invfunc->voidInvoice($invid, $reason, 0);
-				        $inv_msg = " Your Invoice $invid have been Voided. ";
-				}
-				else
-				{
-		        		$inv_msg = " ";
-				}
-			
-			//	$facility_id = $bookfunc->get_Facility_id_from_booking($bookid, $bookdate, $starttime, $slot_table_ftype);
-				$db_stmt = "SELECT facility_id FROM facilities_booking WHERE facilities_type = 1 AND book_date='$bookdate' AND `".$starttime."`='$bookid'";			
-				$db_result = getData($db_stmt);
+						$bookdate = $book_data["book_date"];
+						$ftype = $book_data["facilities_type"];
+						$starttime = $book_data["book_start_time"];
+						$book_hr = $book_data["book_hours_slots"];
+						$vo_id = $book_data["vo_id"];
+						$inv_id = $book_data["invoice_id"];
 				
-				while($db_row = mysqli_fetch_array($db_result))
-				{
-			
-						$facility_id = $db_row["facility_id"];
-			
-				}			
-			
-			//echo $db_stmt;
-			
+				
+				}
+						
+				
+				/*$bookings = $bookfunc->get_client_booking($bookid);
+				$book_data = mysql_fetch_array($bookings);*/
+				$valid_cancel = check_valid_booking_cancellation($bookdate, $starttime);
+				//if ($valid_cancel == 1) {
+					
+						$update_booking_stmt = "UPDATE client_booking_log SET status='2' WHERE book_id = '".$bookid."'";
+						$update_booking_result = setData($update_booking_stmt);
+						//$bookfunc->cancel_client_booking_log($bookid);
+				
+						/*$bookdate = $book_data["book_date"];
+						$ftype = $book_data["facilities_type"];
+						$starttime = $book_data["book_start_time"];
+						$book_hr = $book_data["book_hours_slots"];
+						$vo_id = $book_data["vo_id"];
+						$inv_id = $book_data["invoice_id"];*/
+				
+						// Tell which field to update
+						if ($ftype == 1)
+						{
+				       		 	$facility_field = "meeting_room_hours_left";
+					        		$facility_limit = "meeting_room_hours_limit";
+						        	$slot_table_ftype = 1;
+									$stmt = "SELECT id FROM client_facilities_core WHERE client_id='$cid' AND status='1'";				        	
+						        	$rslt = getData($stmt);
+						        	while($row = mysqli_fetch_array($rslt))
+						        	{
+						        		$f_ref_id = $row["id"];
+									}				        	
+						        //	$f_ref_id = $clientfunc->get_client_conference_hours_ref_id($cid);
+				
+						}
+					
+				
+						// refund client hours
+						//$refund_msg = $clientfunc->returnClientFacilityHours($cid, $facility_field, $facility_limit, $book_hr, $f_ref_id);
+				
+						// void any invoice
+						if ($inv_id != 0)
+						{
+				        		$invid = $vo_id."-".$inv_id;
+					        	$reason = "Cancellation of Booking for VO Facilities - Self Serviced.";
+						        $invfunc->voidInvoice($invid, $reason, 0);
+						        $inv_msg = " Your Invoice $invid have been Voided. ";
+						}
+						else
+						{
+				        		$inv_msg = " ";
+						}
+					
+
+						$db_stmt = "SELECT facility_id FROM facilities_booking WHERE facilities_type = 1 AND book_date='$bookdate' AND `".$starttime."`='$bookid'";			
+						$db_result = getData($db_stmt);
+						
+						while($db_row = mysqli_fetch_array($db_result))
+						{
+					
+								$facility_id = $db_row["facility_id"];
+					
+						}			
+					
+					// free up the booking slot
+						free_facilities_slot($slot_table_ftype, $bookdate, $starttime, $book_hr, $bookid, $facility_id);
+				
+						$msg = "Booking Cancelled Successfully.";
+				
+				
+				
+						$f_msg = $msg." ".$inv_msg." ".$addon_msg;
+				}
 		
-				// free up the booking slot
-				free_facilities_slot($slot_table_ftype, $bookdate, $starttime, $book_hr, $bookid, $facility_id);
-		
-				$msg = "Booking Cancelled Successfully.";
-		
-		
-		
-				$f_msg = $msg." ".$inv_msg." ".$addon_msg;
-		
-		
-				$bookobj[$cnt] = array(
-		                                "Cancellation Results" => $f_msg
-		                );
-		
-				$f_book = array("Facility Booking Cancellation" => $bookobj);
-		                echo json_encode($f_book);
-			/*}
 			else
 			{
 		
 				$f_msg = "Cancellation unsuccessful or not permitted.";
 		
-		
-		                $bookobj[$cnt] = array(
-		                                "Cancellation Results" => $f_msg
-		                );
-		
-		                $f_book = array("Facility Booking Cancellation" => $bookobj);
-		                echo json_encode($f_book);
-		
-			}*/
-		
+				
+			}
+		return $f_msg;
 }
 function check_valid_booking_cancellation($in_date, $in_time)
 {
