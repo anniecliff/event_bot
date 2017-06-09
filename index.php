@@ -78,7 +78,7 @@ Flight::route('POST /', function()
 		$cid = $parameters["clientid"];
 		$book_date   = $parameters["book_date"];
 		
-		$speech = getBookingList($cid,$book_date);
+		$speech = cancelMeetingRoom($cid,$book_date);
 
 		$source  = "v4";
 		/*$next_context = "location";
@@ -1074,6 +1074,7 @@ function cancelMeetingRoom()
 }
 function check_valid_booking_cancellation($in_date, $in_time)
 {
+		//echo "in_date".$in_date."& intime".$in_time;
 		$valid_cancel = 0;
 		//$max_hours = 60 * 60 * 24;
 		$max_hours = 86400;
@@ -1084,9 +1085,9 @@ function check_valid_booking_cancellation($in_date, $in_time)
 		$c_time = date('G:i', $standard);
 		
 		$f_time = $in_date." ".$c_time;
-		
-		//$current_w_max = time()+$max_hours;
-		//echo strtotime($f_time)." vs ".$current_w_max." ";
+		//echo strtotime($f_time)." - ".time()+$max_hours;
+		$current_w_max = time()+$max_hours;
+		echo strtotime($f_time)." vs ".$current_w_max." ";
 		//echo $book_time;
 		if (strtotime($f_time) < time()+$max_hours)
 		{
@@ -1098,7 +1099,7 @@ function check_valid_booking_cancellation($in_date, $in_time)
 			// can cancel
 			$valid_cancel = 1;
 		}
-
+		echo $valid_cancel;
 		return $valid_cancel;
 }
 function free_facilities_slot($facilities_type, $book_date, $start_time, $slots, $bookid, $facility_id)
@@ -1296,9 +1297,11 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 
 }
 
+//function getBookingList()
 function getBookingList($cid,$book_date)
 {
-
+			/*$cid = $_POST["cid"];
+			$book_date=$_POST["book_date"];*/
 			$agent = "10000";
 		   $cnt = 0;
 		   $mtdate = date("2015-09-01", time());
@@ -1309,7 +1312,7 @@ function getBookingList($cid,$book_date)
       	if(mysqli_num_rows($booking_history) >0)
       	{
  		      while($data = mysqli_fetch_array($booking_history))
-	      {
+	      	{
 					$data_r = "SELECT facilities_type FROM facilities_type WHERE id= ".$data["facilities_type"];
 				//	echo $data_r;
       			$fdata = getData($data_r);
@@ -1353,7 +1356,7 @@ function getBookingList($cid,$book_date)
 					
 					$msg = "Your Booking ID is ".$data["book_id"].". Details for your booking : Location Name - ".$voname.", Facility Name : ".$type_name.", Book Date and Time :".$data["book_date"]." at".$timebook;
 		
-					$bookobj[$cnt] = array(
+					/*$bookobj[$cnt] = array(
 			               		      "book id" => $data["book_id"],
 		        	      		         "location name" => $voname,
 						                  "facility name" => $type_name,
@@ -1361,7 +1364,7 @@ function getBookingList($cid,$book_date)
 						                  "time" => $timebook					
 		               		    );
 		
-					$cnt++;
+					$cnt++;*/
 					}
 				}
 				else
