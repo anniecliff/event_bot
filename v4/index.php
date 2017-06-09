@@ -101,8 +101,8 @@ Flight::route('POST /', function()
 		$cid = $parameters["clientid"];
 		$book_date   = $parameters["book_date"];
 		
-//		$speech = getBookingList($cid,$book_date);
-		$speech = $cid." - ".$book_date;
+		$speech = getBookingList($cid,$book_date);
+//		$speech = $cid." - ".$book_date;
 		$source  = "v4";
 		/*$next_context = "location";
 		$param1value = $res_loc;
@@ -1304,12 +1304,12 @@ function getBookingList($cid,$book_date)
 			$book_date=$_POST["book_date"];*/
 			$agent = "10000";
 		   $cnt = 0;
-		   $mtdate = date("2015-09-01", time());
+		  // $mtdate = date("2015-09-01", time());
 
-      	$query = "SELECT * FROM client_booking_log WHERE client_id='$cid' AND status='1' AND book_date = '".$book_date."'";
+      	$query = "SELECT * FROM client_booking_log WHERE client_id=".$cid." AND status='1' AND book_date = '".$book_date."'";
       	//echo $query;
       	$booking_history = getData($query);
-      	if(mysqli_num_rows($booking_history) >0)
+      	if(mysqli_num_rows($booking_history) > 0)
       	{
  		      while($data = mysqli_fetch_array($booking_history))
 	      	{
