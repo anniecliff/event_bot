@@ -1297,9 +1297,11 @@ function getAvailableTimeSlot($bookdate,$loc_id,$booktime)
 
 }
 
-function getBookingList($cid,$book_date)
+function getBookingList()
+//function getBookingList($cid,$book_date)
 {
-
+			$cid = $_POST["cid"];
+			$book_date=$_POST["book_date"];
 			$agent = "10000";
 		   $cnt = 0;
 		   $mtdate = date("2015-09-01", time());
