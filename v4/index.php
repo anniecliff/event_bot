@@ -78,7 +78,7 @@ Flight::route('POST /', function()
 		$cid = $parameters["clientid"];
 		$book_date   = $parameters["book_date"];
 		
-		$speech = getBookingList($cid,$book_date);
+		$speech = cancelMeetingRoom($cid,$book_date);
 
 		$source  = "v4";
 		/*$next_context = "location";
@@ -1310,7 +1310,7 @@ function getBookingList($cid,$book_date)
       	if(mysqli_num_rows($booking_history) >0)
       	{
  		      while($data = mysqli_fetch_array($booking_history))
-	      {
+	      	{
 					$data_r = "SELECT facilities_type FROM facilities_type WHERE id= ".$data["facilities_type"];
 				//	echo $data_r;
       			$fdata = getData($data_r);
