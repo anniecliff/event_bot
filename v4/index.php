@@ -948,7 +948,7 @@ function cancelMeetingRoom()
 		/*$bookings = $bookfunc->get_client_booking($bookid);
 		$book_data = mysql_fetch_array($bookings);*/
 		$valid_cancel = check_valid_booking_cancellation($bookdate, $starttime);
-		if ($valid_cancel == 1) {
+		//if ($valid_cancel == 1) {
 			
 				$update_booking_stmt = "UPDATE client_booking_log SET status='2' WHERE book_id = '".$bookid."'";
 				$update_booking_result = setData($update_booking_stmt);
@@ -1056,7 +1056,7 @@ function cancelMeetingRoom()
 				$f_book = array("Facility Booking Cancellation" => $bookobj);
 		                echo json_encode($f_book);
 			}
-			else
+			/*else
 			{
 		
 				$f_msg = "Cancellation unsuccessful or not permitted.";
@@ -1069,7 +1069,7 @@ function cancelMeetingRoom()
 		                $f_book = array("Facility Booking Cancellation" => $bookobj);
 		                echo json_encode($f_book);
 		
-			}
+			}*/
 		
 }
 function check_valid_booking_cancellation($in_date, $in_time)
