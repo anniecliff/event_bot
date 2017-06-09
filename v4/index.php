@@ -1356,7 +1356,7 @@ function getBookingList()
 					
 					$msg = "Your Booking ID is ".$data["book_id"].". Details for your booking : Location Name - ".$voname.", Facility Name : ".$type_name.", Book Date and Time :".$data["book_date"]." at".$timebook;
 		
-					$bookobj[$cnt] = array(
+					/*$bookobj[$cnt] = array(
 			               		      "book id" => $data["book_id"],
 		        	      		         "location name" => $voname,
 						                  "facility name" => $type_name,
@@ -1364,7 +1364,7 @@ function getBookingList()
 						                  "time" => $timebook					
 		               		    );
 		
-					$cnt++;
+					$cnt++;*/
 					}
 				}
 				else
