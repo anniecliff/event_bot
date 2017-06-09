@@ -76,15 +76,15 @@ Flight::route('POST /', function()
 	{
 		
 		$cid = $parameters["clientid"];
-		$book_date   = $parameters["book_date"];
+		$bookid   = $parameters["bookid"];
 		
-		$speech = cancelMeetingRoom($cid,$book_date);
+		$speech = cancelMeetingRoom($cid,$bookid);
 
 		$source  = "v4";
 		/*$next_context = "location";
 		$param1value = $res_loc;
 		$param2value = 0;*/
-		$context = array("name" => "details");
+		$context = array("name" => "cancel");
 
 		$json = json_encode([
 	                'speech'   => $speech,
@@ -909,15 +909,15 @@ function getVOFacilities_v2($void, $facilitytype)
 
 //function to cancel Meeting room booking
 
-function cancelMeetingRoom()
+function cancelMeetingRoom($cid,$bookid)
 {
 
 		
 		$agent = "10000";
 		
-		$cid = $_POST["cid"];
+		/*$cid = $_POST["cid"];
 		//$token = $_POST["token"];
-		$bookid = $_POST["bookid"];
+		$bookid = $_POST["bookid"];*/
 		
 		/*$cid = "22570";
 		$token = "27c1a8e69ab13f0f4818f9c3b3e49806";
