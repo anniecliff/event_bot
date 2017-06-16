@@ -24,7 +24,7 @@ Flight::route('POST /', function()
 	
 	
 });
-Flight::route('POST /searchEvents 'function(){
+Flight::route('POST /searchEvents' ,function(){
 
 	$returnarray=searchEvents();
 	header('Content-type:application/json;charset=utf-8');
