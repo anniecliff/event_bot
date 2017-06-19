@@ -22,7 +22,8 @@ Flight::route('POST /', function()
 		if($action == "searchEvents")
 		{
 				$keyword = $parameters["events"];
-				$result 	= searchEvents($keyword);
+//				$result 	= searchEvents($keyword);
+				$result 	= "test".$keyword;
 				$context = array("name" => "event");
 				$source  = "event_bot";
 				$json = json_encode([
