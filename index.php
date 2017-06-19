@@ -45,7 +45,7 @@ Flight::route('POST /', function()
 				$result 	= eventRunningThisday($keyword);
 				if($result == false)
 				{
-					$speech	=	"no events for today";				
+					$speech	=	"no events for this day";				
 				
 				}
 				else 
@@ -152,9 +152,9 @@ function searchEvents($keyword)
 //Input : day, week or month
 //Response : List of events
 //Created by : Annie, June 19, 2017
-function eventRunningThisday()
+function eventRunningThisday($day)
 {
-	$day 			=	$_POST["date_period"];
+	//$day 			=	$_POST["date_period"];
 	$eventdate 	=	explode("/",$day);
 	//echo $eventdate;
 	$begindate 	=	$eventdate[0];
@@ -169,7 +169,7 @@ function eventRunningThisday()
 	
 	}
 
-	echo $query;
+	//echo $query;
 	$result		=	getData($query);
 	$count		=	mysqli_num_rows($result);
 	if($count > 0)
