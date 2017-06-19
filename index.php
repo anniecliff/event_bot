@@ -152,7 +152,7 @@ function searchEvents($keyword)
 function eventRunningThisday()
 {
 	$day 			=	$_POST["date_period"];
-	$eventdate 	=	explode("/",$day)
+	$eventdate 	=	explode("/",$day);
 	$begindate 	=	$eventdate[0];
 	$enddate		=	$eventdate[1];
 	$query		=	"SELECT * FROM entrp_events WHERE event_date >='".$begindate."' AND event_date < '".$enddate."'";
