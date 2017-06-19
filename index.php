@@ -61,7 +61,7 @@ function searchEvents($keyword)
 	//$keyword = $_POST['event'];
 	//echo $keyword;
 	$query = 'SELECT * FROM entrp_events WHERE eventName like "%'.$keyword.'%"';
-	echo $query;
+	//echo $query;
 	$result = getData($query);
 	$count= mysqli_num_rows($result);
 
@@ -80,12 +80,12 @@ function searchEvents($keyword)
 		}
 		if($status == 2)
 		{
-			$msg = "Sorry !! This is an expired event. ";
+				$msg = "Sorry !! This is an expired event. ";
 		
 		}
 		else 
 		{
-					$msg = $event['eventName']." \r\n ".$event["description"]." \r\n Address : ".$event["address"]." \r\n ".$event["event_date"]." From : ".$event["start_time"]." to ".$event["end_time"];
+				$msg = $event['eventName']." \r\n ".$event["description"]." \r\n Address : ".$event["address"]." \r\n ".$event["event_date"]." From : ".$event["start_time"]." to ".$event["end_time"];
 		}
 
 	}	
