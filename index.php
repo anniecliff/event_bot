@@ -75,7 +75,7 @@ function searchEvents($keyword)
 				$event["event_date"]		 =	$row["event_date"];
 				$event["time"]				 =	$row["event_time"];
 		}
-		$msg = $event['eventName']." - ".$event["description"]." at ".$event["address"]." , ".$event["event_date"]." , ".$event["time"];
+		$msg = $event['eventName']." \r\n ".$event["description"]." \r\n ".$event["address"]." \r\n ".$event["event_date"]." at ".$event["time"];
 	}	
 	else 
 	{
