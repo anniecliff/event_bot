@@ -15,17 +15,22 @@ Flight::route('POST /', function()
 		ob_start();
 		
 		//$data = Flight::request()->data;
-		$json_obj = file_get_contents('php://input'); 
-		$request = json_decode($json_obj, true);
-		$action = $request["result"]["action"];
-		$parameters = $request["result"]["parameters"];
+		$json_obj = file_get_contents('php://input'); // post json object from api.ai
+		$request = json_decode($json_obj, true);// json_decode the posted json object
+		$action = $request["result"]["action"];// extract action
+		$parameters = $request["result"]["parameters"];//extract parameters
+		
+		/* ************ Written on June 14, 2017 ************ 
+			@desc : Webhook for Events
+			by		:	Annie 
+		*/
 		if($action == "searchEvents")
 		{
 				$keyword = $parameters["events"];
 				$result 	= searchEvents($keyword);
 //				$result 	= "test".$keyword;
-				$context = array("name" => "event");
-				$source  = "event_bot";
+				$context = array("name" => "event");//set output context
+				$source  = "event_bot";    //set source
 				$json = json_encode([
 			                'speech'   => $result,
 			                'displayText' => $result,
@@ -36,6 +41,12 @@ Flight::route('POST /', function()
 		
 		
 		}
+		/* *************** end of searchEvents **************** */
+		
+		/* *************** Written on June 19, 2017 *************** 
+			@desc : Webhook for Event For a Day
+			by		:	Annie 
+		*/
 		else if($action == "eventRunningThisday")
 		{
 			if($parameters["date-period"]!="")
@@ -71,6 +82,7 @@ Flight::route('POST /', function()
 		
 		
 		}
+		/* ************ end of eventRunningThisday ************* */
 		
 	
 	ob_end_clean();
@@ -102,18 +114,20 @@ Flight::route('POST /eventRunningThisday' ,function(){
 
 Flight::start();
 
-//Function for searching an event
-//Input : keyword
-//Response : Event Details
-//created by Annie , June 19,2017
-//function searchEvents()
+/*
+**@desc 			: Function for searching an event
+**Input 			: keyword
+**Response 		: Event Details
+**created by	: Annie , June 19,2017
+*/
+
+//function searchEvents() //uncomment this line and comment next line for testing in heroku 
 
 function searchEvents($keyword)
 {
-	//$keyword = $_POST['event'];
-	//echo $keyword;
+	//$keyword = $_POST['event']; // this is for testing in heroku
+
 	$query = 'SELECT * FROM entrp_events WHERE eventName like "%'.$keyword.'%"';
-	//echo $query;
 	$result = getData($query);
 	$count= mysqli_num_rows($result);
 
@@ -125,7 +139,6 @@ function searchEvents($keyword)
 				$event["description"]	 =	$row["description"];
 				$event["address"]			 =	$row["address"];
 				$event["event_date"]		 =	$row["event_date"];
-				//$event["time"]				 =	$row["event_time"];
 				$event["start_time"]		 =	$row["start_time"];
 				$event["end_time"]		 =	$row["end_time"];
 				$status				 		 =	$row["status"];
@@ -148,15 +161,19 @@ function searchEvents($keyword)
 	return $msg;
 }
 
-//Function  to get events in a given day
-//Input : day, week or month
-//Response : List of events
-//Created by : Annie, June 19, 2017
+
+
+
+/*
+**@desc			:	Function  to get events in a given day
+**Input 			:  day, week or month
+**Response 		:  List of events
+**Created by   :  Annie, June 19, 2017
+**/
 function eventRunningThisday($day)
 {
-	//$day 			=	$_POST["date_period"];
+	//$day 			=	$_POST["date_period"]; //testing in heroku
 	$eventdate 	=	explode("/",$day);
-	//echo $eventdate;
 	$begindate 	=	$eventdate[0];
 	$enddate		=	$eventdate[1];
 	if($enddate == "")
@@ -168,8 +185,6 @@ function eventRunningThisday($day)
 		$query		=	"SELECT * FROM entrp_events WHERE event_date >='".$begindate."' AND event_date < '".$enddate."'";
 	
 	}
-
-	//echo $query;
 	$result		=	getData($query);
 	$count		=	mysqli_num_rows($result);
 	if($count > 0)
