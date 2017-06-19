@@ -55,9 +55,9 @@ Flight::route('POST /searchEvents' ,function(){
 Flight::start();
 
 
-function searchEvents()
+function searchEvents($keyword)
 {
-	$keyword = $_POST['event'];
+	//$keyword = $_POST['event'];
 	//echo $keyword;
 	$query = "SELECT * FROM entrp_events WHERE eventName like '%".$keyword."%'";
 	$result = getData($query);
