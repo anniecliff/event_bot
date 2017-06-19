@@ -153,9 +153,11 @@ function eventRunningThisday()
 {
 	$day 			=	$_POST["date_period"];
 	$eventdate 	=	explode("/",$day);
+	echo $eventdate;
 	$begindate 	=	$eventdate[0];
 	$enddate		=	$eventdate[1];
 	$query		=	"SELECT * FROM entrp_events WHERE event_date >='".$begindate."' AND event_date < '".$enddate."'";
+	echo $query;
 	$result		=	getData($query);
 	$count		=	mysqli_num_rows($result);
 	if($count > 0)
