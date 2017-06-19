@@ -54,7 +54,7 @@ Flight::route('POST /searchEvents' ,function(){
 
 
 Flight::start();
-function searchEvents
+function searchEvents()
 
 //function searchEvents($keyword)
 {
