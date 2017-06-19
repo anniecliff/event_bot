@@ -56,11 +56,11 @@ Flight::route('POST /', function()
 					}
 				}
 //				$result 	= "test".$keyword;
-				$context = array("name" => "event");
+				$context = array("name" => "eventrunning");
 				$source  = "event_bot";
 				$json = json_encode([
-			                'speech'   => $result,
-			                'displayText' => $result,
+			                'speech'   => $speech,
+			                'displayText' => $speech,
 			                'data' => [],
 			                'contextOut' => [$context],
 			                'source' => $source
@@ -153,7 +153,7 @@ function eventRunningThisday()
 {
 	$day 			=	$_POST["date_period"];
 	$eventdate 	=	explode("/",$day);
-	echo $eventdate;
+	//echo $eventdate;
 	$begindate 	=	$eventdate[0];
 	$enddate		=	$eventdate[1];
 	if($enddate == "")
