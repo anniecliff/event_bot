@@ -10,7 +10,7 @@ Flight::route('POST /', function()
 {
 		
 		header('Content-type:application/json;charset=utf-8');
-		header('Authorization:Bearer 0ccb5842a2b04d0b9fdf23cddd01209d');
+		header('Authorization:Bearer e15cdaff36e746608d48c92acdf80539');
 		
 		ob_start();
 		
@@ -19,9 +19,26 @@ Flight::route('POST /', function()
 		$request = json_decode($json_obj, true);
 		$action = $request["result"]["action"];
 		$parameters = $request["result"]["parameters"];
+		if($action == "searchEvents")
+		{
+				$keyword = $parameters["event"];
+				$result 	= searchEvents($keyword);
+				$context = array("name" => "search");
+				$source  = "event_bot"
+				$json = json_encode([
+			                'speech'   => $result,
+			                'displayText' => $result,
+			                'data' => [],
+			                'contextOut' => [$context],
+			                'source' => $source
+			       	 ]); 
+		
+		
+		}
 		
 	
-	
+	ob_end_clean();
+	echo $json;
 	
 });
 Flight::route('POST /searchEvents' ,function(){
