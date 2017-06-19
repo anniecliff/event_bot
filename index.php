@@ -36,12 +36,46 @@ Flight::route('POST /', function()
 		
 		
 		}
+		else if($action == "eventRunningThisday")
+		{
+				$keyword = $parameters["date-period"];
+				$result 	= eventRunningThisday($keyword);
+				if($result == false)
+				{
+					$speech	=	"no events for today";				
+				
+				}
+				else 
+				{
+					$speech = "";
+					foreach($result as $row)
+					{
+							$speech .= $row;
+							$speech .= "  ";
+												
+					}
+				}
+//				$result 	= "test".$keyword;
+				$context = array("name" => "event");
+				$source  = "event_bot";
+				$json = json_encode([
+			                'speech'   => $result,
+			                'displayText' => $result,
+			                'data' => [],
+			                'contextOut' => [$context],
+			                'source' => $source
+			       	 ]); 
+		
+		
+		}
 		
 	
 	ob_end_clean();
 	echo $json;
 	
 });
+// Route for search Events
+//created by Annie , June , 14 2017
 Flight::route('POST /searchEvents' ,function(){
 
 	$returnarray=searchEvents();
@@ -51,9 +85,24 @@ Flight::route('POST /searchEvents' ,function(){
 
 
 });
+//Route for events for a day given
+//Created by Annie, June 19, 2017
+Flight::route('POST /eventRunningThisday' ,function(){
 
+	$returnarray=eventRunningThisday();
+	header('Content-type:application/json;charset=utf-8');
+	echo json_encode($returnarray);
+
+
+
+});
 
 Flight::start();
+
+//Function for searching an event
+//Input : keyword
+//Response : Event Details
+//created by Annie , June 19,2017
 //function searchEvents()
 
 function searchEvents($keyword)
@@ -95,5 +144,41 @@ function searchEvents($keyword)
 	}	
 	return $msg;
 }
+
+//Function  to get events in a given day
+//Input : day, week or month
+//Response : List of events
+//Created by : Annie, June 19, 2017
+function eventRunningThisday()
+{
+	$day 			=	$_POST["date_period"];
+	$eventdate 	=	explode("/",$day)
+	$begindate 	=	$eventdate[0];
+	$enddate		=	$eventdate[1];
+	$query		=	"SELECT * FROM entrp_events WHERE event_date >='".$begindate."' AND event_date < '".$enddate."'";
+	$result		=	getData($query);
+	$count		=	mysqli_num_rows($result);
+	if($count > 0)
+	{
+		while($row = mysqli_fetch_array($result))
+		{
+	
+			$eventName[$i]	=	$row["eventName"];	
+			$i++;
+			
+		}
+	
+	
+	}
+	else 
+	{
+		$eventName = false;
+	}
+
+	return $eventName;
+
+}
+
+
 
 ?>
