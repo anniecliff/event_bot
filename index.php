@@ -23,7 +23,7 @@ Flight::route('POST /', function()
 		{
 				$keyword = $parameters["event"];
 				$result 	= searchEvents($keyword);
-				$context = array("name" => "search");
+				$context = array("name" => "event");
 				$source  = "event_bot";
 				$json = json_encode([
 			                'speech'   => $result,
