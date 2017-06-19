@@ -60,7 +60,7 @@ function searchEvents()
 {
 	$keyword = $_POST['event'];
 	//echo $keyword;
-	$query = "SELECT * FROM entrp_events WHERE eventName like '%".$keyword."%'";
+	$query = 'SELECT * FROM entrp_events WHERE eventName like "%'.$keyword.'"%';
 	$result = getData($query);
 	if(mysqli_num_rows($result) > 0)
 	{
