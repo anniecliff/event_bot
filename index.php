@@ -38,7 +38,10 @@ Flight::route('POST /', function()
 		}
 		else if($action == "eventRunningThisday")
 		{
-				$keyword = $parameters["date-period"];
+			if($parameters["date-period"]!="")
+				{ $keyword = $parameters["date-period"]; }
+			if($parameters["date"]!="")
+				{ $keyword = $parameters["date"]; }			
 				$result 	= eventRunningThisday($keyword);
 				if($result == false)
 				{
