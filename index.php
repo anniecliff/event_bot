@@ -56,7 +56,7 @@ Flight::route('POST /', function()
 				$result 	= eventRunningThisday($keyword);
 				if($result == false)
 				{
-					$speech	=	"no events for this day";				
+					$speech	=	"No events found for this day!!";				
 				
 				}
 				else 
