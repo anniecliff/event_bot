@@ -72,12 +72,12 @@ function searchEvents($keyword)
 				$event['eventName']		 = $row["eventName"];
 				$event["description"]	 =	$row["description"];
 				$event["address"]			 =	$row["address"];
-				$event["event_date"]		 =	$row["event_date_time"];
+				$event["event_date"]		 =	$row["event_date"];
 				//$event["time"]				 =	$row["event_time"];
 				$event["start_time"]				 =	$row["start_time"];
 				$event["end_time"]				 =	$row["end_time"];
 		}
-		$msg = $event['eventName']." \r\n ".$event["description"]." \r\n Address : ".$event["address"]." \r\n Host".$event["event_date"]." From : ".$event["start_time"]." to ".$event["end_time"];
+		$msg = $event['eventName']." \r\n ".$event["description"]." \r\n Address : ".$event["address"]." \r\n ".$event["event_date"]." From : ".$event["start_time"]." to ".$event["end_time"];
 	}	
 	else 
 	{
