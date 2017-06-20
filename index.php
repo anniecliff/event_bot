@@ -61,7 +61,7 @@ Flight::route('POST /', function()
 				}
 				else 
 				{
-					$speech = "";
+					$speech = "Events are : ";
 					foreach($result as $row)
 					{
 							$speech .= $row;
@@ -89,6 +89,8 @@ Flight::route('POST /', function()
 	echo $json;
 	
 });
+
+
 // Route for search Events
 //created by Annie , June , 14 2017
 Flight::route('POST /searchEvents' ,function(){
@@ -100,6 +102,9 @@ Flight::route('POST /searchEvents' ,function(){
 
 
 });
+
+
+
 //Route for events for a day given
 //Created by Annie, June 19, 2017
 Flight::route('POST /eventRunningThisday' ,function(){
