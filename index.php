@@ -68,7 +68,7 @@ Flight::route('POST /', function()
 					foreach($result as $row)
 					{
 							$speech .= $row;
-							$speech .= "  ";
+							$speech .= " , ";
 												
 					}
 				}
