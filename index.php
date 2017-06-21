@@ -204,8 +204,14 @@ function eventRunningThisday($day,$beforeorafter)
 	}
 	else
 	{
-		$query		=	"SELECT * FROM entrp_events WHERE event_date >='".$begindate."' AND event_date < '".$enddate."'";
-	
+		if($beforeorafter == "after")
+		{
+			$query		=	"SELECT * FROM entrp_events WHERE event_date >='".$enddate."'";
+		}
+		else 
+		{
+			$query		=	"SELECT * FROM entrp_events WHERE event_date >='".$begindate."' AND event_date < '".$enddate."'";				
+		}
 	}
 	$result		=	getData($query);
 	$count		=	mysqli_num_rows($result);
