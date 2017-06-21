@@ -49,11 +49,14 @@ Flight::route('POST /', function()
 		*/
 		else if($action == "eventRunningThisday")
 		{
+			$beforeorafter="";
 			if($parameters["date-period"]!="")
 				{ $keyword = $parameters["date-period"]; }
 			if($parameters["date"]!="")
-				{ $keyword = $parameters["date"]; }			
-				$result 	= eventRunningThisday($keyword);
+				{ $keyword = $parameters["date"]; }
+			if($parameters["beforeorafter"]!="")
+				{ $beforeorafter = $parameters["beforeorafter"]; }				
+				$result 	= eventRunningThisday($keyword,$beforeorafter);
 				if($result == false)
 				{
 					$speech	=	"No events found for this day!!";				
@@ -131,8 +134,9 @@ Flight::start();
 function searchEvents($keyword)
 {
 	//$keyword = $_POST['event']; // this is for testing in heroku
-
+	
 	$query = 'SELECT * FROM entrp_events WHERE eventName like "%'.$keyword.'%"';
+	
 	$result = getData($query);
 	$count= mysqli_num_rows($result);
 
@@ -175,7 +179,7 @@ function searchEvents($keyword)
 **Response 		:  List of events
 **Created by   :  Annie, June 19, 2017
 **/
-function eventRunningThisday($day)
+function eventRunningThisday($day,$beforeorafter)
 {
 	//$day 			=	$_POST["date_period"]; //testing in heroku
 	$eventdate 	=	explode("/",$day);
@@ -183,7 +187,20 @@ function eventRunningThisday($day)
 	$enddate		=	$eventdate[1];
 	if($enddate == "")
 	{
-		$query		=	"SELECT * FROM entrp_events WHERE event_date ='".$begindate."'";
+		if($beforeorafter == "after")
+		{
+				$query		=	"SELECT * FROM entrp_events WHERE event_date >'".$begindate."'";
+		
+		}
+		elseif($beforeorafter == "before")
+		{
+				$query		=	"SELECT * FROM entrp_events WHERE event_date <'".$begindate."'";
+		}
+		else 
+		{
+				$query		=	"SELECT * FROM entrp_events WHERE event_date ='".$begindate."'";
+		}
+
 	}
 	else
 	{
